@@ -194,10 +194,41 @@ curl -X POST http://localhost:8001/send-message \
 
 ## 📱 Conectar WhatsApp
 
-1. Inicia el servidor: `python server.py`
-2. Obtén el QR: `curl http://localhost:8001/instance/qr`
-3. Escanea con WhatsApp: Configuración > Dispositivos vinculados
-4. ¡Listo! El bot responderá automáticamente
+### Configuración Rápida
+
+Tu servidor está desplegado en: `https://n8n-barberia-mvp.dtbfmw.easypanel.host`
+
+```bash
+# 1. Verificar que el servidor esté corriendo
+python test_webhook.py
+
+# 2. Configurar webhook en Evolution API
+python configurar_webhook.py
+# Selecciona opción 5 (Todo)
+
+# 3. Escanear código QR con WhatsApp
+```
+
+### Verificar Estado
+
+```bash
+curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+```
+
+### Obtener Código QR
+
+```bash
+python configurar_webhook.py
+# Selecciona opción 4
+```
+
+Escanea el QR con WhatsApp:
+1. Abre WhatsApp en tu teléfono
+2. Ve a Configuración > Dispositivos vinculados
+3. Toca "Vincular un dispositivo"
+4. Escanea el código QR
+
+Ver [CONFIGURAR_WHATSAPP.md](CONFIGURAR_WHATSAPP.md) para guía completa.
 
 ## 🔐 Seguridad
 
