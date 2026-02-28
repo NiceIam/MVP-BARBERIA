@@ -22,15 +22,21 @@ Sistema completo de chatbot para gestión de citas y atención al cliente en bar
 # 1. Instalar dependencias
 pip install -r requirements.txt
 
-# 2. Configurar base de datos
-python setup_database.py
+# 2. Verificar base de datos
+python check_database.py
 
-# 3. Verificar integración
-python test_integration.py
+# 3. Si hay errores, resetear base de datos
+python reset_database.py
 
-# 4. Iniciar servidor
-python server.py
+# 4. Iniciar servidor (todo en uno)
+python start.py
 ```
+
+**O usa el inicio automático:**
+```bash
+python start.py
+```
+Este script verifica todo automáticamente y inicia el servidor.
 
 ## 🔧 Configuración
 

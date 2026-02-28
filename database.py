@@ -34,58 +34,83 @@ class Database:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             
-            # Tabla de clientes
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS clientes (
-                    id SERIAL PRIMARY KEY,
-                    nombre VARCHAR(255) NOT NULL,
-                    telefono VARCHAR(50) UNIQUE NOT NULL,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            
-            # Tabla de citas
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS citas (
-                    id SERIAL PRIMARY KEY,
-                    cliente_id INTEGER REFERENCES clientes(id) ON DELETE CASCADE,
-                    servicio VARCHAR(255) NOT NULL,
-                    precio DECIMAL(10, 2) NOT NULL,
-                    duracion INTEGER NOT NULL,
-                    barbero VARCHAR(255) NOT NULL,
-                    fecha DATE NOT NULL,
-                    hora TIME NOT NULL,
-                    estado VARCHAR(50) DEFAULT 'confirmada',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            
-            # Tabla de sesiones de chat
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS sesiones_chat (
-                    id SERIAL PRIMARY KEY,
-                    telefono VARCHAR(50) UNIQUE NOT NULL,
-                    estado VARCHAR(100) NOT NULL,
-                    datos_temporales JSONB,
-                    ultima_interaccion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            
-            # Índices para mejorar rendimiento
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_citas_cliente_id ON citas(cliente_id)
-            """)
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_citas_fecha ON citas(fecha)
-            """)
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_sesiones_telefono ON sesiones_chat(telefono)
-            """)
-            
-            conn.commit()
-            print("✅ Base de datos inicializada correctamente")
+            try:
+                # Tabla de clientes
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS clientes (
+                        id SERIAL PRIMARY KEY,
+                        nombre VARCHAR(255) NOT NULL,
+                        telefono VARCHAR(50) UNIQUE NOT NULL,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                conn.commit()
+                
+                # Tabla de citas
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS citas (
+                        id SERIAL PRIMARY KEY,
+                        cliente_id INTEGER REFERENCES clientes(id) ON DELETE CASCADE,
+                        servicio VARCHAR(255) NOT NULL,
+                        precio DECIMAL(10, 2) NOT NULL,
+                        duracion INTEGER NOT NULL,
+                        barbero VARCHAR(255) NOT NULL,
+                        fecha DATE NOT NULL,
+                        hora TIME NOT NULL,
+                        estado VARCHAR(50) DEFAULT 'confirmada',
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                conn.commit()
+                
+                # Tabla de sesiones de chat
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS sesiones_chat (
+                        id SERIAL PRIMARY KEY,
+                        telefono VARCHAR(50) UNIQUE NOT NULL,
+                        estado VARCHAR(100) NOT NULL,
+                        datos_temporales JSONB,
+                        ultima_interaccion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                conn.commit()
+                
+                # Índices para mejorar rendimiento (solo si no existen)
+                try:
+                    cursor.execute("""
+                        CREATE INDEX IF NOT EXISTS idx_citas_cliente_id ON citas(cliente_id)
+                    """)
+                    conn.commit()
+                except Exception as e:
+                    print(f"Índice idx_citas_cliente_id ya existe o error: {e}")
+                    conn.rollback()
+                
+                try:
+                    cursor.execute("""
+                        CREATE INDEX IF NOT EXISTS idx_citas_fecha ON citas(fecha)
+                    """)
+                    conn.commit()
+                except Exception as e:
+                    print(f"Índice idx_citas_fecha ya existe o error: {e}")
+                    conn.rollback()
+                
+                try:
+                    cursor.execute("""
+                        CREATE INDEX IF NOT EXISTS idx_sesiones_telefono ON sesiones_chat(telefono)
+                    """)
+                    conn.commit()
+                except Exception as e:
+                    print(f"Índice idx_sesiones_telefono ya existe o error: {e}")
+                    conn.rollback()
+                
+                print("✅ Base de datos inicializada correctamente")
+                
+            except Exception as e:
+                print(f"❌ Error inicializando base de datos: {e}")
+                conn.rollback()
+                raise
     
     # OPERACIONES DE CLIENTES
     

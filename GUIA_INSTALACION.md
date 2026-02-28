@@ -31,14 +31,30 @@ DEBUG=True
 
 ### 3. Inicializar Base de Datos
 
+#### Opción A: Inicialización Normal (recomendado)
 ```bash
 python setup_database.py
+```
+
+#### Opción B: Verificar Estado de la BD
+```bash
+python check_database.py
+```
+
+#### Opción C: Reset Completo (elimina todos los datos)
+```bash
+python reset_database.py
 ```
 
 Esto creará las tablas necesarias:
 - `clientes` - Información de clientes
 - `citas` - Citas agendadas
 - `sesiones_chat` - Sesiones activas del chatbot
+
+**Si encuentras errores de columnas no existentes:**
+1. Ejecuta `python check_database.py` para ver el estado
+2. Ejecuta `python reset_database.py` para recrear las tablas
+3. Confirma escribiendo "SI" cuando se solicite
 
 ### 4. Verificar Integración
 
@@ -173,8 +189,29 @@ curl http://localhost:8001/stats
 # Verificar que PostgreSQL esté corriendo
 docker ps | grep postgres
 
+# Verificar estado de la base de datos
+python check_database.py
+
+# Si hay problemas con las tablas, resetear
+python reset_database.py
+
 # Probar conexión manual
 psql postgresql://postgres:Olinky2025@n8n_postgres_odontologia:5432/chatbot
+```
+
+### Error: "column does not exist"
+
+Este error ocurre cuando las tablas no están correctamente creadas:
+
+```bash
+# 1. Verificar estado
+python check_database.py
+
+# 2. Resetear base de datos
+python reset_database.py
+
+# 3. Iniciar servidor
+python server.py
 ```
 
 ### Error de Conexión a Evolution API
