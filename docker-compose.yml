@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  chatbot:
+    build: .
+    container_name: chatbot_barberia
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:Olinky2025@n8n_postgres_odontologia:5432/chatbot?sslmode=disable
+      - EVOLUTION_API_URL=https://n8n-evolution-api-nueva-odonto.dtbfmw.easypanel.host/
+      - EVOLUTION_API_KEY=429683C4C977415CAAFCCE10F7D57E11
+      - EVOLUTION_INSTANCE_NAME=OdontologiaBot
+      - HOST=0.0.0.0
+      - PORT=8001
+      - DEBUG=True
+    restart: unless-stopped
+    networks:
+      - chatbot_network
+
+networks:
+  chatbot_network:
+    driver: bridge
