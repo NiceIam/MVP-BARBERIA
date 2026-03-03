@@ -103,14 +103,15 @@ class ChatbotEngine:
     def _menu_principal(self) -> str:
         """Retorna el menú principal."""
         return """
-🏠 *Bienvenido a Barbería Churco*
+💈 *Bienvenido a Barbería Churco*
 
 ¿Qué deseas hacer?
 
-1️⃣ Agendar cita
-2️⃣ Consultar mi cita
-3️⃣ Cancelar cita
-4️⃣ Reagendar cita
+1. Agendar cita
+2. Consultar mi cita
+3. Cancelar cita
+4. Reagendar cita
+5. Información de la barbería
 
 Responde con el número de la opción.
         """.strip()
@@ -123,8 +124,8 @@ Responde con el número de la opción.
         row_index: int
     ) -> str:
         """Procesa la selección del menú principal."""
-        if not validar_opcion_numerica(mensaje, 4):
-            return "Opción inválida. Por favor responde con un número del 1 al 4."
+        if not validar_opcion_numerica(mensaje, 5):
+            return "Opción inválida. Por favor responde con un número del 1 al 5."
         
         opcion = int(mensaje)
         
@@ -140,6 +141,10 @@ Responde con el número de la opción.
         elif opcion == 4:
             # Reagendar cita
             return self._iniciar_reagendamiento(telefono, sesion, row_index)
+        elif opcion == 5:
+            # Información de la barbería
+            self.sheets.eliminar_sesion(telefono)
+            return self._mostrar_informacion_barberia()
         
         return "Opción inválida."
     
@@ -191,12 +196,36 @@ Responde con el número de la opción.
         
         mensaje = "✂️ *Selecciona tu servicio:*\n\n"
         for idx, servicio in enumerate(servicios, 1):
-            mensaje += f"{idx}️⃣ {servicio.nombre}\n"
+            mensaje += f"{idx}. {servicio.nombre}\n"
             mensaje += f"   💰 ${servicio.precio:,} COP\n"
             mensaje += f"   ⏱️ {servicio.duracion_minutos} minutos\n\n"
         mensaje += "Responde con el número del servicio."
         
         return mensaje
+    
+    def _mostrar_informacion_barberia(self) -> str:
+        """Muestra información de la barbería."""
+        return """
+💈 *Barbería Churco*
+
+📍 *Dirección:*
+Calle 17 # 25-23
+Barrio Santa Teresita
+
+⏰ *Horarios:*
+Todos los días
+• Mañana: 8:00 AM - 12:00 PM
+• Tarde: 2:00 PM - 8:00 PM
+
+✂️ *Servicios:*
+• Corte + Barba: $28,000 COP
+• Corte Normal: $20,000 COP
+
+👨‍💼 *Barbero:*
+Churco
+
+Escribe 'hola' para volver al menú principal.
+        """.strip()
 
     
     def _procesar_seleccion_servicio(
@@ -235,7 +264,7 @@ Responde con el número de la opción.
         
         for idx, fecha in enumerate(fechas, 1):
             dia_nombre = dias_semana[fecha.weekday()]
-            mensaje += f"{idx}️⃣ {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
+            mensaje += f"{idx}. {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
         
         mensaje += "\nResponde con el número del día."
         return mensaje
@@ -294,7 +323,7 @@ Responde con el número de la opción.
         """Formatea la lista de horas disponibles."""
         mensaje = "🕐 *¿A qué hora?*\n\n"
         for idx, hora in enumerate(slots[:20], 1):  # Máximo 20 opciones
-            mensaje += f"{idx}️⃣ {formatear_hora(hora)}\n"
+            mensaje += f"{idx}. {formatear_hora(hora)}\n"
         
         mensaje += "\nResponde con el número de la hora."
         return mensaje

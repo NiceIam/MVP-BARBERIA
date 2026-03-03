@@ -58,7 +58,7 @@ def formatear_lista_citas(citas: list) -> str:
     
     mensaje = f"*Tienes {len(citas)} citas agendadas:*\n\n"
     for idx, cita in enumerate(citas, 1):
-        mensaje += f"{idx}️⃣ {formatear_fecha(cita.fecha)}\n"
+        mensaje += f"{idx}. {formatear_fecha(cita.fecha)}\n"
         mensaje += f"   🕐 {formatear_hora(cita.hora_inicio)}\n"
         mensaje += f"   ✂️ {cita.servicio_nombre}\n\n"
     
