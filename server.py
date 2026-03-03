@@ -2,9 +2,10 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from typing import Dict, Any
+from typing import Dict, Any, Set
 from loguru import logger
 import sys
+import time
 
 from config.settings import HOST, PORT, DEBUG
 from chatbot import ChatbotEngine
@@ -21,6 +22,10 @@ app = FastAPI(
     description="Sistema de agendamiento por WhatsApp",
     version="2.0.0"
 )
+
+# Cache para evitar mensajes duplicados
+mensaje_cache: Dict[str, float] = {}
+CACHE_TIMEOUT = 5  # segundos
 
 # Inicializar servicios
 try:
@@ -55,6 +60,12 @@ async def root():
         "service": "Barbería Churco Chatbot",
         "version": "2.0.0"
     }
+
+
+@app.post("/")
+async def root_webhook(request: Request):
+    """Webhook en raíz (redirige a /webhook)."""
+    return await webhook(request)
 
 
 @app.get("/health")
@@ -104,37 +115,7 @@ async def webhook(request: Request):
     try:
         data = await request.json()
         logger.info(f"📨 Webhook recibido: {data}")
-        
-        # Extraer datos del mensaje
-        event_type = data.get("event")
-        
-        if event_type == "messages.upsert":
-            message_data = data.get("data", {})
-            key = message_data.get("key", {})
-            message = message_data.get("message", {})
-            
-            # Obtener teléfono del remitente
-            telefono = key.get("remoteJid", "").replace("@s.whatsapp.net", "")
-            
-            # Obtener texto del mensaje
-            texto = ""
-            if "conversation" in message:
-                texto = message["conversation"]
-            elif "extendedTextMessage" in message:
-                texto = message["extendedTextMessage"].get("text", "")
-            
-            if telefono and texto:
-                logger.info(f"💬 Mensaje de {telefono}: {texto}")
-                
-                # Procesar mensaje con el chatbot
-                respuesta = chatbot.procesar_mensaje(telefono, texto)
-                
-                # Enviar respuesta
-                evolution.send_message(telefono, respuesta)
-                logger.info(f"✅ Respuesta enviada a {telefono}")
-        
-        return {"status": "ok"}
-    
+        return await procesar_webhook_interno(data)
     except Exception as e:
         logger.error(f"❌ Error procesando webhook: {e}")
         return {"status": "error", "message": str(e)}
