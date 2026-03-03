@@ -353,62 +353,112 @@ Responde *SI* para confirmar o *NO* para cancelar.
         if not validar_confirmacion(mensaje):
             return "Por favor responde *SI* para confirmar o *NO* para cancelar."
         
-        # Crear la cita
+        # Verificar si es reagendamiento
+        es_reagendamiento = sesion.datos_temp.get("reagendando", False)
+        
+        # Obtener cliente
         cliente = self.sheets.get_cliente_por_telefono(telefono)
         if not cliente:
-            # Esto no debería pasar, pero por seguridad
             self.sheets.eliminar_sesion(telefono)
             return "Error: Cliente no encontrado. Por favor inicia de nuevo."
         
-        # Crear objeto Cita
+        # Preparar datos de la cita
         fecha = date.fromisoformat(sesion.datos_temp["fecha"])
         hora_inicio = time.fromisoformat(sesion.datos_temp["hora_inicio"])
         hora_fin = time.fromisoformat(sesion.datos_temp["hora_fin"])
         
-        cita = Cita(
-            id="",  # Se genera en crear_cita
-            cliente_id=cliente.id,
-            cliente_telefono=telefono,
-            cliente_nombre=cliente.nombre,
-            servicio_id=sesion.datos_temp["servicio_id"],
-            servicio_nombre=sesion.datos_temp["servicio_nombre"],
-            precio=sesion.datos_temp["precio"],
-            fecha=fecha,
-            hora_inicio=hora_inicio,
-            hora_fin=hora_fin,
-            estado=ESTADO_CONFIRMADA
-        )
+        if es_reagendamiento:
+            # REAGENDAMIENTO - Actualizar cita existente
+            cita_id = sesion.datos_temp.get("cita_id")
+            result = self.sheets.get_cita_por_id(cita_id)
+            
+            if not result:
+                self.sheets.eliminar_sesion(telefono)
+                return "Error: Cita no encontrada."
+            
+            cita, cita_row = result
+            
+            # Eliminar evento anterior de Calendar
+            if cita.calendar_event_id:
+                self.calendar.eliminar_evento(cita.calendar_event_id)
+            
+            # Actualizar datos de la cita
+            cita.fecha = fecha
+            cita.hora_inicio = hora_inicio
+            cita.hora_fin = hora_fin
+            cita.estado = ESTADO_CONFIRMADA
+            
+            # Guardar en Sheets
+            self.sheets.actualizar_cita(cita, cita_row)
+            
+            # Crear nuevo evento en Calendar
+            event_id = self.calendar.crear_evento(
+                cita_id=cita.id,
+                cliente_nombre=cliente.nombre,
+                cliente_telefono=telefono,
+                servicio_nombre=cita.servicio_nombre,
+                precio=cita.precio,
+                fecha=fecha,
+                hora_inicio=hora_inicio,
+                hora_fin=hora_fin,
+                estado=ESTADO_CONFIRMADA
+            )
+            
+            if event_id:
+                cita.calendar_event_id = event_id
+                self.sheets.actualizar_cita(cita, cita_row)
+            
+            # Limpiar sesión
+            self.sheets.eliminar_sesion(telefono)
+            
+            return "✅ Cita reagendada exitosamente!\n\n" + formatear_confirmacion_cita(cita)
         
-        # Guardar en Sheets
-        if not self.sheets.crear_cita(cita):
-            return "Error al crear la cita. Por favor intenta de nuevo."
-        
-        # Crear evento en Calendar
-        event_id = self.calendar.crear_evento(
-            cita_id=cita.id,
-            cliente_nombre=cliente.nombre,
-            cliente_telefono=telefono,
-            servicio_nombre=cita.servicio_nombre,
-            precio=cita.precio,
-            fecha=fecha,
-            hora_inicio=hora_inicio,
-            hora_fin=hora_fin,
-            estado=ESTADO_CONFIRMADA
-        )
-        
-        if event_id:
-            # Actualizar cita con event_id
-            result = self.sheets.get_cita_por_id(cita.id)
-            if result:
-                cita_guardada, cita_row = result
-                cita_guardada.calendar_event_id = event_id
-                self.sheets.actualizar_cita(cita_guardada, cita_row)
-        
-        # Limpiar sesión
-        self.sheets.eliminar_sesion(telefono)
-        
-        # Retornar confirmación
-        return formatear_confirmacion_cita(cita)
+        else:
+            # AGENDAMIENTO NUEVO - Crear nueva cita
+            cita = Cita(
+                id="",  # Se genera en crear_cita
+                cliente_id=cliente.id,
+                cliente_telefono=telefono,
+                cliente_nombre=cliente.nombre,
+                servicio_id=sesion.datos_temp["servicio_id"],
+                servicio_nombre=sesion.datos_temp["servicio_nombre"],
+                precio=sesion.datos_temp["precio"],
+                fecha=fecha,
+                hora_inicio=hora_inicio,
+                hora_fin=hora_fin,
+                estado=ESTADO_CONFIRMADA
+            )
+            
+            # Guardar en Sheets
+            if not self.sheets.crear_cita(cita):
+                return "Error al crear la cita. Por favor intenta de nuevo."
+            
+            # Crear evento en Calendar
+            event_id = self.calendar.crear_evento(
+                cita_id=cita.id,
+                cliente_nombre=cliente.nombre,
+                cliente_telefono=telefono,
+                servicio_nombre=cita.servicio_nombre,
+                precio=cita.precio,
+                fecha=fecha,
+                hora_inicio=hora_inicio,
+                hora_fin=hora_fin,
+                estado=ESTADO_CONFIRMADA
+            )
+            
+            if event_id:
+                # Actualizar cita con event_id
+                result = self.sheets.get_cita_por_id(cita.id)
+                if result:
+                    cita_guardada, cita_row = result
+                    cita_guardada.calendar_event_id = event_id
+                    self.sheets.actualizar_cita(cita_guardada, cita_row)
+            
+            # Limpiar sesión
+            self.sheets.eliminar_sesion(telefono)
+            
+            # Retornar confirmación
+            return formatear_confirmacion_cita(cita)
 
     
     def _iniciar_consulta(
@@ -590,9 +640,10 @@ Responde *SI* para continuar.
             
             # Iniciar selección de nueva fecha
             sesion.estado = ESTADO_ESPERANDO_FECHA
+            sesion.datos_temp["reagendando"] = True  # Marcar que es reagendamiento
             self.sheets.actualizar_sesion(sesion, row_index)
             return self._mostrar_fechas()
         
-        # El resto del flujo es igual al agendamiento normal
-        # pero al final actualiza la cita existente en vez de crear una nueva
+        # Si llegó aquí, el flujo de fecha/hora ya se procesó en los otros métodos
+        # Este método solo se llama para la confirmación inicial
         return "Flujo de reagendamiento en proceso..."
