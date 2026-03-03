@@ -73,17 +73,33 @@ def filtrar_slots_ocupados(
         # Verificar contra eventos en Calendar
         if not ocupado:
             for evento in eventos_calendar:
-                # Extraer hora de inicio y fin del evento
+                # Verificar si es evento de todo el día
+                if 'date' in evento.get('start', {}):
+                    # Evento de todo el día - bloquea todos los slots
+                    ocupado = True
+                    break
+                
+                # Extraer hora de inicio y fin del evento con hora específica
                 start_str = evento.get('start', {}).get('dateTime', '')
                 end_str = evento.get('end', {}).get('dateTime', '')
                 
                 if start_str and end_str:
-                    evento_inicio = datetime.fromisoformat(start_str.replace('Z', '+00:00')).time()
-                    evento_fin = datetime.fromisoformat(end_str.replace('Z', '+00:00')).time()
-                    
-                    if hay_solapamiento(slot, slot_fin, evento_inicio, evento_fin):
-                        ocupado = True
-                        break
+                    try:
+                        # Manejar diferentes formatos de timezone
+                        if 'Z' in start_str:
+                            start_str = start_str.replace('Z', '+00:00')
+                        if 'Z' in end_str:
+                            end_str = end_str.replace('Z', '+00:00')
+                        
+                        evento_inicio = datetime.fromisoformat(start_str).time()
+                        evento_fin = datetime.fromisoformat(end_str).time()
+                        
+                        if hay_solapamiento(slot, slot_fin, evento_inicio, evento_fin):
+                            ocupado = True
+                            break
+                    except (ValueError, AttributeError) as e:
+                        logger.warning(f"Error parseando evento de Calendar: {e}")
+                        continue
         
         if not ocupado:
             slots_libres.append(slot)
