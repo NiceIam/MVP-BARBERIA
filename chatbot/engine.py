@@ -59,6 +59,8 @@ class ChatbotEngine:
         # Procesar según el estado actual
         if sesion.estado == ESTADO_INICIO:
             return self._procesar_menu_principal(telefono, mensaje, sesion, row_index)
+        elif sesion.estado == "esperando_nombre":
+            return self._procesar_nombre(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_ESPERANDO_SERVICIO:
             return self._procesar_seleccion_servicio(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_ESPERANDO_FECHA:
@@ -132,10 +134,34 @@ Responde con el número de la opción.
         # Verificar o crear cliente
         cliente = self.sheets.get_cliente_por_telefono(telefono)
         if cliente is None:
-            # Crear cliente con nombre genérico
-            cliente = self.sheets.crear_cliente(telefono, "Cliente")
+            # Pedir nombre
+            sesion.estado = "esperando_nombre"
+            sesion.datos_temp = {}
+            self.sheets.actualizar_sesion(sesion, row_index)
+            return "Para agendar tu cita, ¿cuál es tu nombre?"
         
         # Cliente existe, mostrar servicios
+        sesion.estado = ESTADO_ESPERANDO_SERVICIO
+        sesion.datos_temp = {"cliente_id": cliente.id}
+        self.sheets.actualizar_sesion(sesion, row_index)
+        
+        return self._mostrar_servicios()
+    
+    def _procesar_nombre(
+        self,
+        telefono: str,
+        mensaje: str,
+        sesion: Sesion,
+        row_index: int
+    ) -> str:
+        """Procesa el nombre del cliente."""
+        if not validar_nombre(mensaje):
+            return "Por favor ingresa un nombre válido (solo letras)."
+        
+        # Crear cliente
+        cliente = self.sheets.crear_cliente(telefono, mensaje)
+        
+        # Continuar con servicios
         sesion.estado = ESTADO_ESPERANDO_SERVICIO
         sesion.datos_temp = {"cliente_id": cliente.id}
         self.sheets.actualizar_sesion(sesion, row_index)
