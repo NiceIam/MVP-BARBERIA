@@ -74,8 +74,12 @@ class ChatbotEngine:
             return self._procesar_confirmacion(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_CONSULTA_CITA:
             return self._procesar_consulta_cita(telefono, mensaje, sesion, row_index)
+        elif sesion.estado == "seleccionando_cita_cancelar":
+            return self._procesar_seleccion_cita_cancelar(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_CANCELANDO_CITA:
             return self._procesar_cancelacion(telefono, mensaje, sesion, row_index)
+        elif sesion.estado == "seleccionando_cita_reagendar":
+            return self._procesar_seleccion_cita_reagendar(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_REAGENDANDO_CITA:
             return self._procesar_reagendamiento(telefono, mensaje, sesion, row_index)
         
@@ -625,6 +629,43 @@ Responde *SI* para confirmar la cancelación.
         
         return "✅ Cita cancelada exitosamente. Puedes agendar una nueva cuando quieras."
     
+    def _procesar_seleccion_cita_cancelar(
+        self,
+        telefono: str,
+        mensaje: str,
+        sesion: Sesion,
+        row_index: int
+    ) -> str:
+        """Procesa la selección de cita para cancelar cuando hay múltiples."""
+        citas_ids = sesion.datos_temp.get("citas_ids", [])
+        
+        if not validar_opcion_numerica(mensaje, len(citas_ids)):
+            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+        
+        opcion = int(mensaje)
+        cita_id = citas_ids[opcion - 1]
+        
+        result = self.sheets.get_cita_por_id(cita_id)
+        if not result:
+            self.sheets.eliminar_sesion(telefono)
+            return "Error: Cita no encontrada."
+        
+        cita, _ = result
+        
+        # Cambiar estado a cancelando y guardar cita_id
+        sesion.estado = ESTADO_CANCELANDO_CITA
+        sesion.datos_temp = {"cita_id": cita.id}
+        self.sheets.actualizar_sesion(sesion, row_index)
+        
+        mensaje = f"""
+¿Deseas cancelar esta cita?
+
+{formatear_cita_resumen(cita)}
+
+Responde *SI* para confirmar la cancelación.
+        """.strip()
+        return mensaje
+    
     def _iniciar_reagendamiento(
         self,
         telefono: str,
@@ -691,3 +732,46 @@ Responde *SI* para continuar.
         # Si llegó aquí, el flujo de fecha/hora ya se procesó en los otros métodos
         # Este método solo se llama para la confirmación inicial
         return "Flujo de reagendamiento en proceso..."
+    
+    def _procesar_seleccion_cita_reagendar(
+        self,
+        telefono: str,
+        mensaje: str,
+        sesion: Sesion,
+        row_index: int
+    ) -> str:
+        """Procesa la selección de cita para reagendar cuando hay múltiples."""
+        citas_ids = sesion.datos_temp.get("citas_ids", [])
+        
+        if not validar_opcion_numerica(mensaje, len(citas_ids)):
+            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+        
+        opcion = int(mensaje)
+        cita_id = citas_ids[opcion - 1]
+        
+        result = self.sheets.get_cita_por_id(cita_id)
+        if not result:
+            self.sheets.eliminar_sesion(telefono)
+            return "Error: Cita no encontrada."
+        
+        cita, _ = result
+        
+        # Cambiar estado a reagendando y guardar datos de la cita
+        sesion.estado = ESTADO_REAGENDANDO_CITA
+        sesion.datos_temp = {
+            "cita_id": cita.id,
+            "servicio_id": cita.servicio_id,
+            "servicio_nombre": cita.servicio_nombre,
+            "precio": cita.precio,
+            "duracion_minutos": 45 if "Barba" in cita.servicio_nombre else 30
+        }
+        self.sheets.actualizar_sesion(sesion, row_index)
+        
+        mensaje = f"""
+¿Deseas reagendar esta cita?
+
+{formatear_cita_resumen(cita)}
+
+Responde *SI* para continuar.
+        """.strip()
+        return mensaje

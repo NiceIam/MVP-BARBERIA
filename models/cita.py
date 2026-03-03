@@ -27,6 +27,20 @@ class Cita:
     @classmethod
     def from_sheet_row(cls, row: list) -> 'Cita':
         """Crea una Cita desde una fila de Google Sheets."""
+        # Parsear fecha con soporte para ambos formatos
+        fecha_obj = date.today()
+        if len(row) > 7 and row[7]:
+            try:
+                # Intentar formato nuevo DD/MM/YYYY
+                fecha_obj = datetime.strptime(row[7], '%d/%m/%Y').date()
+            except ValueError:
+                try:
+                    # Intentar formato antiguo YYYY-MM-DD
+                    fecha_obj = datetime.strptime(row[7], '%Y-%m-%d').date()
+                except ValueError:
+                    # Si falla ambos, usar fecha actual
+                    fecha_obj = date.today()
+        
         return cls(
             id=row[0] if len(row) > 0 else "",
             cliente_id=row[1] if len(row) > 1 else "",
@@ -35,7 +49,7 @@ class Cita:
             servicio_id=row[4] if len(row) > 4 else "",
             servicio_nombre=row[5] if len(row) > 5 else "",
             precio=int(row[6]) if len(row) > 6 and row[6] else 0,
-            fecha=datetime.strptime(row[7], '%d/%m/%Y').date() if len(row) > 7 else date.today(),
+            fecha=fecha_obj,
             hora_inicio=datetime.strptime(row[8], '%H:%M').time() if len(row) > 8 else time(0, 0),
             hora_fin=datetime.strptime(row[9], '%H:%M').time() if len(row) > 9 else time(0, 0),
             estado=row[10] if len(row) > 10 else "",
