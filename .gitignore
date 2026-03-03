@@ -42,8 +42,10 @@ logs/
 *.sqlite3
 
 # Environment variables
+.env
 .env.local
 .env.production
+.env.*
 
 # OS
 .DS_Store

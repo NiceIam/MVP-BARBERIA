@@ -103,7 +103,7 @@ cat .env
 
 ```bash
 # Conéctate manualmente a PostgreSQL
-psql postgresql://postgres:Olinky2025@n8n_postgres_odontologia:5432/chatbot
+psql postgresql://usuario:contraseña@host:5432/nombre_bd
 
 # Dentro de psql, ejecuta:
 \dt  # Ver tablas
@@ -127,7 +127,7 @@ python server.py
 # Probar envío de mensaje
 curl -X POST http://localhost:8001/send-message \
   -H "Content-Type: application/json" \
-  -d '{"telefono": "3001234567", "mensaje": "Hola"}'
+  -d '{"telefono": "1234567890", "mensaje": "Hola"}'
 
 # Ver estado de salud
 curl http://localhost:8001/health

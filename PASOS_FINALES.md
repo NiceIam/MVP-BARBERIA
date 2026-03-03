@@ -1,11 +1,11 @@
 # 🚀 Pasos Finales para Activar el Chatbot
 
-## ✅ Resumen de tu Configuración
+## ✅ Configuración
 
-- **URL del Bot**: `https://n8n-barberia-mvp.dtbfmw.easypanel.host`
-- **Webhook**: `https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook`
-- **Base de Datos**: PostgreSQL en `n8n_postgres_odontologia`
-- **Evolution API**: Instancia `OdontologiaBot`
+- **URL del Bot**: Configurada en tu archivo `.env`
+- **Webhook**: `https://tu-dominio.com/webhook` (o localhost en desarrollo)
+- **Base de Datos**: PostgreSQL configurada en `.env`
+- **Evolution API**: Instancia configurada en `.env`
 
 ## 🎯 Pasos para Activar (5 minutos)
 
@@ -61,7 +61,7 @@ El bot debería responder con el menú principal.
 ### ¿El servidor está corriendo?
 
 ```bash
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+curl http://localhost:8001/health
 ```
 
 Debe responder con `"status": "healthy"`
@@ -73,7 +73,7 @@ python configurar_webhook.py
 # Opción 2: Verificar webhook actual
 ```
 
-Debe mostrar: `URL: https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook`
+Debe mostrar: `URL: https://tu-dominio.com/webhook`
 
 ### ¿WhatsApp está conectado?
 
@@ -140,7 +140,7 @@ self.info_contacto = {
 
 ```bash
 # Ver estadísticas
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/stats
+curl http://localhost:8001/stats
 
 # Ver citas en la base de datos
 python -c "from database import get_database; db = get_database(); print(db.obtener_citas_por_telefono('TU_NUMERO'))"

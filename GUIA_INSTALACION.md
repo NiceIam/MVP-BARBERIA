@@ -17,13 +17,19 @@ pip install -r requirements.txt
 
 ### 2. Configurar Variables de Entorno
 
-El archivo `.env` ya está configurado con tus credenciales:
+Copia el archivo de ejemplo y configura tus credenciales:
+
+```bash
+cp .env.example .env
+```
+
+Edita el archivo `.env` con tus valores:
 
 ```env
-DATABASE_URL=postgresql://postgres:Olinky2025@n8n_postgres_odontologia:5432/chatbot?sslmode=disable
-EVOLUTION_API_URL=https://n8n-evolution-api-nueva-odonto.dtbfmw.easypanel.host/
-EVOLUTION_API_KEY=429683C4C977415CAAFCCE10F7D57E11
-EVOLUTION_INSTANCE_NAME=OdontologiaBot
+DATABASE_URL=postgresql://usuario:contraseña@host:5432/nombre_bd?sslmode=disable
+EVOLUTION_API_URL=https://tu-evolution-api.com/
+EVOLUTION_API_KEY=tu_api_key_aqui
+EVOLUTION_INSTANCE_NAME=NombreDeTuInstancia
 HOST=0.0.0.0
 PORT=8001
 DEBUG=True
@@ -89,7 +95,7 @@ curl -X POST http://localhost:8001/webhook/configure \
 ### Opción 2: Manualmente en Evolution API
 
 1. Accede a tu panel de Evolution API
-2. Ve a la configuración de la instancia `OdontologiaBot`
+2. Ve a la configuración de tu instancia
 3. Configura el webhook URL: `https://tu-dominio.com/webhook`
 4. Activa los eventos:
    - `MESSAGES_UPSERT`
@@ -150,7 +156,7 @@ docker-compose down
 curl -X POST http://localhost:8001/send-message \
   -H "Content-Type: application/json" \
   -d '{
-    "telefono": "3001234567",
+    "telefono": "1234567890",
     "mensaje": "Hola"
   }'
 ```
@@ -196,7 +202,7 @@ python check_database.py
 python reset_database.py
 
 # Probar conexión manual
-psql postgresql://postgres:Olinky2025@n8n_postgres_odontologia:5432/chatbot
+psql postgresql://usuario:contraseña@host:5432/nombre_bd
 ```
 
 ### Error: "column does not exist"
@@ -218,8 +224,8 @@ python server.py
 
 ```bash
 # Verificar URL y API Key
-curl -H "apikey: 429683C4C977415CAAFCCE10F7D57E11" \
-  https://n8n-evolution-api-nueva-odonto.dtbfmw.easypanel.host/instance/connectionState/OdontologiaBot
+curl -H "apikey: TU_API_KEY" \
+  https://tu-evolution-api.com/instance/connectionState/TuInstancia
 ```
 
 ### Webhook No Recibe Mensajes

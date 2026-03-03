@@ -1,10 +1,10 @@
 # 📱 Guía Completa: Configurar WhatsApp con Evolution API
 
-## 🎯 Tu Configuración
+## 🎯 Configuración
 
-- **URL del Bot**: `https://n8n-barberia-mvp.dtbfmw.easypanel.host`
-- **Webhook**: `https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook`
-- **Instancia**: `OdontologiaBot`
+- **URL del Bot**: `https://tu-dominio.com` (o `http://localhost:8001` en desarrollo)
+- **Webhook**: `https://tu-dominio.com/webhook`
+- **Instancia**: Configurada en tu archivo `.env`
 
 ## ✅ Pasos para Configurar
 
@@ -12,7 +12,7 @@
 
 ```bash
 # Probar que el servidor responde
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+curl http://localhost:8001/health
 ```
 
 Deberías ver algo como:
@@ -93,10 +93,10 @@ python configurar_webhook.py
 ### Enviar Mensaje de Prueba
 
 ```bash
-curl -X POST https://n8n-barberia-mvp.dtbfmw.easypanel.host/send-message \
+curl -X POST http://localhost:8001/send-message \
   -H "Content-Type: application/json" \
   -d '{
-    "telefono": "3001234567",
+    "telefono": "1234567890",
     "mensaje": "Hola, esto es una prueba"
   }'
 ```
@@ -106,7 +106,7 @@ curl -X POST https://n8n-barberia-mvp.dtbfmw.easypanel.host/send-message \
 ### 1. Servidor Activo
 
 ```bash
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/
+curl http://localhost:8001/
 ```
 
 Respuesta esperada:
@@ -121,7 +121,7 @@ Respuesta esperada:
 ### 2. Base de Datos Conectada
 
 ```bash
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+curl http://localhost:8001/health
 ```
 
 Debe mostrar `"database": "connected"`
@@ -139,7 +139,7 @@ python configurar_webhook.py
 
 Debe mostrar:
 ```
-URL: https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook
+URL: https://tu-dominio.com/webhook
 ```
 
 ### 5. WhatsApp Conectado
@@ -189,7 +189,7 @@ Envía estos mensajes para probar cada flujo:
 
 ```bash
 # Verificar que esté corriendo
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+curl http://localhost:8001/health
 
 # Si no responde, verifica los logs del servidor
 ```
@@ -204,7 +204,7 @@ python configurar_webhook.py
 
 2. Verifica que la URL sea correcta:
 ```
-https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook
+https://tu-dominio.com/webhook
 ```
 
 3. Prueba el webhook manualmente:
@@ -237,14 +237,14 @@ python check_database.py
 
 3. Prueba enviar un mensaje manualmente:
 ```bash
-curl -X POST https://n8n-barberia-mvp.dtbfmw.easypanel.host/send-message \
+curl -X POST http://localhost:8001/send-message \
   -H "Content-Type: application/json" \
   -d '{"telefono": "TU_NUMERO", "mensaje": "Prueba"}'
 ```
 
 ## 📋 Checklist de Configuración
 
-- [ ] Servidor corriendo en `https://n8n-barberia-mvp.dtbfmw.easypanel.host`
+- [ ] Servidor corriendo en `http://localhost:8001` (o tu dominio en producción)
 - [ ] `/health` responde correctamente
 - [ ] Base de datos conectada
 - [ ] Evolution API accesible
@@ -267,10 +267,10 @@ Una vez completados todos los pasos, tu chatbot estará:
 
 | Endpoint | URL |
 |----------|-----|
-| Servidor | https://n8n-barberia-mvp.dtbfmw.easypanel.host |
-| Health | https://n8n-barberia-mvp.dtbfmw.easypanel.host/health |
-| Webhook | https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook |
-| Stats | https://n8n-barberia-mvp.dtbfmw.easypanel.host/stats |
+| Servidor | http://localhost:8001 |
+| Health | http://localhost:8001/health |
+| Webhook | http://localhost:8001/webhook |
+| Stats | http://localhost:8001/stats |
 
 ## 💡 Próximos Pasos
 

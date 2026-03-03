@@ -2,6 +2,14 @@
 
 Sistema completo de chatbot para gestión de citas y atención al cliente en barberías, integrado con WhatsApp Business API (Evolution API) y PostgreSQL.
 
+## ⚠️ Configuración Inicial
+
+Antes de empezar, debes configurar tus credenciales:
+
+1. Copia el archivo de ejemplo: `cp .env.example .env`
+2. Edita `.env` con tus credenciales
+3. Ver [CONFIGURACION_INICIAL.md](CONFIGURACION_INICIAL.md) para más detalles
+
 ## 🚀 Características
 
 - ✅ Reserva de citas con selección de servicio, barbero, fecha y hora
@@ -40,10 +48,16 @@ Este script verifica todo automáticamente y inicia el servidor.
 
 ## 🔧 Configuración
 
-Las credenciales ya están configuradas en `.env`:
-- PostgreSQL: Conectado a `n8n_postgres_odontologia`
-- Evolution API: Instancia `OdontologiaBot`
-- Puerto: 8001
+Copia el archivo `.env.example` a `.env` y configura tus credenciales:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` con tus valores:
+- PostgreSQL: URL de conexión a tu base de datos
+- Evolution API: URL, API Key e Instancia
+- Puerto: Puerto donde correrá el servidor (default: 8001)
 
 Ver [GUIA_INSTALACION.md](GUIA_INSTALACION.md) para instrucciones detalladas.
 
@@ -149,7 +163,7 @@ SELECT * FROM citas ORDER BY fecha DESC;
 -- Citas por cliente
 SELECT c.*, cl.nombre FROM citas c 
 JOIN clientes cl ON c.cliente_id = cl.id 
-WHERE cl.telefono = '3001234567';
+WHERE cl.telefono = '1234567890';
 
 -- Estadísticas
 SELECT COUNT(*) FROM citas WHERE estado = 'confirmada';
@@ -189,14 +203,12 @@ python test_integration.py
 # Enviar mensaje de prueba
 curl -X POST http://localhost:8001/send-message \
   -H "Content-Type: application/json" \
-  -d '{"telefono": "3001234567", "mensaje": "Hola"}'
+  -d '{"telefono": "1234567890", "mensaje": "Hola"}'
 ```
 
 ## 📱 Conectar WhatsApp
 
 ### Configuración Rápida
-
-Tu servidor está desplegado en: `https://n8n-barberia-mvp.dtbfmw.easypanel.host`
 
 ```bash
 # 1. Verificar que el servidor esté corriendo
@@ -212,7 +224,7 @@ python configurar_webhook.py
 ### Verificar Estado
 
 ```bash
-curl https://n8n-barberia-mvp.dtbfmw.easypanel.host/health
+curl http://localhost:8001/health
 ```
 
 ### Obtener Código QR

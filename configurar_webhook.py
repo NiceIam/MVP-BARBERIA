@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # URL de tu servidor desplegado
-WEBHOOK_URL = "https://n8n-barberia-mvp.dtbfmw.easypanel.host/webhook"
+WEBHOOK_URL = "http://localhost:8001/webhook"  # Cambia esto por tu URL de producción
 
 def configurar_webhook():
     """Configura el webhook en Evolution API"""
