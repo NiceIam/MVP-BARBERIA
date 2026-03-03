@@ -256,13 +256,23 @@ Responde con el número de la opción.
         opcion = int(mensaje)
         fecha_seleccionada = fechas[opcion - 1]
         
-        # Guardar fecha en sesión
+        # Calcular horas disponibles ANTES de guardar la fecha
+        duracion_minutos = sesion.datos_temp.get("duracion_minutos", 30)
+        citas_dia = self.sheets.get_citas_por_fecha(fecha_seleccionada)
+        eventos_calendar = self.calendar.get_eventos_dia(fecha_seleccionada)
+        slots = obtener_slots_disponibles(fecha_seleccionada, duracion_minutos, citas_dia, eventos_calendar)
+        
+        if not slots:
+            # No hay horarios - mantener estado y pedir otra fecha
+            return "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n" + self._mostrar_fechas()
+        
+        # Hay horarios disponibles - guardar fecha y continuar
         sesion.datos_temp["fecha"] = fecha_seleccionada.isoformat()
         sesion.estado = ESTADO_ESPERANDO_HORA
         self.sheets.actualizar_sesion(sesion, row_index)
         
-        # Calcular y mostrar horas disponibles
-        return self._mostrar_horas_disponibles(fecha_seleccionada, sesion.datos_temp["duracion_minutos"])
+        # Mostrar horas disponibles
+        return self._formatear_horas_disponibles(slots)
     
     def _mostrar_horas_disponibles(self, fecha: date, duracion_minutos: int) -> str:
         """Muestra las horas disponibles para una fecha."""
@@ -278,6 +288,10 @@ Responde con el número de la opción.
         if not slots:
             return "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha."
         
+        return self._formatear_horas_disponibles(slots)
+    
+    def _formatear_horas_disponibles(self, slots: list) -> str:
+        """Formatea la lista de horas disponibles."""
         mensaje = "🕐 *¿A qué hora?*\n\n"
         for idx, hora in enumerate(slots[:20], 1):  # Máximo 20 opciones
             mensaje += f"{idx}️⃣ {formatear_hora(hora)}\n"
