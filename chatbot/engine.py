@@ -43,16 +43,35 @@ class ChatbotEngine:
         # Verificar si es comando para volver al menú
         if validar_comando_menu(mensaje):
             self.sheets.eliminar_sesion(telefono)
-            return self._menu_principal()
+            # Verificar si el cliente existe
+            cliente = self.sheets.get_cliente_por_telefono(telefono)
+            if cliente is None:
+                # Cliente nuevo - pedir nombre
+                sesion = Sesion(telefono=telefono, estado="esperando_nombre", datos_temp={})
+                self.sheets.crear_sesion(sesion)
+                return "Para comenzar, ¿cuál es tu nombre?"
+            else:
+                # Cliente existente - mostrar menú
+                sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
+                self.sheets.crear_sesion(sesion)
+                return self._menu_principal()
         
         # Obtener o crear sesión
         sesion_data = self.sheets.get_sesion(telefono)
         
         if sesion_data is None:
-            # Nueva sesión - mostrar menú
-            sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
-            self.sheets.crear_sesion(sesion)
-            return self._menu_principal()
+            # Nueva sesión - verificar si el cliente existe
+            cliente = self.sheets.get_cliente_por_telefono(telefono)
+            if cliente is None:
+                # Cliente nuevo - pedir nombre
+                sesion = Sesion(telefono=telefono, estado="esperando_nombre", datos_temp={})
+                self.sheets.crear_sesion(sesion)
+                return "Para comenzar, ¿cuál es tu nombre?"
+            else:
+                # Cliente existente - mostrar menú
+                sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
+                self.sheets.crear_sesion(sesion)
+                return self._menu_principal()
         
         sesion, row_index = sesion_data
         
@@ -131,16 +150,14 @@ Responde con el número de la opción.
         row_index: int
     ) -> str:
         """Inicia el flujo de agendamiento."""
-        # Verificar o crear cliente
+        # El cliente ya debe existir (se pidió nombre al inicio)
         cliente = self.sheets.get_cliente_por_telefono(telefono)
         if cliente is None:
-            # Pedir nombre
-            sesion.estado = "esperando_nombre"
-            sesion.datos_temp = {}
-            self.sheets.actualizar_sesion(sesion, row_index)
-            return "Para agendar tu cita, ¿cuál es tu nombre?"
+            # Esto no debería pasar, pero por seguridad
+            self.sheets.eliminar_sesion(telefono)
+            return "Error: Por favor escribe 'hola' para comenzar de nuevo."
         
-        # Cliente existe, mostrar servicios
+        # Mostrar servicios
         sesion.estado = ESTADO_ESPERANDO_SERVICIO
         sesion.datos_temp = {"cliente_id": cliente.id}
         self.sheets.actualizar_sesion(sesion, row_index)
@@ -161,12 +178,12 @@ Responde con el número de la opción.
         # Crear cliente
         cliente = self.sheets.crear_cliente(telefono, mensaje)
         
-        # Continuar con servicios
-        sesion.estado = ESTADO_ESPERANDO_SERVICIO
-        sesion.datos_temp = {"cliente_id": cliente.id}
+        # Mostrar menú principal
+        sesion.estado = ESTADO_INICIO
+        sesion.datos_temp = {}
         self.sheets.actualizar_sesion(sesion, row_index)
         
-        return self._mostrar_servicios()
+        return f"¡Gracias {mensaje}! 😊\n\n" + self._menu_principal()
     
     def _mostrar_servicios(self) -> str:
         """Muestra los servicios disponibles."""
