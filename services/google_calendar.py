@@ -1,4 +1,5 @@
 """Cliente para Google Calendar API."""
+import json
 from datetime import datetime, date, time, timedelta
 from typing import List, Optional, Dict, Any
 import pytz
@@ -22,17 +23,37 @@ class CalendarClient:
     
     def __init__(self):
         """Inicializa el cliente de Google Calendar."""
-        if not SERVICE_ACCOUNT_PATH.exists():
-            raise FileNotFoundError(
-                f"❌ Archivo de credenciales no encontrado: {SERVICE_ACCOUNT_PATH}\n"
-                f"   Descarga el archivo service_account.json desde Google Cloud Console\n"
-                f"   y colócalo en la raíz del proyecto."
-            )
+        import os
         
-        self.credentials = service_account.Credentials.from_service_account_file(
-            str(SERVICE_ACCOUNT_PATH),
-            scopes=GOOGLE_SCOPES
-        )
+        # Intentar leer desde variable de entorno primero
+        service_account_json = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
+        
+        if service_account_json and service_account_json.startswith('{'):
+            # Es un JSON string en el .env
+            try:
+                service_account_info = json.loads(service_account_json)
+                self.credentials = service_account.Credentials.from_service_account_info(
+                    service_account_info,
+                    scopes=GOOGLE_SCOPES
+                )
+                logger.info("✅ Credenciales Calendar cargadas desde variable de entorno")
+            except json.JSONDecodeError as e:
+                raise ValueError(f"❌ Error parseando JSON de credenciales: {e}")
+        else:
+            # Es un path a archivo
+            if not SERVICE_ACCOUNT_PATH.exists():
+                raise FileNotFoundError(
+                    f"❌ Archivo de credenciales no encontrado: {SERVICE_ACCOUNT_PATH}\n"
+                    f"   Opción 1: Descarga service_account.json y colócalo en la raíz\n"
+                    f"   Opción 2: Pon el JSON completo en GOOGLE_SERVICE_ACCOUNT_FILE del .env"
+                )
+            
+            self.credentials = service_account.Credentials.from_service_account_file(
+                str(SERVICE_ACCOUNT_PATH),
+                scopes=GOOGLE_SCOPES
+            )
+            logger.info("✅ Credenciales Calendar cargadas desde archivo")
+        
         self.service = build('calendar', 'v3', credentials=self.credentials)
         self.calendar_id = GOOGLE_CALENDAR_ID
         self.timezone = pytz.timezone(TIMEZONE)
