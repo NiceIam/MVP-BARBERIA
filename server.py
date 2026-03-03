@@ -23,10 +23,22 @@ app = FastAPI(
 )
 
 # Inicializar servicios
-chatbot = ChatbotEngine()
-sheets = SheetsClient()
-calendar = CalendarClient()
-evolution = EvolutionAPI()
+try:
+    chatbot = ChatbotEngine()
+    sheets = SheetsClient()
+    calendar = CalendarClient()
+    evolution = EvolutionAPI()
+except FileNotFoundError as e:
+    logger.error(str(e))
+    logger.error("\n⚠️  SOLUCIÓN:")
+    logger.error("   1. Ve a Google Cloud Console")
+    logger.error("   2. Crea un Service Account")
+    logger.error("   3. Descarga las credenciales JSON")
+    logger.error("   4. Guárdalo como 'service_account.json' en la raíz del proyecto")
+    sys.exit(1)
+except Exception as e:
+    logger.error(f"❌ Error inicializando servicios: {e}")
+    sys.exit(1)
 
 
 class SendMessageRequest(BaseModel):

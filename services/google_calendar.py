@@ -22,6 +22,13 @@ class CalendarClient:
     
     def __init__(self):
         """Inicializa el cliente de Google Calendar."""
+        if not SERVICE_ACCOUNT_PATH.exists():
+            raise FileNotFoundError(
+                f"❌ Archivo de credenciales no encontrado: {SERVICE_ACCOUNT_PATH}\n"
+                f"   Descarga el archivo service_account.json desde Google Cloud Console\n"
+                f"   y colócalo en la raíz del proyecto."
+            )
+        
         self.credentials = service_account.Credentials.from_service_account_file(
             str(SERVICE_ACCOUNT_PATH),
             scopes=GOOGLE_SCOPES
