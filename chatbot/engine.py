@@ -687,7 +687,7 @@ Responde *SI* para confirmar la cancelación.
                 "servicio_id": citas[0].servicio_id,
                 "servicio_nombre": citas[0].servicio_nombre,
                 "precio": citas[0].precio,
-                "duracion_minutos": 45 if "Barba" in citas[0].servicio_nombre else 30
+                "duracion_minutos": 45 if "Barba" in citas[0].servicio_nombre else 40
             }
             self.sheets.actualizar_sesion(sesion, row_index)
             
@@ -763,7 +763,7 @@ Responde *SI* para continuar.
             "servicio_id": cita.servicio_id,
             "servicio_nombre": cita.servicio_nombre,
             "precio": cita.precio,
-            "duracion_minutos": 45 if "Barba" in cita.servicio_nombre else 30
+            "duracion_minutos": 45 if "Barba" in cita.servicio_nombre else 40
         }
         self.sheets.actualizar_sesion(sesion, row_index)
         

@@ -19,7 +19,7 @@ SERVICIOS = {
         "id": "srv_corte_normal",
         "nombre": "Corte Normal",
         "precio": 20000,
-        "duracion_minutos": 30,
+        "duracion_minutos": 40,
         "activo": True,
         "orden": 2
     }
