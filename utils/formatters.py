@@ -20,8 +20,6 @@ def formatear_cita_resumen(cita: Cita) -> str:
 ✂️ Servicio: {cita.servicio_nombre}
 💰 Precio: {formatear_precio(cita.precio)}
 👨‍💼 Barbero: Churco
-
-ID: {cita.id}
     """.strip()
     return mensaje
 
@@ -40,8 +38,6 @@ def formatear_confirmacion_cita(cita: Cita) -> str:
 
 Te esperamos en Barbería Churco.
 Recuerda llegar 5 minutos antes.
-
-ID de tu cita: {cita.id}
     """.strip()
     return mensaje
 
