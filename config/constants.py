@@ -27,8 +27,8 @@ SERVICIOS = {
 
 # Horarios de atención (todos los días)
 HORARIOS_ATENCION = [
-    {"hora_inicio": time(8, 0), "hora_fin": time(12, 0)},   # Mañana
-    {"hora_inicio": time(14, 0), "hora_fin": time(20, 0)}   # Tarde
+    {"hora_inicio": time(8, 0), "hora_fin": time(12, 15)},   # Mañana (hasta 12:15 para que quepa la cita de 11:30)
+    {"hora_inicio": time(14, 0), "hora_fin": time(20, 15)}   # Tarde (hasta 20:15 para que quepa la cita de 19:30)
 ]
 
 # Estados de cita
