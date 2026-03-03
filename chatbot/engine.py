@@ -405,8 +405,14 @@ Responde *SI* para confirmar o *NO* para cancelar.
             )
             
             if event_id:
+                logger.info(f"✅ Event ID recibido para reagendamiento: {event_id}")
                 cita.calendar_event_id = event_id
-                self.sheets.actualizar_cita(cita, cita_row)
+                if self.sheets.actualizar_cita(cita, cita_row):
+                    logger.info(f"✅ Cita reagendada actualizada con event_id en Sheets")
+                else:
+                    logger.error(f"❌ Error actualizando cita reagendada con event_id")
+            else:
+                logger.warning(f"⚠️ No se recibió event_id de Calendar para reagendamiento")
             
             # Limpiar sesión
             self.sheets.eliminar_sesion(telefono)
@@ -447,12 +453,20 @@ Responde *SI* para confirmar o *NO* para cancelar.
             )
             
             if event_id:
+                logger.info(f"✅ Event ID recibido: {event_id}")
                 # Actualizar cita con event_id
                 result = self.sheets.get_cita_por_id(cita.id)
                 if result:
                     cita_guardada, cita_row = result
                     cita_guardada.calendar_event_id = event_id
-                    self.sheets.actualizar_cita(cita_guardada, cita_row)
+                    if self.sheets.actualizar_cita(cita_guardada, cita_row):
+                        logger.info(f"✅ Cita actualizada con event_id en Sheets")
+                    else:
+                        logger.error(f"❌ Error actualizando cita con event_id")
+                else:
+                    logger.error(f"❌ No se pudo recuperar la cita {cita.id} para actualizar event_id")
+            else:
+                logger.warning(f"⚠️ No se recibió event_id de Calendar")
             
             # Limpiar sesión
             self.sheets.eliminar_sesion(telefono)

@@ -76,66 +76,80 @@ class CalendarClient:
         estado: str = "confirmada"
     ) -> Optional[str]:
         """Crea un evento en Google Calendar."""
-        dt_inicio = self._crear_datetime_local(fecha, hora_inicio)
-        dt_fin = self._crear_datetime_local(fecha, hora_fin)
-        
-        # Determinar color según estado
-        color_map = {
-            "confirmada": COLOR_CONFIRMADA,
-            "pendiente": COLOR_PENDIENTE,
-            "completada": COLOR_COMPLETADA,
-            "cancelada": COLOR_CANCELADA
-        }
-        color_id = color_map.get(estado, COLOR_CONFIRMADA)
+        try:
+            dt_inicio = self._crear_datetime_local(fecha, hora_inicio)
+            dt_fin = self._crear_datetime_local(fecha, hora_fin)
+            
+            logger.info(f"📅 Creando evento en Calendar para cita {cita_id}")
+            logger.debug(f"   Fecha: {fecha}, Hora: {hora_inicio} - {hora_fin}")
+            logger.debug(f"   Calendar ID: {self.calendar_id}")
+            
+            # Determinar color según estado
+            color_map = {
+                "confirmada": COLOR_CONFIRMADA,
+                "pendiente": COLOR_PENDIENTE,
+                "completada": COLOR_COMPLETADA,
+                "cancelada": COLOR_CANCELADA
+            }
+            color_id = color_map.get(estado, COLOR_CONFIRMADA)
 
-        
-        evento = {
-            "summary": f"{servicio_nombre} - {cliente_nombre}",
-            "description": (
-                f"Cliente: {cliente_nombre}\n"
-                f"Teléfono: +{cliente_telefono}\n"
-                f"Servicio: {servicio_nombre}\n"
-                f"Precio: ${precio:,} COP\n"
-                f"ID Cita: {cita_id}"
-            ),
-            "start": {
-                "dateTime": dt_inicio.isoformat(),
-                "timeZone": TIMEZONE
-            },
-            "end": {
-                "dateTime": dt_fin.isoformat(),
-                "timeZone": TIMEZONE
-            },
-            "attendees": [
-                {"email": self.calendar_id}
-            ],
-            "reminders": {
-                "useDefault": False,
-                "overrides": [
-                    {"method": "popup", "minutes": 60},
-                    {"method": "popup", "minutes": 15}
-                ]
-            },
-            "colorId": color_id,
-            "extendedProperties": {
-                "private": {
-                    "cita_id": cita_id,
-                    "cliente_telefono": cliente_telefono,
-                    "precio": str(precio)
+            
+            evento = {
+                "summary": f"{servicio_nombre} - {cliente_nombre}",
+                "description": (
+                    f"Cliente: {cliente_nombre}\n"
+                    f"Teléfono: +{cliente_telefono}\n"
+                    f"Servicio: {servicio_nombre}\n"
+                    f"Precio: ${precio:,} COP\n"
+                    f"ID Cita: {cita_id}"
+                ),
+                "start": {
+                    "dateTime": dt_inicio.isoformat(),
+                    "timeZone": TIMEZONE
+                },
+                "end": {
+                    "dateTime": dt_fin.isoformat(),
+                    "timeZone": TIMEZONE
+                },
+                "attendees": [
+                    {"email": self.calendar_id}
+                ],
+                "reminders": {
+                    "useDefault": False,
+                    "overrides": [
+                        {"method": "popup", "minutes": 60},
+                        {"method": "popup", "minutes": 15}
+                    ]
+                },
+                "colorId": color_id,
+                "extendedProperties": {
+                    "private": {
+                        "cita_id": cita_id,
+                        "cliente_telefono": cliente_telefono,
+                        "precio": str(precio)
+                    }
                 }
             }
-        }
-        
-        try:
+            
             result = self.service.events().insert(
                 calendarId=self.calendar_id,
                 body=evento
             ).execute()
+            
             event_id = result.get('id')
-            logger.info(f"Evento creado en Calendar: {event_id}")
+            if event_id:
+                logger.info(f"✅ Evento creado en Calendar: {event_id}")
+            else:
+                logger.error(f"❌ Evento creado pero sin ID en respuesta: {result}")
+            
             return event_id
+            
         except HttpError as e:
-            logger.error(f"Error creando evento: {e}")
+            logger.error(f"❌ Error HTTP creando evento: {e}")
+            logger.error(f"   Detalles: {e.content if hasattr(e, 'content') else 'N/A'}")
+            return None
+        except Exception as e:
+            logger.error(f"❌ Error inesperado creando evento: {e}")
             return None
     
     def eliminar_evento(self, event_id: str) -> bool:
