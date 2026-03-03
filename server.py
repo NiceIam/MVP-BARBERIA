@@ -64,8 +64,65 @@ async def root():
 
 @app.post("/")
 async def root_webhook(request: Request):
-    """Webhook en raíz (redirige a /webhook)."""
-    return await webhook(request)
+    """Webhook en raíz (procesa igual que /webhook)."""
+    try:
+        data = await request.json()
+        logger.info(f"📨 Webhook recibido en /: {data}")
+        return await procesar_webhook_interno(data)
+    except Exception as e:
+        logger.error(f"❌ Error procesando webhook en /: {e}")
+        return {"status": "error", "message": str(e)}
+
+
+async def procesar_webhook_interno(data: dict) -> dict:
+    """Procesa el webhook internamente."""
+    event_type = data.get("event")
+    
+    if event_type == "messages.upsert":
+        message_data = data.get("data", {})
+        key = message_data.get("key", {})
+        message = message_data.get("message", {})
+        
+        # Obtener teléfono del remitente
+        telefono = key.get("remoteJid", "").replace("@s.whatsapp.net", "")
+        
+        # Obtener texto del mensaje
+        texto = ""
+        if "conversation" in message:
+            texto = message["conversation"]
+        elif "extendedTextMessage" in message:
+            texto = message["extendedTextMessage"].get("text", "")
+        
+        if telefono and texto:
+            # Crear ID único para este mensaje
+            message_id = key.get("id", "")
+            cache_key = f"{telefono}:{message_id}:{texto}"
+            
+            # Verificar si ya procesamos este mensaje recientemente
+            now = time.time()
+            if cache_key in mensaje_cache:
+                if now - mensaje_cache[cache_key] < CACHE_TIMEOUT:
+                    logger.info(f"⏭️  Mensaje duplicado ignorado: {telefono}")
+                    return {"status": "ok", "message": "duplicado"}
+            
+            # Guardar en cache
+            mensaje_cache[cache_key] = now
+            
+            # Limpiar cache antiguo
+            keys_to_delete = [k for k, v in mensaje_cache.items() if now - v > CACHE_TIMEOUT]
+            for k in keys_to_delete:
+                del mensaje_cache[k]
+            
+            logger.info(f"💬 Mensaje de {telefono}: {texto}")
+            
+            # Procesar mensaje con el chatbot
+            respuesta = chatbot.procesar_mensaje(telefono, texto)
+            
+            # Enviar respuesta
+            evolution.send_message(telefono, respuesta)
+            logger.info(f"✅ Respuesta enviada a {telefono}")
+    
+    return {"status": "ok"}
 
 
 @app.get("/health")
