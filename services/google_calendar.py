@@ -111,9 +111,6 @@ class CalendarClient:
                     "dateTime": dt_fin.isoformat(),
                     "timeZone": TIMEZONE
                 },
-                "attendees": [
-                    {"email": self.calendar_id}
-                ],
                 "reminders": {
                     "useDefault": False,
                     "overrides": [
