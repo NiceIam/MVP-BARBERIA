@@ -132,11 +132,8 @@ Responde con el número de la opción.
         # Verificar o crear cliente
         cliente = self.sheets.get_cliente_por_telefono(telefono)
         if cliente is None:
-            # Pedir nombre
-            sesion.estado = "esperando_nombre"
-            sesion.datos_temp = {}
-            self.sheets.actualizar_sesion(sesion, row_index)
-            return "Para agendar tu cita, ¿cuál es tu nombre?"
+            # Crear cliente con nombre genérico
+            cliente = self.sheets.crear_cliente(telefono, "Cliente")
         
         # Cliente existe, mostrar servicios
         sesion.estado = ESTADO_ESPERANDO_SERVICIO
