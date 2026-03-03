@@ -57,7 +57,7 @@ cp .env.example .env
 Edita `.env` con tus valores:
 - PostgreSQL: URL de conexión a tu base de datos
 - Evolution API: URL, API Key e Instancia
-- Puerto: Puerto donde correrá el servidor (default: 8001)
+- Puerto: Puerto donde correrá el servidor (default: 8000)
 
 Ver [GUIA_INSTALACION.md](GUIA_INSTALACION.md) para instrucciones detalladas.
 

@@ -5,7 +5,7 @@ import requests
 import json
 
 # URL de tu servidor desplegado
-BASE_URL = "http://localhost:8001"  # Cambia esto por tu URL de producción
+BASE_URL = "http://localhost:8000"  # Cambia esto por tu URL de producción
 
 def test_health():
     """Prueba el endpoint de salud"""

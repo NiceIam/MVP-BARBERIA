@@ -31,7 +31,7 @@ EVOLUTION_API_URL=https://tu-evolution-api.com/
 EVOLUTION_API_KEY=tu_api_key_aqui
 EVOLUTION_INSTANCE_NAME=NombreDeTuInstancia
 HOST=0.0.0.0
-PORT=8001
+PORT=8000
 DEBUG=True
 ```
 
@@ -80,7 +80,7 @@ Este script verificará:
 python server.py
 ```
 
-El servidor estará disponible en: `http://0.0.0.0:8001`
+El servidor estará disponible en: `http://0.0.0.0:8000`
 
 ## 🌐 Configurar Webhook en Evolution API
 
@@ -307,7 +307,7 @@ server {
     server_name tu-dominio.com;
 
     location / {
-        proxy_pass http://localhost:8001;
+        proxy_pass http://localhost:8000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }

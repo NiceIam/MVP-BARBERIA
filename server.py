@@ -1,294 +1,159 @@
-"""
-Servidor FastAPI para recibir webhooks de Evolution API
-"""
-import os
+"""Servidor FastAPI para el chatbot."""
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
-from dotenv import load_dotenv
-import uvicorn
-from chatbot_integrado import get_gestor_chatbots
-from evolution_api import get_evolution_api
-from database import get_database
+from pydantic import BaseModel
+from typing import Dict, Any
+from loguru import logger
+import sys
 
-# Cargar variables de entorno
-load_dotenv()
+from config.settings import HOST, PORT, DEBUG
+from chatbot import ChatbotEngine
+from services import SheetsClient, CalendarClient, EvolutionAPI
 
-app = FastAPI(title="Chatbot Barbería - WhatsApp Bot")
+# Configurar logging
+logger.remove()
+logger.add(sys.stderr, level="INFO" if not DEBUG else "DEBUG")
+logger.add("logs/barberia_{time}.log", rotation="1 day", retention="30 days", level="INFO")
+
+# Inicializar FastAPI
+app = FastAPI(
+    title="Barbería Churco Chatbot",
+    description="Sistema de agendamiento por WhatsApp",
+    version="2.0.0"
+)
 
 # Inicializar servicios
-gestor = get_gestor_chatbots()
-evolution = get_evolution_api()
-db = get_database()
+chatbot = ChatbotEngine()
+sheets = SheetsClient()
+calendar = CalendarClient()
+evolution = EvolutionAPI()
 
 
-@app.on_event("startup")
-async def startup_event():
-    """Evento de inicio del servidor"""
-    print("=" * 60)
-    print("🚀 Iniciando servidor del chatbot...")
-    print("=" * 60)
-    
-    # Verificar conexión a base de datos
-    try:
-        print("✅ Base de datos conectada")
-    except Exception as e:
-        print(f"❌ Error conectando a base de datos: {e}")
-    
-    # Verificar instancia de Evolution API
-    try:
-        estado = evolution.verificar_instancia()
-        print(f"✅ Evolution API conectada: {estado}")
-    except Exception as e:
-        print(f"❌ Error conectando a Evolution API: {e}")
-    
-    print("=" * 60)
+class SendMessageRequest(BaseModel):
+    """Modelo para enviar mensajes."""
+    telefono: str
+    mensaje: str
 
 
 @app.get("/")
 async def root():
-    """Endpoint raíz"""
+    """Endpoint raíz."""
     return {
         "status": "online",
-        "service": "Chatbot Barbería",
-        "version": "1.0.0"
+        "service": "Barbería Churco Chatbot",
+        "version": "2.0.0"
     }
 
 
 @app.get("/health")
 async def health_check():
-    """Endpoint de salud"""
+    """Verifica el estado del sistema."""
+    status = {
+        "status": "healthy",
+        "sheets": "unknown",
+        "calendar": "unknown",
+        "evolution": "unknown"
+    }
+    
+    # Verificar Google Sheets
     try:
-        # Verificar base de datos
-        db_status = "connected"
-        
-        # Verificar Evolution API
-        evolution_status = evolution.verificar_instancia()
-        
-        return {
-            "status": "healthy",
-            "database": db_status,
-            "evolution_api": evolution_status
-        }
+        if sheets.test_connection():
+            status["sheets"] = "connected"
+        else:
+            status["sheets"] = "error"
     except Exception as e:
-        return JSONResponse(
-            status_code=503,
-            content={"status": "unhealthy", "error": str(e)}
-        )
+        status["sheets"] = f"error: {str(e)}"
+    
+    # Verificar Google Calendar
+    try:
+        if calendar.test_connection():
+            status["calendar"] = "connected"
+        else:
+            status["calendar"] = "error"
+    except Exception as e:
+        status["calendar"] = f"error: {str(e)}"
+    
+    # Verificar Evolution API
+    try:
+        instance_status = evolution.get_instance_status()
+        if instance_status:
+            status["evolution"] = "connected"
+        else:
+            status["evolution"] = "error"
+    except Exception as e:
+        status["evolution"] = f"error: {str(e)}"
+    
+    return status
 
 
 @app.post("/webhook")
-async def webhook_evolution(request: Request):
-    """
-    Webhook para recibir mensajes de Evolution API
-    """
+async def webhook(request: Request):
+    """Recibe mensajes de WhatsApp vía Evolution API."""
     try:
         data = await request.json()
+        logger.info(f"📨 Webhook recibido: {data}")
         
-        # Log del webhook recibido
-        print(f"📨 Webhook recibido: {data.get('event', 'unknown')}")
+        # Extraer datos del mensaje
+        event_type = data.get("event")
         
-        # Verificar que sea un mensaje
-        event = data.get('event')
+        if event_type == "messages.upsert":
+            message_data = data.get("data", {})
+            key = message_data.get("key", {})
+            message = message_data.get("message", {})
+            
+            # Obtener teléfono del remitente
+            telefono = key.get("remoteJid", "").replace("@s.whatsapp.net", "")
+            
+            # Obtener texto del mensaje
+            texto = ""
+            if "conversation" in message:
+                texto = message["conversation"]
+            elif "extendedTextMessage" in message:
+                texto = message["extendedTextMessage"].get("text", "")
+            
+            if telefono and texto:
+                logger.info(f"💬 Mensaje de {telefono}: {texto}")
+                
+                # Procesar mensaje con el chatbot
+                respuesta = chatbot.procesar_mensaje(telefono, texto)
+                
+                # Enviar respuesta
+                evolution.send_message(telefono, respuesta)
+                logger.info(f"✅ Respuesta enviada a {telefono}")
         
-        if event == 'messages.upsert':
-            # Extraer información del mensaje
-            message_data = data.get('data', {})
-            
-            # Verificar que no sea un mensaje propio
-            if message_data.get('key', {}).get('fromMe'):
-                return {"status": "ignored", "reason": "own_message"}
-            
-            # Extraer datos del remitente y mensaje
-            remote_jid = message_data.get('key', {}).get('remoteJid', '')
-            message_type = message_data.get('messageType', '')
-            
-            # Extraer número de teléfono
-            telefono = remote_jid.split('@')[0] if '@' in remote_jid else remote_jid
-            
-            # Extraer texto del mensaje
-            mensaje_texto = ""
-            if message_type == 'conversation':
-                mensaje_texto = message_data.get('message', {}).get('conversation', '')
-            elif message_type == 'extendedTextMessage':
-                mensaje_texto = message_data.get('message', {}).get('extendedTextMessage', {}).get('text', '')
-            elif message_type == 'imageMessage':
-                mensaje_texto = message_data.get('message', {}).get('imageMessage', {}).get('caption', '')
-            
-            if not mensaje_texto:
-                return {"status": "ignored", "reason": "no_text"}
-            
-            print(f"👤 Mensaje de {telefono}: {mensaje_texto}")
-            
-            # Procesar mensaje con el chatbot
-            respuesta = gestor.procesar_mensaje_whatsapp(telefono, mensaje_texto)
-            
-            # Enviar respuesta
-            resultado = gestor.enviar_respuesta(telefono, respuesta)
-            
-            print(f"🤖 Respuesta enviada a {telefono}")
-            
-            return {
-                "status": "success",
-                "telefono": telefono,
-                "mensaje_recibido": mensaje_texto,
-                "respuesta_enviada": True
-            }
-        
-        return {"status": "ignored", "event": event}
+        return {"status": "ok"}
     
     except Exception as e:
-        print(f"❌ Error procesando webhook: {e}")
-        import traceback
-        traceback.print_exc()
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
+        logger.error(f"❌ Error procesando webhook: {e}")
+        return {"status": "error", "message": str(e)}
 
 
 @app.post("/send-message")
-async def send_message(request: Request):
-    """
-    Endpoint para enviar mensajes manualmente
-    Body: {"telefono": "3001234567", "mensaje": "Hola"}
-    """
+async def send_message(request: SendMessageRequest):
+    """Envía un mensaje manualmente."""
     try:
-        data = await request.json()
-        telefono = data.get('telefono')
-        mensaje = data.get('mensaje')
-        
-        if not telefono or not mensaje:
-            raise HTTPException(status_code=400, detail="Faltan parámetros")
-        
-        resultado = evolution.enviar_mensaje_texto(telefono, mensaje)
-        
-        return {
-            "status": "success",
-            "resultado": resultado
-        }
-    
+        success = evolution.send_message(request.telefono, request.mensaje)
+        if success:
+            return {"status": "sent", "telefono": request.telefono}
+        else:
+            raise HTTPException(status_code=500, detail="Error enviando mensaje")
     except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
-
-
-@app.get("/instance/status")
-async def instance_status():
-    """Obtiene el estado de la instancia de WhatsApp"""
-    try:
-        estado = evolution.verificar_instancia()
-        return {
-            "status": "success",
-            "data": estado
-        }
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
-
-
-@app.get("/instance/qr")
-async def get_qr():
-    """Obtiene el código QR para conectar WhatsApp"""
-    try:
-        qr_data = evolution.obtener_qr()
-        return {
-            "status": "success",
-            "data": qr_data
-        }
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
-
-
-@app.post("/instance/connect")
-async def connect_instance():
-    """Conecta la instancia de WhatsApp"""
-    try:
-        resultado = evolution.conectar_instancia()
-        return {
-            "status": "success",
-            "data": resultado
-        }
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
-
-
-@app.post("/webhook/configure")
-async def configure_webhook(request: Request):
-    """
-    Configura el webhook en Evolution API
-    Body: {"webhook_url": "https://tu-dominio.com/webhook"}
-    """
-    try:
-        data = await request.json()
-        webhook_url = data.get('webhook_url')
-        
-        if not webhook_url:
-            raise HTTPException(status_code=400, detail="Falta webhook_url")
-        
-        resultado = evolution.configurar_webhook(webhook_url)
-        
-        return {
-            "status": "success",
-            "resultado": resultado
-        }
-    
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
+        logger.error(f"Error enviando mensaje: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/stats")
 async def get_stats():
-    """Obtiene estadísticas del chatbot"""
-    try:
-        # Aquí puedes agregar consultas a la base de datos para obtener estadísticas
-        return {
-            "status": "success",
-            "sesiones_activas": len(gestor.chatbots),
-            "message": "Estadísticas básicas"
-        }
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"status": "error", "message": str(e)}
-        )
+    """Obtiene estadísticas del sistema."""
+    # TODO: Implementar estadísticas desde Sheets
+    return {
+        "total_citas": 0,
+        "citas_hoy": 0,
+        "citas_pendientes": 0
+    }
 
 
 if __name__ == "__main__":
-    host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", 8001))
-    debug = os.getenv("DEBUG", "False").lower() == "true"
-    
-    print(f"""
-╔══════════════════════════════════════════════════════════╗
-║                                                          ║
-║          💈 CHATBOT BARBERÍA - WHATSAPP BOT 💈          ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝
-
-🌐 Servidor: http://{host}:{port}
-📡 Webhook: http://{host}:{port}/webhook
-🔧 Health: http://{host}:{port}/health
-📊 Stats: http://{host}:{port}/stats
-
-Presiona CTRL+C para detener el servidor
-""")
-    
-    uvicorn.run(
-        "server:app",
-        host=host,
-        port=port,
-        reload=debug
-    )
+    import uvicorn
+    logger.info(f"🚀 Iniciando servidor en {HOST}:{PORT}")
+    uvicorn.run(app, host=HOST, port=PORT)

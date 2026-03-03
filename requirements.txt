@@ -1,7 +1,29 @@
-python-dateutil>=2.8.2
-psycopg2-binary>=2.9.9
-fastapi>=0.104.1
-uvicorn>=0.24.0
-python-dotenv>=1.0.0
-requests>=2.31.0
-pydantic>=2.5.0
+# Web Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.0
+
+# Google APIs
+google-auth==2.27.0
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.116.0
+
+# WhatsApp
+requests==2.31.0
+httpx==0.26.0
+
+# Utilidades
+python-dotenv==1.0.0
+pytz==2024.1
+python-dateutil==2.8.2
+
+# Jobs
+APScheduler==3.10.4
+
+# Logging
+loguru==0.7.2
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3

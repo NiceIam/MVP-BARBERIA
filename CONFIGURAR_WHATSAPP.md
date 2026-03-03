@@ -2,7 +2,7 @@
 
 ## 🎯 Configuración
 
-- **URL del Bot**: `https://tu-dominio.com` (o `http://localhost:8001` en desarrollo)
+- **URL del Bot**: `https://tu-dominio.com` (o `http://localhost:8000` en desarrollo)
 - **Webhook**: `https://tu-dominio.com/webhook`
 - **Instancia**: Configurada en tu archivo `.env`
 
@@ -12,7 +12,7 @@
 
 ```bash
 # Probar que el servidor responde
-curl http://localhost:8001/health
+curl http://localhost:8000/health
 ```
 
 Deberías ver algo como:
@@ -244,7 +244,7 @@ curl -X POST http://localhost:8001/send-message \
 
 ## 📋 Checklist de Configuración
 
-- [ ] Servidor corriendo en `http://localhost:8001` (o tu dominio en producción)
+- [ ] Servidor corriendo en `http://localhost:8000` (o tu dominio en producción)
 - [ ] `/health` responde correctamente
 - [ ] Base de datos conectada
 - [ ] Evolution API accesible
@@ -267,10 +267,10 @@ Una vez completados todos los pasos, tu chatbot estará:
 
 | Endpoint | URL |
 |----------|-----|
-| Servidor | http://localhost:8001 |
-| Health | http://localhost:8001/health |
-| Webhook | http://localhost:8001/webhook |
-| Stats | http://localhost:8001/stats |
+| Servidor | http://localhost:8000 |
+| Health | http://localhost:8000/health |
+| Webhook | http://localhost:8000/webhook |
+| Stats | http://localhost:8000/stats |
 
 ## 💡 Próximos Pasos
 
