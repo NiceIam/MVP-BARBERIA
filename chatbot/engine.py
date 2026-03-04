@@ -100,6 +100,7 @@ class ChatbotEngine:
 3. Cancelar cita
 4. Reagendar cita
 5. Información de la barbería
+6. Contactar al barbero
 
 Responde con el número de la opción.
         """.strip()
@@ -112,8 +113,8 @@ Responde con el número de la opción.
         row_index: int
     ) -> str:
         """Procesa la selección del menú principal."""
-        if not validar_opcion_numerica(mensaje, 5):
-            return "Opción inválida. Por favor responde con un número del 1 al 5."
+        if not validar_opcion_numerica(mensaje, 6):
+            return "Opción inválida. Por favor responde con un número del 1 al 6."
         
         opcion = int(mensaje)
         
@@ -133,6 +134,10 @@ Responde con el número de la opción.
             # Información de la barbería
             self.sheets.eliminar_sesion(telefono)
             return self._mostrar_informacion_barberia()
+        elif opcion == 6:
+            # Contactar al barbero
+            self.sheets.eliminar_sesion(telefono)
+            return self._mostrar_contacto_barbero()
         
         return "Opción inválida."
     
@@ -200,8 +205,7 @@ Responde con el número de la opción.
 💈 *Barbería Churco*
 
 📍 *Dirección:*
-Calle 16 # 20-06
-Barrio Santa Teresita
+Calle 16 #20-06
 
 ⏰ *Horarios:*
 Todos los días
@@ -217,6 +221,18 @@ Churco
 
 📅 *Turnos disponibles:*
 Bloques de 1 hora comenzando cada hora en punto
+
+Escribe 'hola' para volver al menú principal.
+        """.strip()
+    
+    def _mostrar_contacto_barbero(self) -> str:
+        """Muestra información de contacto del barbero."""
+        return """
+💈 *Sígueme y escríbeme por IG si gustas* 💈
+
+📸 Instagram: https://www.instagram.com/churcosbarberstudio?igsh=cGt2aXo3MTl5cmFk
+
+¡Te responderé lo más pronto posible! 😊
 
 Escribe 'hola' para volver al menú principal.
         """.strip()
@@ -262,7 +278,8 @@ Escribe 'hola' para volver al menú principal.
         # Mostrar aviso si estamos antes del 09/03/2026
         if fecha_actual < fecha_inicio_disponible:
             mensaje += "ℹ️ Agenda llena hasta el 08/03/2026\n"
-            mensaje += "Las citas están disponibles desde el 09/03/2026\n\n"
+            mensaje += "Las citas están disponibles desde el 09/03/2026\n
+            mensaje += "Si desean agendar una cita para esta semana por favor llamar a este número\n"
         
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         
