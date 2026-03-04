@@ -11,7 +11,7 @@ SERVICIOS = {
         "id": "srv_corte_barba",
         "nombre": "Corte + Barba",
         "precio": 28000,
-        "duracion_minutos": 45,
+        "duracion_minutos": 60,
         "activo": True,
         "orden": 1
     },
@@ -19,7 +19,7 @@ SERVICIOS = {
         "id": "srv_corte_normal",
         "nombre": "Corte Normal",
         "precio": 20000,
-        "duracion_minutos": 40,
+        "duracion_minutos": 45,
         "activo": True,
         "orden": 2
     }
@@ -27,8 +27,8 @@ SERVICIOS = {
 
 # Horarios de atención (todos los días)
 HORARIOS_ATENCION = [
-    {"hora_inicio": time(8, 0), "hora_fin": time(12, 15)},   # Mañana (hasta 12:15 para que quepa la cita de 11:30)
-    {"hora_inicio": time(14, 0), "hora_fin": time(20, 15)}   # Tarde (hasta 20:15 para que quepa la cita de 19:30)
+    {"hora_inicio": time(8, 0), "hora_fin": time(12, 0)},   # Mañana: 8:00, 9:00, 10:00, 11:00
+    {"hora_inicio": time(14, 0), "hora_fin": time(20, 0)}   # Tarde: 14:00, 15:00, 16:00, 17:00, 18:00, 19:00
 ]
 
 # Estados de cita
