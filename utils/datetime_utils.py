@@ -26,14 +26,27 @@ def get_datetime_actual() -> datetime:
 def get_proximas_fechas(dias: int = 7) -> List[date]:
     """Retorna las próximas N fechas desde hoy."""
     fecha_actual = get_fecha_actual()
-    return [fecha_actual + timedelta(days=i) for i in range(dias)]
+    fecha_inicio_agendamiento = date(2026, 3, 9)  # Primer día disponible para agendar
+    
+    # Si estamos antes del 09/03/2026, comenzar desde esa fecha
+    if fecha_actual < fecha_inicio_agendamiento:
+        fecha_inicio = fecha_inicio_agendamiento
+    else:
+        fecha_inicio = fecha_actual
+    
+    return [fecha_inicio + timedelta(days=i) for i in range(dias)]
 
 
 def es_fecha_valida(fecha: date) -> bool:
     """Verifica si una fecha es válida para agendar."""
+    fecha_minima = date(2026, 3, 9)  # Primer día disponible para agendar
     hoy = get_fecha_actual()
-    max_fecha = hoy + timedelta(days=30)
-    return hoy <= fecha <= max_fecha
+    
+    # La fecha mínima es la mayor entre hoy y el 09/03/2026
+    fecha_inicio = max(hoy, fecha_minima)
+    max_fecha = fecha_inicio + timedelta(days=30)
+    
+    return fecha_inicio <= fecha <= max_fecha
 
 
 def es_hora_futura(fecha: date, hora: time) -> bool:

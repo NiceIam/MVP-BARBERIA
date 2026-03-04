@@ -143,7 +143,7 @@ class SheetsClient:
         """Obtiene todas las citas de una fecha."""
         rows = self._read_range(f"{SHEET_CITAS}!A2:O")
         citas = []
-        fecha_str = fecha.strftime('%Y-%m-%d')
+        fecha_str = fecha.strftime('%d/%m/%Y')
         for row in rows:
             if len(row) > 7 and row[7] == fecha_str:
                 citas.append(Cita.from_sheet_row(row))

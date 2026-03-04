@@ -43,35 +43,19 @@ class ChatbotEngine:
         # Verificar si es comando para volver al menú
         if validar_comando_menu(mensaje):
             self.sheets.eliminar_sesion(telefono)
-            # Verificar si el cliente existe
-            cliente = self.sheets.get_cliente_por_telefono(telefono)
-            if cliente is None:
-                # Cliente nuevo - pedir nombre
-                sesion = Sesion(telefono=telefono, estado="esperando_nombre", datos_temp={})
-                self.sheets.crear_sesion(sesion)
-                return "Para comenzar, ¿cuál es tu nombre?"
-            else:
-                # Cliente existente - mostrar menú
-                sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
-                self.sheets.crear_sesion(sesion)
-                return self._menu_principal()
+            # Siempre mostrar menú principal
+            sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
+            self.sheets.crear_sesion(sesion)
+            return self._menu_principal()
         
         # Obtener o crear sesión
         sesion_data = self.sheets.get_sesion(telefono)
         
         if sesion_data is None:
-            # Nueva sesión - verificar si el cliente existe
-            cliente = self.sheets.get_cliente_por_telefono(telefono)
-            if cliente is None:
-                # Cliente nuevo - pedir nombre
-                sesion = Sesion(telefono=telefono, estado="esperando_nombre", datos_temp={})
-                self.sheets.crear_sesion(sesion)
-                return "Para comenzar, ¿cuál es tu nombre?"
-            else:
-                # Cliente existente - mostrar menú
-                sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
-                self.sheets.crear_sesion(sesion)
-                return self._menu_principal()
+            # Nueva sesión - siempre mostrar menú principal primero
+            sesion = Sesion(telefono=telefono, estado=ESTADO_INICIO)
+            self.sheets.crear_sesion(sesion)
+            return self._menu_principal()
         
         sesion, row_index = sesion_data
         
@@ -90,8 +74,12 @@ class ChatbotEngine:
             return self._procesar_confirmacion(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_CONSULTA_CITA:
             return self._procesar_consulta_cita(telefono, mensaje, sesion, row_index)
+        elif sesion.estado == "seleccionando_cita_cancelar":
+            return self._procesar_seleccion_cita_cancelar(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_CANCELANDO_CITA:
             return self._procesar_cancelacion(telefono, mensaje, sesion, row_index)
+        elif sesion.estado == "seleccionando_cita_reagendar":
+            return self._procesar_seleccion_cita_reagendar(telefono, mensaje, sesion, row_index)
         elif sesion.estado == ESTADO_REAGENDANDO_CITA:
             return self._procesar_reagendamiento(telefono, mensaje, sesion, row_index)
         
@@ -112,6 +100,7 @@ class ChatbotEngine:
 3. Cancelar cita
 4. Reagendar cita
 5. Información de la barbería
+6. Contactar al barbero
 
 Responde con el número de la opción.
         """.strip()
@@ -124,8 +113,8 @@ Responde con el número de la opción.
         row_index: int
     ) -> str:
         """Procesa la selección del menú principal."""
-        if not validar_opcion_numerica(mensaje, 5):
-            return "Opción inválida. Por favor responde con un número del 1 al 5."
+        if not validar_opcion_numerica(mensaje, 6):
+            return "Opción inválida. Por favor responde con un número del 1 al 6."
         
         opcion = int(mensaje)
         
@@ -145,6 +134,10 @@ Responde con el número de la opción.
             # Información de la barbería
             self.sheets.eliminar_sesion(telefono)
             return self._mostrar_informacion_barberia()
+        elif opcion == 6:
+            # Contactar al barbero
+            self.sheets.eliminar_sesion(telefono)
+            return self._mostrar_contacto_barbero()
         
         return "Opción inválida."
     
@@ -155,14 +148,17 @@ Responde con el número de la opción.
         row_index: int
     ) -> str:
         """Inicia el flujo de agendamiento."""
-        # El cliente ya debe existir (se pidió nombre al inicio)
+        # Verificar si el cliente existe
         cliente = self.sheets.get_cliente_por_telefono(telefono)
-        if cliente is None:
-            # Esto no debería pasar, pero por seguridad
-            self.sheets.eliminar_sesion(telefono)
-            return "Error: Por favor escribe 'hola' para comenzar de nuevo."
         
-        # Mostrar servicios
+        if cliente is None:
+            # Cliente nuevo - pedir nombre primero
+            sesion.estado = "esperando_nombre"
+            sesion.datos_temp = {}
+            self.sheets.actualizar_sesion(sesion, row_index)
+            return "Para agendar tu cita, primero necesito saber tu nombre. ¿Cuál es tu nombre?"
+        
+        # Cliente existente - mostrar servicios
         sesion.estado = ESTADO_ESPERANDO_SERVICIO
         sesion.datos_temp = {"cliente_id": cliente.id}
         self.sheets.actualizar_sesion(sesion, row_index)
@@ -183,12 +179,12 @@ Responde con el número de la opción.
         # Crear cliente
         cliente = self.sheets.crear_cliente(telefono, mensaje)
         
-        # Mostrar menú principal
-        sesion.estado = ESTADO_INICIO
-        sesion.datos_temp = {}
+        # Continuar con el flujo de agendamiento - mostrar servicios
+        sesion.estado = ESTADO_ESPERANDO_SERVICIO
+        sesion.datos_temp = {"cliente_id": cliente.id}
         self.sheets.actualizar_sesion(sesion, row_index)
         
-        return f"¡Gracias {mensaje}! 😊\n\n" + self._menu_principal()
+        return f"¡Gracias {mensaje}! 😊\n\n" + self._mostrar_servicios()
     
     def _mostrar_servicios(self) -> str:
         """Muestra los servicios disponibles."""
@@ -209,8 +205,7 @@ Responde con el número de la opción.
 💈 *Barbería Churco*
 
 📍 *Dirección:*
-Calle 17 # 25-23
-Barrio Santa Teresita
+Calle 16 #20-06
 
 ⏰ *Horarios:*
 Todos los días
@@ -218,11 +213,26 @@ Todos los días
 • Tarde: 2:00 PM - 8:00 PM
 
 ✂️ *Servicios:*
-• Corte + Barba: $28,000 COP
-• Corte Normal: $20,000 COP
+• Corte + Barba: $28,000 COP (60 min)
+• Corte Normal: $20,000 COP (45 min)
 
 👨‍💼 *Barbero:*
 Churco
+
+📅 *Turnos disponibles:*
+Bloques de 1 hora comenzando cada hora en punto
+
+Escribe 'hola' para volver al menú principal.
+        """.strip()
+    
+    def _mostrar_contacto_barbero(self) -> str:
+        """Muestra información de contacto del barbero."""
+        return """
+💈 *Sígueme y escríbeme por IG si gustas* 💈
+
+📸 Instagram: https://www.instagram.com/churcosbarberstudio?igsh=cGt2aXo3MTl5cmFk
+
+¡Te responderé lo más pronto posible! 😊
 
 Escribe 'hola' para volver al menú principal.
         """.strip()
@@ -257,9 +267,24 @@ Escribe 'hola' para volver al menú principal.
     
     def _mostrar_fechas(self) -> str:
         """Muestra las fechas disponibles."""
+<<<<<<< HEAD
         fechas = get_proximas_fechas(15)
+=======
+        from utils.datetime_utils import get_fecha_actual
+        
+        fechas = get_proximas_fechas(7)
+        fecha_actual = get_fecha_actual()
+        fecha_inicio_disponible = date(2026, 3, 9)
+>>>>>>> fedb05549a8def27a54f30c33034a8a0f283efa9
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
+        
+        # Mostrar aviso si estamos antes del 09/03/2026
+        if fecha_actual < fecha_inicio_disponible:
+            mensaje += "ℹ️ Agenda llena hasta el 08/03/2026\n"
+            mensaje += "Las citas están disponibles desde el 09/03/2026\n"
+            mensaje += "Si desean agendar una cita para esta semana por favor llamar a este número\n"
+        
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         
         for idx, fecha in enumerate(fechas, 1):
@@ -267,6 +292,7 @@ Escribe 'hola' para volver al menú principal.
             mensaje += f"{idx}. {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
         
         mensaje += "\nResponde con el número del día."
+        return mensaje
         return mensaje
     
     def _procesar_seleccion_fecha(
@@ -638,6 +664,43 @@ Responde *SI* para confirmar la cancelación.
         
         return "✅ Cita cancelada exitosamente. Puedes agendar una nueva cuando quieras."
     
+    def _procesar_seleccion_cita_cancelar(
+        self,
+        telefono: str,
+        mensaje: str,
+        sesion: Sesion,
+        row_index: int
+    ) -> str:
+        """Procesa la selección de cita para cancelar cuando hay múltiples."""
+        citas_ids = sesion.datos_temp.get("citas_ids", [])
+        
+        if not validar_opcion_numerica(mensaje, len(citas_ids)):
+            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+        
+        opcion = int(mensaje)
+        cita_id = citas_ids[opcion - 1]
+        
+        result = self.sheets.get_cita_por_id(cita_id)
+        if not result:
+            self.sheets.eliminar_sesion(telefono)
+            return "Error: Cita no encontrada."
+        
+        cita, _ = result
+        
+        # Cambiar estado a cancelando y guardar cita_id
+        sesion.estado = ESTADO_CANCELANDO_CITA
+        sesion.datos_temp = {"cita_id": cita.id}
+        self.sheets.actualizar_sesion(sesion, row_index)
+        
+        mensaje = f"""
+¿Deseas cancelar esta cita?
+
+{formatear_cita_resumen(cita)}
+
+Responde *SI* para confirmar la cancelación.
+        """.strip()
+        return mensaje
+    
     def _iniciar_reagendamiento(
         self,
         telefono: str,
@@ -659,7 +722,7 @@ Responde *SI* para confirmar la cancelación.
                 "servicio_id": citas[0].servicio_id,
                 "servicio_nombre": citas[0].servicio_nombre,
                 "precio": citas[0].precio,
-                "duracion_minutos": 45 if "Barba" in citas[0].servicio_nombre else 30
+                "duracion_minutos": 60 if "Barba" in citas[0].servicio_nombre else 45
             }
             self.sheets.actualizar_sesion(sesion, row_index)
             
@@ -704,3 +767,46 @@ Responde *SI* para continuar.
         # Si llegó aquí, el flujo de fecha/hora ya se procesó en los otros métodos
         # Este método solo se llama para la confirmación inicial
         return "Flujo de reagendamiento en proceso..."
+    
+    def _procesar_seleccion_cita_reagendar(
+        self,
+        telefono: str,
+        mensaje: str,
+        sesion: Sesion,
+        row_index: int
+    ) -> str:
+        """Procesa la selección de cita para reagendar cuando hay múltiples."""
+        citas_ids = sesion.datos_temp.get("citas_ids", [])
+        
+        if not validar_opcion_numerica(mensaje, len(citas_ids)):
+            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+        
+        opcion = int(mensaje)
+        cita_id = citas_ids[opcion - 1]
+        
+        result = self.sheets.get_cita_por_id(cita_id)
+        if not result:
+            self.sheets.eliminar_sesion(telefono)
+            return "Error: Cita no encontrada."
+        
+        cita, _ = result
+        
+        # Cambiar estado a reagendando y guardar datos de la cita
+        sesion.estado = ESTADO_REAGENDANDO_CITA
+        sesion.datos_temp = {
+            "cita_id": cita.id,
+            "servicio_id": cita.servicio_id,
+            "servicio_nombre": cita.servicio_nombre,
+            "precio": cita.precio,
+            "duracion_minutos": 60 if "Barba" in cita.servicio_nombre else 45
+        }
+        self.sheets.actualizar_sesion(sesion, row_index)
+        
+        mensaje = f"""
+¿Deseas reagendar esta cita?
+
+{formatear_cita_resumen(cita)}
+
+Responde *SI* para continuar.
+        """.strip()
+        return mensaje
