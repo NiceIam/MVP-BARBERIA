@@ -267,24 +267,9 @@ Escribe 'hola' para volver al menú principal.
     
     def _mostrar_fechas(self) -> str:
         """Muestra las fechas disponibles."""
-<<<<<<< HEAD
         fechas = get_proximas_fechas(15)
-=======
-        from utils.datetime_utils import get_fecha_actual
-        
-        fechas = get_proximas_fechas(7)
-        fecha_actual = get_fecha_actual()
-        fecha_inicio_disponible = date(2026, 3, 9)
->>>>>>> fedb05549a8def27a54f30c33034a8a0f283efa9
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
-        
-        # Mostrar aviso si estamos antes del 09/03/2026
-        if fecha_actual < fecha_inicio_disponible:
-            mensaje += "ℹ️ Agenda llena hasta el 08/03/2026\n"
-            mensaje += "Las citas están disponibles desde el 09/03/2026\n"
-            mensaje += "Si desean agendar una cita para esta semana por favor llamar a este número\n"
-        
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         
         for idx, fecha in enumerate(fechas, 1):
