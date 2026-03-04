@@ -270,6 +270,8 @@ Escribe 'hola' para volver al menú principal.
         fechas = get_proximas_fechas(15)
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
+        mensaje += "ℹ️ La agenda está llena hasta el domingo 8 de marzo. Si quieres agendar una cita para esta semana llámame a este número.\n\n"
+        
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         
         for idx, fecha in enumerate(fechas, 1):

@@ -38,6 +38,8 @@ def formatear_confirmacion_cita(cita: Cita) -> str:
 
 Te esperamos en Barbería Churco.
 Recuerda llegar 5 minutos antes.
+
+*No es necesario que respondas este mensaje*
     """.strip()
     return mensaje
 
