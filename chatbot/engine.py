@@ -257,7 +257,7 @@ Escribe 'hola' para volver al menú principal.
     
     def _mostrar_fechas(self) -> str:
         """Muestra las fechas disponibles."""
-        fechas = get_proximas_fechas(7)
+        fechas = get_proximas_fechas(15)
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
@@ -277,7 +277,7 @@ Escribe 'hola' para volver al menú principal.
         row_index: int
     ) -> str:
         """Procesa la selección de fecha."""
-        fechas = get_proximas_fechas(7)
+        fechas = get_proximas_fechas(15)
         
         if not validar_opcion_numerica(mensaje, len(fechas)):
             return f"Opción inválida. Por favor responde con un número del 1 al {len(fechas)}."
