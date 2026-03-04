@@ -278,7 +278,7 @@ Escribe 'hola' para volver al menú principal.
         # Mostrar aviso si estamos antes del 09/03/2026
         if fecha_actual < fecha_inicio_disponible:
             mensaje += "ℹ️ Agenda llena hasta el 08/03/2026\n"
-            mensaje += "Las citas están disponibles desde el 09/03/2026\n
+            mensaje += "Las citas están disponibles desde el 09/03/2026\n"
             mensaje += "Si desean agendar una cita para esta semana por favor llamar a este número\n"
         
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
