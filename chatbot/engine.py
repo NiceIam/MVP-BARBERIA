@@ -200,7 +200,7 @@ Responde con el número de la opción.
 💈 *Barbería Churco*
 
 📍 *Dirección:*
-Calle 17 # 25-23
+Calle 16 # 20-06
 Barrio Santa Teresita
 
 ⏰ *Horarios:*
@@ -209,11 +209,14 @@ Todos los días
 • Tarde: 2:00 PM - 8:00 PM
 
 ✂️ *Servicios:*
-• Corte + Barba: $28,000 COP
-• Corte Normal: $20,000 COP
+• Corte + Barba: $28,000 COP (60 min)
+• Corte Normal: $20,000 COP (45 min)
 
 👨‍💼 *Barbero:*
 Churco
+
+📅 *Turnos disponibles:*
+Bloques de 1 hora comenzando cada hora en punto
 
 Escribe 'hola' para volver al menú principal.
         """.strip()
@@ -698,7 +701,7 @@ Responde *SI* para confirmar la cancelación.
                 "servicio_id": citas[0].servicio_id,
                 "servicio_nombre": citas[0].servicio_nombre,
                 "precio": citas[0].precio,
-                "duracion_minutos": 45 if "Barba" in citas[0].servicio_nombre else 40
+                "duracion_minutos": 60 if "Barba" in citas[0].servicio_nombre else 45
             }
             self.sheets.actualizar_sesion(sesion, row_index)
             
@@ -774,7 +777,7 @@ Responde *SI* para continuar.
             "servicio_id": cita.servicio_id,
             "servicio_nombre": cita.servicio_nombre,
             "precio": cita.precio,
-            "duracion_minutos": 45 if "Barba" in cita.servicio_nombre else 40
+            "duracion_minutos": 60 if "Barba" in cita.servicio_nombre else 45
         }
         self.sheets.actualizar_sesion(sesion, row_index)
         
