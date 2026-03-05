@@ -29,6 +29,10 @@ class ChatbotEngine:
         self.calendar = CalendarClient()
         self.whatsapp = WhatsAppService()
     
+    def _agregar_opcion_menu(self, mensaje: str) -> str:
+        """Agrega la opción de volver al menú a cualquier mensaje."""
+        return f"{mensaje}\n\n_Escribe *hola* para volver al menú principal._"
+    
     def procesar_mensaje(self, telefono: str, mensaje: str) -> str:
         """
         Procesa un mensaje entrante y retorna la respuesta.
@@ -114,7 +118,7 @@ Responde con el número de la opción.
     ) -> str:
         """Procesa la selección del menú principal."""
         if not validar_opcion_numerica(mensaje, 6):
-            return "Opción inválida. Por favor responde con un número del 1 al 6."
+            return self._agregar_opcion_menu("Opción inválida. Por favor responde con un número del 1 al 6.")
         
         opcion = int(mensaje)
         
@@ -139,7 +143,7 @@ Responde con el número de la opción.
             self.sheets.eliminar_sesion(telefono)
             return self._mostrar_contacto_barbero()
         
-        return "Opción inválida."
+        return self._agregar_opcion_menu("Opción inválida.")
     
     def _iniciar_agendamiento(
         self,
@@ -156,7 +160,7 @@ Responde con el número de la opción.
             sesion.estado = "esperando_nombre"
             sesion.datos_temp = {}
             self.sheets.actualizar_sesion(sesion, row_index)
-            return "Para agendar tu cita, primero necesito saber tu nombre. ¿Cuál es tu nombre?"
+            return self._agregar_opcion_menu("Para agendar tu cita, primero necesito saber tu nombre. ¿Cuál es tu nombre?")
         
         # Cliente existente - mostrar servicios
         sesion.estado = ESTADO_ESPERANDO_SERVICIO
@@ -174,7 +178,7 @@ Responde con el número de la opción.
     ) -> str:
         """Procesa el nombre del cliente."""
         if not validar_nombre(mensaje):
-            return "Por favor ingresa un nombre válido (solo letras)."
+            return self._agregar_opcion_menu("Por favor ingresa un nombre válido (solo letras).")
         
         # Crear cliente
         cliente = self.sheets.crear_cliente(telefono, mensaje)
@@ -197,7 +201,7 @@ Responde con el número de la opción.
             mensaje += f"   ⏱️ {servicio.duracion_minutos} minutos\n\n"
         mensaje += "Responde con el número del servicio."
         
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _mostrar_informacion_barberia(self) -> str:
         """Muestra información de la barbería."""
@@ -249,7 +253,7 @@ Escribe 'hola' para volver al menú principal.
         servicios = self.sheets.get_servicios_activos()
         
         if not validar_opcion_numerica(mensaje, len(servicios)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {len(servicios)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(servicios)}.")
         
         opcion = int(mensaje)
         servicio = servicios[opcion - 1]
@@ -279,8 +283,7 @@ Escribe 'hola' para volver al menú principal.
             mensaje += f"{idx}. {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
         
         mensaje += "\nResponde con el número del día."
-        return mensaje
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _procesar_seleccion_fecha(
         self,
@@ -293,7 +296,7 @@ Escribe 'hola' para volver al menú principal.
         fechas = get_proximas_fechas(15)
         
         if not validar_opcion_numerica(mensaje, len(fechas)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {len(fechas)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(fechas)}.")
         
         opcion = int(mensaje)
         fecha_seleccionada = fechas[opcion - 1]
@@ -306,7 +309,7 @@ Escribe 'hola' para volver al menú principal.
         
         if not slots:
             # No hay horarios - mantener estado y pedir otra fecha
-            return "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n" + self._mostrar_fechas()
+            return self._agregar_opcion_menu("😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n" + self._mostrar_fechas())
         
         # Hay horarios disponibles - guardar fecha y continuar
         sesion.datos_temp["fecha"] = fecha_seleccionada.isoformat()
@@ -339,7 +342,7 @@ Escribe 'hola' para volver al menú principal.
             mensaje += f"{idx}. {formatear_hora(hora)}\n"
         
         mensaje += "\nResponde con el número de la hora."
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
 
     
     def _procesar_seleccion_hora(
@@ -359,7 +362,7 @@ Escribe 'hola' para volver al menú principal.
         slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
         
         if not validar_opcion_numerica(mensaje, min(len(slots), 20)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {min(len(slots), 20)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {min(len(slots), 20)}.")
         
         opcion = int(mensaje)
         hora_seleccionada = slots[opcion - 1]
@@ -392,7 +395,7 @@ Escribe 'hola' para volver al menú principal.
 Responde *SI* para confirmar o *NO* para cancelar.
         """.strip()
         
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _procesar_confirmacion(
         self,
@@ -404,10 +407,10 @@ Responde *SI* para confirmar o *NO* para cancelar.
         """Procesa la confirmación de la cita."""
         if validar_cancelacion(mensaje):
             self.sheets.eliminar_sesion(telefono)
-            return "Cita cancelada. Escribe 'hola' cuando quieras agendar de nuevo."
+            return self._agregar_opcion_menu("Cita cancelada.")
         
         if not validar_confirmacion(mensaje):
-            return "Por favor responde *SI* para confirmar o *NO* para cancelar."
+            return self._agregar_opcion_menu("Por favor responde *SI* para confirmar o *NO* para cancelar.")
         
         # Verificar si es reagendamiento
         es_reagendamiento = sesion.datos_temp.get("reagendando", False)
@@ -416,7 +419,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
         cliente = self.sheets.get_cliente_por_telefono(telefono)
         if not cliente:
             self.sheets.eliminar_sesion(telefono)
-            return "Error: Cliente no encontrado. Por favor inicia de nuevo."
+            return self._agregar_opcion_menu("Error: Cliente no encontrado. Por favor inicia de nuevo.")
         
         # Preparar datos de la cita
         fecha = date.fromisoformat(sesion.datos_temp["fecha"])
@@ -430,7 +433,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
             
             if not result:
                 self.sheets.eliminar_sesion(telefono)
-                return "Error: Cita no encontrada."
+                return self._agregar_opcion_menu("Error: Cita no encontrada.")
             
             cita, cita_row = result
             
@@ -473,7 +476,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
             # Limpiar sesión
             self.sheets.eliminar_sesion(telefono)
             
-            return "✅ Cita reagendada exitosamente!\n\n" + formatear_confirmacion_cita(cita)
+            return self._agregar_opcion_menu("✅ Cita reagendada exitosamente!\n\n" + formatear_confirmacion_cita(cita))
         
         else:
             # AGENDAMIENTO NUEVO - Crear nueva cita
@@ -493,7 +496,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
             
             # Guardar en Sheets
             if not self.sheets.crear_cita(cita):
-                return "Error al crear la cita. Por favor intenta de nuevo."
+                return self._agregar_opcion_menu("Error al crear la cita. Por favor intenta de nuevo.")
             
             # Crear evento en Calendar
             event_id = self.calendar.crear_evento(
@@ -528,7 +531,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
             self.sheets.eliminar_sesion(telefono)
             
             # Retornar confirmación
-            return formatear_confirmacion_cita(cita)
+            return self._agregar_opcion_menu(formatear_confirmacion_cita(cita))
 
     
     def _iniciar_consulta(
@@ -542,18 +545,18 @@ Responde *SI* para confirmar o *NO* para cancelar.
         
         if not citas:
             self.sheets.eliminar_sesion(telefono)
-            return "No tienes citas agendadas."
+            return self._agregar_opcion_menu("No tienes citas agendadas.")
         
         if len(citas) == 1:
             self.sheets.eliminar_sesion(telefono)
-            return formatear_cita_resumen(citas[0])
+            return self._agregar_opcion_menu(formatear_cita_resumen(citas[0]))
         
         # Múltiples citas - guardar en sesión
         sesion.estado = ESTADO_CONSULTA_CITA
         sesion.datos_temp = {"citas_ids": [c.id for c in citas]}
         self.sheets.actualizar_sesion(sesion, row_index)
         
-        return formatear_lista_citas(citas)
+        return self._agregar_opcion_menu(formatear_lista_citas(citas))
     
     def _procesar_consulta_cita(
         self,
@@ -566,7 +569,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
         citas_ids = sesion.datos_temp.get("citas_ids", [])
         
         if not validar_opcion_numerica(mensaje, len(citas_ids)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}.")
         
         opcion = int(mensaje)
         cita_id = citas_ids[opcion - 1]
@@ -574,11 +577,11 @@ Responde *SI* para confirmar o *NO* para cancelar.
         result = self.sheets.get_cita_por_id(cita_id)
         if not result:
             self.sheets.eliminar_sesion(telefono)
-            return "Error: Cita no encontrada."
+            return self._agregar_opcion_menu("Error: Cita no encontrada.")
         
         cita, _ = result
         self.sheets.eliminar_sesion(telefono)
-        return formatear_cita_resumen(cita)
+        return self._agregar_opcion_menu(formatear_cita_resumen(cita))
     
     def _iniciar_cancelacion(
         self,
@@ -591,7 +594,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
         
         if not citas:
             self.sheets.eliminar_sesion(telefono)
-            return "No tienes citas para cancelar."
+            return self._agregar_opcion_menu("No tienes citas para cancelar.")
         
         if len(citas) == 1:
             # Una sola cita - pedir confirmación directa
@@ -606,7 +609,7 @@ Responde *SI* para confirmar o *NO* para cancelar.
 
 Responde *SI* para confirmar la cancelación.
             """.strip()
-            return mensaje
+            return self._agregar_opcion_menu(mensaje)
         
         # Múltiples citas - pedir selección
         sesion.estado = "seleccionando_cita_cancelar"
@@ -615,7 +618,7 @@ Responde *SI* para confirmar la cancelación.
         
         mensaje = "¿Qué cita deseas cancelar?\n\n"
         mensaje += formatear_lista_citas(citas)
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _procesar_cancelacion(
         self,
@@ -627,14 +630,14 @@ Responde *SI* para confirmar la cancelación.
         """Procesa la cancelación de una cita."""
         if not validar_confirmacion(mensaje):
             self.sheets.eliminar_sesion(telefono)
-            return "Cancelación abortada."
+            return self._agregar_opcion_menu("Cancelación abortada.")
         
         cita_id = sesion.datos_temp.get("cita_id")
         result = self.sheets.get_cita_por_id(cita_id)
         
         if not result:
             self.sheets.eliminar_sesion(telefono)
-            return "Error: Cita no encontrada."
+            return self._agregar_opcion_menu("Error: Cita no encontrada.")
         
         cita, cita_row = result
         
@@ -649,7 +652,7 @@ Responde *SI* para confirmar la cancelación.
         # Limpiar sesión
         self.sheets.eliminar_sesion(telefono)
         
-        return "✅ Cita cancelada exitosamente. Puedes agendar una nueva cuando quieras."
+        return self._agregar_opcion_menu("✅ Cita cancelada exitosamente. Puedes agendar una nueva cuando quieras.")
     
     def _procesar_seleccion_cita_cancelar(
         self,
@@ -662,7 +665,7 @@ Responde *SI* para confirmar la cancelación.
         citas_ids = sesion.datos_temp.get("citas_ids", [])
         
         if not validar_opcion_numerica(mensaje, len(citas_ids)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}.")
         
         opcion = int(mensaje)
         cita_id = citas_ids[opcion - 1]
@@ -670,7 +673,7 @@ Responde *SI* para confirmar la cancelación.
         result = self.sheets.get_cita_por_id(cita_id)
         if not result:
             self.sheets.eliminar_sesion(telefono)
-            return "Error: Cita no encontrada."
+            return self._agregar_opcion_menu("Error: Cita no encontrada.")
         
         cita, _ = result
         
@@ -686,7 +689,7 @@ Responde *SI* para confirmar la cancelación.
 
 Responde *SI* para confirmar la cancelación.
         """.strip()
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _iniciar_reagendamiento(
         self,
@@ -699,7 +702,7 @@ Responde *SI* para confirmar la cancelación.
         
         if not citas:
             self.sheets.eliminar_sesion(telefono)
-            return "No tienes citas para reagendar."
+            return self._agregar_opcion_menu("No tienes citas para reagendar.")
         
         if len(citas) == 1:
             # Una sola cita - pedir confirmación
@@ -720,7 +723,7 @@ Responde *SI* para confirmar la cancelación.
 
 Responde *SI* para continuar.
             """.strip()
-            return mensaje
+            return self._agregar_opcion_menu(mensaje)
         
         # Múltiples citas
         sesion.estado = "seleccionando_cita_reagendar"
@@ -729,7 +732,7 @@ Responde *SI* para continuar.
         
         mensaje = "¿Qué cita deseas reagendar?\n\n"
         mensaje += formatear_lista_citas(citas)
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
     
     def _procesar_reagendamiento(
         self,
@@ -743,7 +746,7 @@ Responde *SI* para continuar.
         if "fecha" not in sesion.datos_temp:
             if not validar_confirmacion(mensaje):
                 self.sheets.eliminar_sesion(telefono)
-                return "Reagendamiento cancelado."
+                return self._agregar_opcion_menu("Reagendamiento cancelado.")
             
             # Iniciar selección de nueva fecha
             sesion.estado = ESTADO_ESPERANDO_FECHA
@@ -766,7 +769,7 @@ Responde *SI* para continuar.
         citas_ids = sesion.datos_temp.get("citas_ids", [])
         
         if not validar_opcion_numerica(mensaje, len(citas_ids)):
-            return f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}."
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(citas_ids)}.")
         
         opcion = int(mensaje)
         cita_id = citas_ids[opcion - 1]
@@ -774,7 +777,7 @@ Responde *SI* para continuar.
         result = self.sheets.get_cita_por_id(cita_id)
         if not result:
             self.sheets.eliminar_sesion(telefono)
-            return "Error: Cita no encontrada."
+            return self._agregar_opcion_menu("Error: Cita no encontrada.")
         
         cita, _ = result
         
@@ -796,4 +799,4 @@ Responde *SI* para continuar.
 
 Responde *SI* para continuar.
         """.strip()
-        return mensaje
+        return self._agregar_opcion_menu(mensaje)
