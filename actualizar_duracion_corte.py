@@ -23,26 +23,26 @@ def main():
         if len(row) > 0:
             servicio_id = row[0]
             
-            # Actualizar Corte + Barba a 60 minutos
+            # Actualizar Corte + Barba a 50 minutos
             if servicio_id == "srv_corte_barba":
                 logger.info(f"📋 Servicio: {row[1]}")
                 logger.info(f"   Duración actual: {row[3]} minutos")
-                row[3] = 60
+                row[3] = 50
                 range_name = f"servicios!A{idx}:F{idx}"
                 if sheets._update_row(range_name, row):
-                    logger.info(f"✅ Duración actualizada a 60 minutos")
+                    logger.info(f"✅ Duración actualizada a 50 minutos")
                     actualizados += 1
                 else:
                     logger.error(f"❌ Error actualizando Corte + Barba")
             
-            # Actualizar Corte Normal a 45 minutos
+            # Actualizar Corte Normal a 40 minutos
             elif servicio_id == "srv_corte_normal":
                 logger.info(f"📋 Servicio: {row[1]}")
                 logger.info(f"   Duración actual: {row[3]} minutos")
-                row[3] = 45
+                row[3] = 40
                 range_name = f"servicios!A{idx}:F{idx}"
                 if sheets._update_row(range_name, row):
-                    logger.info(f"✅ Duración actualizada a 45 minutos")
+                    logger.info(f"✅ Duración actualizada a 40 minutos")
                     actualizados += 1
                 else:
                     logger.error(f"❌ Error actualizando Corte Normal")

@@ -310,7 +310,8 @@ Escribe 'hola' para volver al menú principal.
         
         if not slots:
             # No hay horarios - mantener estado y pedir otra fecha
-            return self._agregar_opcion_menu("😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n" + self._mostrar_fechas())
+            mensaje_error = "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n"
+            return mensaje_error + self._mostrar_fechas()
         
         # Hay horarios disponibles - guardar fecha y continuar
         sesion.datos_temp["fecha"] = fecha_seleccionada.isoformat()
@@ -318,22 +319,6 @@ Escribe 'hola' para volver al menú principal.
         self.sheets.actualizar_sesion(sesion, row_index)
         
         # Mostrar horas disponibles
-        return self._formatear_horas_disponibles(slots)
-    
-    def _mostrar_horas_disponibles(self, fecha: date, duracion_minutos: int) -> str:
-        """Muestra las horas disponibles para una fecha."""
-        # Obtener citas existentes
-        citas_dia = self.sheets.get_citas_por_fecha(fecha)
-        
-        # Obtener eventos de Calendar
-        eventos_calendar = self.calendar.get_eventos_dia(fecha)
-        
-        # Calcular slots disponibles
-        slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
-        
-        if not slots:
-            return "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha."
-        
         return self._formatear_horas_disponibles(slots)
     
     def _formatear_horas_disponibles(self, slots: list) -> str:
@@ -723,7 +708,7 @@ Responde *SI* para confirmar la cancelación.
                 "servicio_id": citas[0].servicio_id,
                 "servicio_nombre": citas[0].servicio_nombre,
                 "precio": citas[0].precio,
-                "duracion_minutos": 60 if "Barba" in citas[0].servicio_nombre else 45
+                "duracion_minutos": 50 if "Barba" in citas[0].servicio_nombre else 40
             }
             self.sheets.actualizar_sesion(sesion, row_index)
             
@@ -799,7 +784,7 @@ Responde *SI* para continuar.
             "servicio_id": cita.servicio_id,
             "servicio_nombre": cita.servicio_nombre,
             "precio": cita.precio,
-            "duracion_minutos": 60 if "Barba" in cita.servicio_nombre else 45
+            "duracion_minutos": 50 if "Barba" in cita.servicio_nombre else 40
         }
         self.sheets.actualizar_sesion(sesion, row_index)
         
