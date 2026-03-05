@@ -46,3 +46,10 @@ def validar_comando_menu(texto: str) -> bool:
     texto_lower = texto.lower().strip()
     comandos = ['menu', 'inicio', 'hola', 'start', 'empezar']
     return texto_lower in comandos
+
+
+def validar_comando_volver(texto: str) -> bool:
+    """Valida si el texto es un comando para volver a la selección anterior."""
+    texto_lower = texto.lower().strip()
+    comandos = ['volver', 'atras', 'atrás', 'regresar', 'back']
+    return texto_lower in comandos
