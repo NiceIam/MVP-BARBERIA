@@ -84,7 +84,9 @@ Responde con el número del día."""
 9. 3:30 PM
 10. 4:15 PM
 
-Responde con el número de la hora."""
+Responde con el número de la hora.
+
+💡 Si no encuentras un horario que te sirva, escribe *volver* para elegir otra fecha."""
     )
     
     # Ejemplo 5: Confirmación

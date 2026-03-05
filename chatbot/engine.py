@@ -16,7 +16,8 @@ from utils.formatters import (
 )
 from chatbot.validaciones import (
     validar_nombre, validar_opcion_numerica,
-    validar_confirmacion, validar_cancelacion, validar_comando_menu
+    validar_confirmacion, validar_cancelacion, validar_comando_menu,
+    validar_comando_volver
 )
 
 
@@ -342,6 +343,7 @@ Escribe 'hola' para volver al menú principal.
             mensaje += f"{idx}. {formatear_hora(hora)}\n"
         
         mensaje += "\nResponde con el número de la hora."
+        mensaje += "\n\n💡 Si no encuentras un horario que te sirva, escribe *volver* para elegir otra fecha."
         return self._agregar_opcion_menu(mensaje)
 
     
@@ -353,6 +355,15 @@ Escribe 'hola' para volver al menú principal.
         row_index: int
     ) -> str:
         """Procesa la selección de hora."""
+        # Verificar si el usuario quiere volver a las fechas
+        if validar_comando_volver(mensaje):
+            # Limpiar la fecha seleccionada y volver al estado de selección de fecha
+            if "fecha" in sesion.datos_temp:
+                del sesion.datos_temp["fecha"]
+            sesion.estado = ESTADO_ESPERANDO_FECHA
+            self.sheets.actualizar_sesion(sesion, row_index)
+            return self._mostrar_fechas()
+        
         fecha = date.fromisoformat(sesion.datos_temp["fecha"])
         duracion_minutos = sesion.datos_temp["duracion_minutos"]
         
