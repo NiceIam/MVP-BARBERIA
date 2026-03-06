@@ -268,18 +268,32 @@ Escribe 'hola' para volver al menú principal.
         self.sheets.actualizar_sesion(sesion, row_index)
         
         # Mostrar fechas disponibles
-        return self._mostrar_fechas()
+        duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+        return self._mostrar_fechas(duracion_minutos)
     
-    def _mostrar_fechas(self) -> str:
-        """Muestra las fechas disponibles."""
-        fechas = get_proximas_fechas(15)
+    def _mostrar_fechas(self, duracion_minutos: int = 50) -> str:
+        """Muestra solo las fechas que tienen disponibilidad."""
+        fechas_todas = get_proximas_fechas(15)
+        
+        # Filtrar fechas con disponibilidad
+        fechas_disponibles = []
+        for fecha in fechas_todas:
+            citas_dia = self.sheets.get_citas_por_fecha(fecha)
+            eventos_calendar = self.calendar.get_eventos_dia(fecha)
+            slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
+            
+            if slots:  # Solo agregar si tiene al menos un slot disponible
+                fechas_disponibles.append(fecha)
+        
+        # Si no hay fechas disponibles
+        if not fechas_disponibles:
+            return self._agregar_opcion_menu("😔 Lo sentimos, no hay fechas disponibles en los próximos 15 días. Por favor intenta más tarde o contacta directamente a la barbería.")
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
-        mensaje += "ℹ️ La agenda está llena hasta el domingo 8 de marzo. Si quieres agendar una cita para esta semana llámame a este número.\n\n"
         
         dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         
-        for idx, fecha in enumerate(fechas, 1):
+        for idx, fecha in enumerate(fechas_disponibles, 1):
             dia_nombre = dias_semana[fecha.weekday()]
             mensaje += f"{idx}. {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
         
@@ -294,26 +308,34 @@ Escribe 'hola' para volver al menú principal.
         row_index: int
     ) -> str:
         """Procesa la selección de fecha."""
-        fechas = get_proximas_fechas(15)
+        # Obtener duración del servicio
+        duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
         
-        if not validar_opcion_numerica(mensaje, len(fechas)):
-            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(fechas)}.")
+        # Obtener todas las fechas y filtrar las que tienen disponibilidad
+        fechas_todas = get_proximas_fechas(15)
+        fechas_disponibles = []
+        
+        for fecha in fechas_todas:
+            citas_dia = self.sheets.get_citas_por_fecha(fecha)
+            eventos_calendar = self.calendar.get_eventos_dia(fecha)
+            slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
+            
+            if slots:  # Solo agregar si tiene al menos un slot disponible
+                fechas_disponibles.append(fecha)
+        
+        # Validar opción
+        if not validar_opcion_numerica(mensaje, len(fechas_disponibles)):
+            return self._agregar_opcion_menu(f"Opción inválida. Por favor responde con un número del 1 al {len(fechas_disponibles)}.")
         
         opcion = int(mensaje)
-        fecha_seleccionada = fechas[opcion - 1]
+        fecha_seleccionada = fechas_disponibles[opcion - 1]
         
-        # Calcular horas disponibles ANTES de guardar la fecha
-        duracion_minutos = sesion.datos_temp.get("duracion_minutos", 30)
+        # Calcular horas disponibles para la fecha seleccionada
         citas_dia = self.sheets.get_citas_por_fecha(fecha_seleccionada)
         eventos_calendar = self.calendar.get_eventos_dia(fecha_seleccionada)
         slots = obtener_slots_disponibles(fecha_seleccionada, duracion_minutos, citas_dia, eventos_calendar)
         
-        if not slots:
-            # No hay horarios - mantener estado y pedir otra fecha
-            mensaje_error = "😔 No hay horarios disponibles para ese día. Por favor elige otra fecha:\n\n"
-            return mensaje_error + self._mostrar_fechas()
-        
-        # Hay horarios disponibles - guardar fecha y continuar
+        # Guardar fecha y continuar (ya sabemos que tiene slots porque fue filtrada)
         sesion.datos_temp["fecha"] = fecha_seleccionada.isoformat()
         sesion.estado = ESTADO_ESPERANDO_HORA
         self.sheets.actualizar_sesion(sesion, row_index)
@@ -347,7 +369,8 @@ Escribe 'hola' para volver al menú principal.
                 del sesion.datos_temp["fecha"]
             sesion.estado = ESTADO_ESPERANDO_FECHA
             self.sheets.actualizar_sesion(sesion, row_index)
-            return self._mostrar_fechas()
+            duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+            return self._mostrar_fechas(duracion_minutos)
         
         fecha = date.fromisoformat(sesion.datos_temp["fecha"])
         duracion_minutos = sesion.datos_temp["duracion_minutos"]
@@ -748,7 +771,8 @@ Responde *SI* para continuar.
             sesion.estado = ESTADO_ESPERANDO_FECHA
             sesion.datos_temp["reagendando"] = True  # Marcar que es reagendamiento
             self.sheets.actualizar_sesion(sesion, row_index)
-            return self._mostrar_fechas()
+            duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+            return self._mostrar_fechas(duracion_minutos)
         
         # Si llegó aquí, el flujo de fecha/hora ya se procesó en los otros métodos
         # Este método solo se llama para la confirmación inicial
