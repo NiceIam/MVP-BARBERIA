@@ -1,7 +1,7 @@
 # 📊 Estado Actual del Sistema - Barbería Churco Chatbot
 
 **Fecha:** 5 de Marzo, 2026  
-**Versión:** 2.0 - Filtro de Fechas con Disponibilidad
+**Versión:** 2.1 - 20 Fechas con Disponibilidad Garantizada
 
 ---
 
@@ -122,44 +122,51 @@ Usuario existente:
 
 ---
 
-### 7. 🎯 Filtro de Fechas con Disponibilidad (NUEVO)
-**Estado:** ✅ COMPLETADO Y VERIFICADO
+### 7. 🎯 Filtro de Fechas con Disponibilidad
+**Estado:** ✅ COMPLETADO
 
-**Funcionalidad Principal:**
+**Funcionalidad:**
 - Valida disponibilidad de fechas ANTES de mostrarlas
 - Solo muestra fechas que tienen al menos 1 horario disponible
 - Considera la duración del servicio seleccionado
-- Mensaje especial si no hay fechas disponibles en 15 días
+
+---
+
+### 8. 📅 20 Fechas con Disponibilidad Garantizada (NUEVO)
+**Estado:** ✅ COMPLETADO Y VERIFICADO
+
+**Funcionalidad Principal:**
+- Siempre muestra exactamente 20 fechas con disponibilidad
+- Búsqueda incremental: si una fecha está llena, busca más adelante
+- Puede buscar hasta 60 días en el futuro
+- Búsqueda eficiente en lotes de 10 días
 
 **Ventajas:**
-- ✅ Usuario no pierde tiempo seleccionando fechas sin disponibilidad
+- ✅ Usuario siempre tiene 20 opciones para elegir
+- ✅ Consistente: siempre el mismo número de opciones
+- ✅ Más flexibilidad para agendar
 - ✅ Mejor experiencia de usuario
-- ✅ Más profesional
-- ✅ Menos frustración
 
-**Implementación:**
+**Algoritmo:**
 ```python
-def _mostrar_fechas(self, duracion_minutos: int = 50):
-    # Obtiene 15 fechas siguientes
-    fechas_todas = get_proximas_fechas(15)
-    
-    # Filtra solo las que tienen disponibilidad
-    fechas_disponibles = []
-    for fecha in fechas_todas:
-        slots = obtener_slots_disponibles(fecha, duracion_minutos, ...)
-        if slots:  # Solo si tiene al menos 1 slot
-            fechas_disponibles.append(fecha)
-    
-    # Muestra solo fechas disponibles
-    ...
+# Busca hasta encontrar 20 fechas con disponibilidad
+FECHAS_A_MOSTRAR = 20
+MAX_DIAS_BUSCAR = 60
+
+while len(fechas_disponibles) < 20 and dias_revisados < 60:
+    fechas_lote = get_proximas_fechas(10, dias_revisados)
+    # Verifica disponibilidad de cada fecha
+    # Agrega solo las que tienen slots disponibles
+    dias_revisados += 10
 ```
 
 **Archivos:**
+- `utils/datetime_utils.py` - get_proximas_fechas() con parámetro offset
 - `chatbot/engine.py` - _mostrar_fechas(), _procesar_seleccion_fecha()
-- `FILTRO_FECHAS_DISPONIBLES.md` - Documentación completa
+- `CAMBIO_20_FECHAS_DISPONIBLES.md` - Documentación completa
 
 **Pruebas:**
-- ✅ test_filtro_fechas.py - Todas las pruebas pasan
+- ✅ test_20_fechas_simple.py - Todas las pruebas pasan
 
 ---
 
@@ -224,7 +231,9 @@ MVP-BARBERIA/
    • Corte Normal (40 min)
 
 4. Usuario: "1" (Corte + Barba)
-   Bot: [Valida disponibilidad de 15 fechas]
+   Bot: [Busca fechas con disponibilidad...]
+        [Continúa hasta encontrar 20 fechas disponibles]
+        [Puede buscar hasta 60 días en el futuro]
         [Muestra solo fechas con disponibilidad]
    
 5. Usuario: "2" (Selecciona fecha)
@@ -265,9 +274,10 @@ MVP-BARBERIA/
 - Corte Normal: $20,000 COP (40 min)
 
 ### Disponibilidad
-- Muestra hasta 15 días adelante
-- Solo fechas con disponibilidad real
+- Muestra hasta 20 fechas con disponibilidad
+- Búsqueda hasta 60 días en el futuro
 - Validación en tiempo real
+- Siempre 20 opciones disponibles
 
 ---
 
@@ -311,6 +321,7 @@ Todas las funcionalidades solicitadas han sido:
 Para cualquier ajuste o mejora adicional, el sistema está bien documentado y estructurado para facilitar cambios futuros.
 
 **Documentación disponible:**
+- CAMBIO_20_FECHAS_DISPONIBLES.md (⭐ NUEVO)
 - FILTRO_FECHAS_DISPONIBLES.md
 - CAMBIO_HORARIOS_50MIN.md
 - FUNCIONALIDAD_VOLVER.md
@@ -321,5 +332,5 @@ Para cualquier ajuste o mejora adicional, el sistema está bien documentado y es
 ---
 
 **Última actualización:** 5 de Marzo, 2026  
-**Versión del sistema:** 2.0  
+**Versión del sistema:** 2.1  
 **Estado:** ✅ PRODUCCIÓN
