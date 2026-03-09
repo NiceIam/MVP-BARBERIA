@@ -23,8 +23,14 @@ def get_datetime_actual() -> datetime:
     return datetime.now(tz)
 
 
-def get_proximas_fechas(dias: int = 7) -> List[date]:
-    """Retorna las próximas N fechas desde hoy."""
+def get_proximas_fechas(dias: int = 7, offset: int = 0) -> List[date]:
+    """
+    Retorna las próximas N fechas desde hoy.
+    
+    Args:
+        dias: Número de fechas a retornar
+        offset: Días a saltar desde la fecha de inicio (default: 0)
+    """
     fecha_actual = get_fecha_actual()
     fecha_inicio_agendamiento = date(2026, 3, 9)  # Primer día disponible para agendar
     
@@ -33,6 +39,9 @@ def get_proximas_fechas(dias: int = 7) -> List[date]:
         fecha_inicio = fecha_inicio_agendamiento
     else:
         fecha_inicio = fecha_actual
+    
+    # Aplicar offset
+    fecha_inicio = fecha_inicio + timedelta(days=offset)
     
     return [fecha_inicio + timedelta(days=i) for i in range(dias)]
 
