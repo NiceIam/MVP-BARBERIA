@@ -1,7 +1,7 @@
 # 📊 Estado Actual del Sistema - Barbería Churco Chatbot
 
 **Fecha:** 5 de Marzo, 2026  
-**Versión:** 2.1 - 20 Fechas con Disponibilidad Garantizada
+**Versión:** 2.2 - Nuevo Slot 7:50 PM
 
 ---
 
@@ -17,8 +17,8 @@
 
 **Horarios de Atención:**
 - Mañana: 8:00 AM - 12:10 PM (última cita 11:20)
-- Tarde: 2:00 PM - 7:50 PM (última cita 7:00 PM)
-- Total: 12 slots por día (5 mañana + 7 tarde)
+- Tarde: 2:00 PM - 8:40 PM (última cita 7:50 PM) ⭐ ACTUALIZADO
+- Total: 13 slots por día (5 mañana + 8 tarde)
 
 **Archivos:**
 - `config/settings.py` - SLOT_INTERVAL_MINUTES = 50
@@ -265,9 +265,10 @@ MVP-BARBERIA/
 ## 📊 MÉTRICAS DEL SISTEMA
 
 ### Capacidad Diaria
-- 12 slots por día (50 minutos cada uno)
+- 13 slots por día (50 minutos cada uno) ⭐ ACTUALIZADO
 - 5 slots en la mañana (8:00 - 12:10)
-- 7 slots en la tarde (14:00 - 19:50)
+- 8 slots en la tarde (14:00 - 20:40) ⭐ ACTUALIZADO
+- Última cita: 7:50 PM (19:50) ⭐ NUEVO
 
 ### Servicios
 - Corte + Barba: $28,000 COP (50 min)
