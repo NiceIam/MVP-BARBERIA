@@ -28,7 +28,7 @@ SERVICIOS = {
 # Horarios de atención (todos los días)
 HORARIOS_ATENCION = [
     {"hora_inicio": time(8, 0), "hora_fin": time(12, 10)},   # Mañana: última cita 11:20 termina a 12:10
-    {"hora_inicio": time(14, 0), "hora_fin": time(19, 50)}   # Tarde: última cita 19:00 termina a 19:50
+    {"hora_inicio": time(14, 0), "hora_fin": time(20, 40)}   # Tarde: última cita 19:50 termina a 20:40
 ]
 
 # Estados de cita
