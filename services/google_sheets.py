@@ -139,6 +139,16 @@ class SheetsClient:
                     citas.append(cita)
         return sorted(citas, key=lambda c: c.fecha)
     
+    def get_todas_citas_activas(self) -> List[Cita]:
+        """Obtiene todas las citas activas o pendientes (BATCH)."""
+        rows = self._read_range(f"{SHEET_CITAS}!A2:O")
+        citas = []
+        for row in rows:
+            cita = Cita.from_sheet_row(row)
+            if cita.estado in ['confirmada', 'pendiente']:
+                citas.append(cita)
+        return citas
+    
     def get_citas_por_fecha(self, fecha: date) -> List[Cita]:
         """Obtiene todas las citas de una fecha."""
         rows = self._read_range(f"{SHEET_CITAS}!A2:O")
