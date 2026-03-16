@@ -310,6 +310,7 @@ Escribe 'hola' para volver al menú principal.
             mensaje += f"{idx}. {dia_nombre} {fecha.strftime('%d/%m/%Y')}\n"
         
         mensaje += "\nResponde con el número del día."
+        mensaje += "\n\n⚠️ *Aviso Importante:* Si ya tenías una cita agendada para esta semana, por favor comunícate directamente a este número para coordinar."
         return self._agregar_opcion_menu(mensaje)
     
     def _procesar_seleccion_fecha(
