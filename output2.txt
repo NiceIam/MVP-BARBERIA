@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "D:\Olinky\barberia-churco\MVP-BARBERIA\test_servicios_simple.py", line 33, in <module>
+    sheets = SheetsClient()
+  File "D:\Olinky\barberia-churco\MVP-BARBERIA\services\google_sheets.py", line 51, in __init__
+    self.credentials = service_account.Credentials.from_service_account_file(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        str(SERVICE_ACCOUNT_PATH),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        scopes=GOOGLE_SCOPES
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Daniel\miniconda3\Lib\site-packages\google\oauth2\service_account.py", line 260, in from_service_account_file
+    info, signer = _service_account_info.from_filename(
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        filename, require=["client_email", "token_uri"]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Daniel\miniconda3\Lib\site-packages\google\auth\_service_account_info.py", line 78, in from_filename
+    with io.open(filename, "r", encoding="utf-8") as json_file:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'D:\\Olinky\\barberia-churco\\MVP-BARBERIA'
+======================================================================
+🧪 TEST SIMPLE DE SERVICIOS
+======================================================================
+
+1️⃣ Importando servicios...
+   ✅ Imports exitosos
+
+2️⃣ Inicializando SheetsClient...
+   ❌ Error: [Errno 13] Permission denied: 'D:\\Olinky\\barberia-churco\\MVP-BARBERIA'

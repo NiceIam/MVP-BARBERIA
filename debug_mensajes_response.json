@@ -1,0 +1,2151 @@
+{
+  "messages": {
+    "total": 35126,
+    "pages": 703,
+    "currentPage": 1,
+    "records": [
+      {
+        "id": "cmmsbc4q90w2lnp4jldwnq0lb",
+        "key": {
+          "id": "ACD198EB886D6AC48F73C6B2E0B4AAF4",
+          "fromMe": false,
+          "remoteJid": "224842175528963@lid",
+          "participant": "",
+          "remoteJidAlt": "573116816884@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Natalia♡.",
+        "messageType": "audioMessage",
+        "message": {
+          "audioMessage": {
+            "ptt": true,
+            "url": "https://mmg.whatsapp.net/v/t62.7117-24/653872970_813952791751411_7678094368363834945_n.enc?ccb=11-4&oh=01_Q5Aa4AFMmAqyTxYooK4Fs2k27T_zCpkZxXPq97Git84RgjSkVA&oe=69DE8EBF&_nc_sid=5e03e0&mms3=true",
+            "seconds": 5,
+            "mediaKey": "SzGQys68iSei9A5mg+baIVCeIUx4YbKHoR3zdBZ6+ec=",
+            "mimetype": "audio/ogg; codecs=opus",
+            "waveform": "ABtMYFtKXV5dV11JVF5XXV5dWF5SWmBXSV5eT11cWlNaXl1AX1JdUT9aX1dLSVtdXVReVV1eS05fU1NXVFZVXg==",
+            "directPath": "/v/t62.7117-24/653872970_813952791751411_7678094368363834945_n.enc?ccb=11-4&oh=01_Q5Aa4AFMmAqyTxYooK4Fs2k27T_zCpkZxXPq97Git84RgjSkVA&oe=69DE8EBF&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 10732,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "V2hTBPwyNF73J9RcLRBZuUoPDyzgQbb8QCq1qhajJcs=",
+            "contextInfo": {
+              "mentionedJid": [],
+              "groupMentions": [],
+              "statusAttributions": []
+            },
+            "fileEncSha256": "jP+sPNNAVL45LXCJDEoYmG22BGqr8p7IXthc7Oau2o4=",
+            "mediaKeyTimestamp": {
+              "low": 1773612912,
+              "high": 0,
+              "unsigned": false
+            }
+          },
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "ZGlFKp4kwO0/B4cFTXzIU9haEy3E+6m6w9lYpIs59Mo=",
+            "deviceListMetadata": {
+              "senderTimestamp": {
+                "low": 1772053379,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773612916,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsbc2g00w29np4jl8f1gtdy",
+        "key": {
+          "id": "ACC25A6EC33303A57A452D33B6C1212F",
+          "fromMe": false,
+          "remoteJid": "224842175528963@lid",
+          "participant": "",
+          "remoteJidAlt": "573116816884@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Natalia♡.",
+        "messageType": "videoMessage",
+        "message": {
+          "videoMessage": {
+            "url": "https://mmg.whatsapp.net/v/t62.7161-24/30687236_1642323420521788_8483345868941972027_n.enc?ccb=11-4&oh=01_Q5Aa4AF0MUtYOeQcRY6pA3FNgnnWG1skkPfonUrPIvLR6hZ-Xg&oe=69DEB3BD&_nc_sid=5e03e0&mms3=true",
+            "width": 474,
+            "height": 850,
+            "seconds": 1,
+            "mediaKey": "1Gj1GLFhNjFqUdou3f0YD5OPcvQcCXg5qJvbJyVh6Qo=",
+            "mimetype": "video/mp4",
+            "directPath": "/v/t62.7161-24/30687236_1642323420521788_8483345868941972027_n.enc?ccb=11-4&oh=01_Q5Aa4AF0MUtYOeQcRY6pA3FNgnnWG1skkPfonUrPIvLR6hZ-Xg&oe=69DEB3BD&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 376524,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "YKQDu/99xV3dI4ZTvISUI65SyqEJl0m8IzvOCx3TsfM=",
+            "annotations": [],
+            "contextInfo": {
+              "mentionedJid": [],
+              "groupMentions": [],
+              "pairedMediaType": 0,
+              "statusSourceType": 1,
+              "statusAttributions": []
+            },
+            "fileEncSha256": "kBJckgMNHcnu5cPRNNfiYz0mtN1/4R45pLTFfLjQeho=",
+            "jpegThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P/Zztn////////////////CABEIAEgAKAMBIgACEQEDEQH/xAAuAAADAQEBAAAAAAAAAAAAAAAAAwQCAQUBAQEBAQAAAAAAAAAAAAAAAAABAgP/2gAMAwEAAhADEAAAAKWKbZRXJssEB5LEMVpLtKSYIavLM60yWjUuICXzWK3Guc4UGCbVwLz5oF0Af//EAB8QAAICAgMAAwAAAAAAAAAAAAABAhEDIRASMQRhgf/aAAgBAQABPwBC8ZiWkR4RHwxtKKHmp6J5VGNi9ExTpJGjsmtiYh5YqUU2do+wl+HZsw5be2SyJQbJ5HKdiySshJuO3sWaHiiifyJWjv2dsjmxprRPK1J0kWSe0WJkXfEvVzF+l/Q3ZZV7KZ//xAAXEQADAQAAAAAAAAAAAAAAAAABEBEw/9oACAECAQE/AHVUMP/EABgRAQEBAQEAAAAAAAAAAAAAAAEAIBAR/9oACAEDAQE/ANM3jxjH/9k=",
+            "processedVideos": [],
+            "streamingSidecar": "4xYfW17aqUPbPSKUJ7qV4N7yliMtK2mOqUWE5mUyoZ/rg4jQA4RSuBpTtmGvh9bTLoRix6XObRG1MYsV",
+            "mediaKeyTimestamp": {
+              "low": 1773612900,
+              "high": 0,
+              "unsigned": false
+            },
+            "interactiveAnnotations": [],
+            "externalShareFullVideoDurationInSeconds": 0
+          },
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "MMOvFn2r0m+xUtzPxciTpIlyqu4vVvsiMpgMFseAm8o=",
+            "deviceListMetadata": {
+              "senderTimestamp": {
+                "low": 1772053379,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773612913,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "pairedMediaType": 0,
+          "statusSourceType": 1,
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsbc2mw0w2fnp4j55n307i9",
+        "key": {
+          "id": "ACB9FA903B134A7CC646DE113CF5C3C1",
+          "fromMe": false,
+          "remoteJid": "224842175528963@lid",
+          "participant": "",
+          "remoteJidAlt": "573116816884@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Natalia♡.",
+        "messageType": "imageMessage",
+        "message": {
+          "imageMessage": {
+            "url": "https://mmg.whatsapp.net/v/t62.7118-24/19655469_2660935590973134_5700300289992148555_n.enc?ccb=11-4&oh=01_Q5Aa4AH3tYcYc_t5Vhnq2Sgu2ULsCQOvgklfwT5EZ3hHPxkrMQ&oe=69DE8980&_nc_sid=5e03e0&mms3=true",
+            "width": 900,
+            "height": 1600,
+            "mediaKey": "rAnhNNNWKSTwUEtG8gW3iCPKKI4UzXAHuQhQSQzoUf8=",
+            "mimetype": "image/jpeg",
+            "directPath": "/v/t62.7118-24/19655469_2660935590973134_5700300289992148555_n.enc?ccb=11-4&oh=01_Q5Aa4AH3tYcYc_t5Vhnq2Sgu2ULsCQOvgklfwT5EZ3hHPxkrMQ&oe=69DE8980&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 127925,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "L7b4AU1kaiHSzsQngEDx9PMdpnBuCcLZubjJo7QW9G8=",
+            "annotations": [],
+            "contextInfo": {
+              "mentionedJid": [],
+              "groupMentions": [],
+              "pairedMediaType": 0,
+              "statusSourceType": 0,
+              "statusAttributions": []
+            },
+            "scanLengths": [
+              13643,
+              44009,
+              22761,
+              47512
+            ],
+            "scansSidecar": "eqiqVooUVVyqnxuJhE4q/pCzQCfxm1qxV1nh5iMXNj4O1PBTwkLtqQ==",
+            "fileEncSha256": "oQXo03AFM4Bkga6vql7LCzzdCrPyhOBo8cRAxLkLjgc=",
+            "jpegThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P/Zztn////////////////CABEIAEAAJAMBIgACEQEDEQH/xAAtAAACAwEAAAAAAAAAAAAAAAAAAwIEBQEBAQEBAAAAAAAAAAAAAAAAAAIAAf/aAAwDAQACEAMQAAAAzl94HAnGmEimak77GMjVXZklwxu0sW1ZddncRaTNqHLIEmzBFjjJGf/EACIQAQACAgEEAgMAAAAAAAAAAAEAAgMREgQhMVEQExRBYf/aAAgBAQABPwBYxhD40xpb1AdwJjxcmfjU4d6xx8Y9Oqs4p2SdNhxXr/SX7AEyV2px3aPTZKm1lsVLu+Upa46p5tAtYC/kl62px1YCNvB5HzLUWz9OMaws6JTqrFjZuZcxn0NdJDJkv2/XohZACOLfescVpXD7hoNEcoMNcd/G5ly6Je9t7ban/8QAGBEAAwEBAAAAAAAAAAAAAAAAABEgARL/2gAIAQIBAT8AUIQ550//xAAYEQEBAQEBAAAAAAAAAAAAAAAAARESEP/aAAgBAwEBPwD2106Wa5bWq2P/2Q==",
+            "mediaKeyTimestamp": {
+              "low": 1773612906,
+              "high": 0,
+              "unsigned": false
+            },
+            "midQualityFileSha256": "pPGxRrRa264lUVRVVRnxwkgTlxSPqbbyu2+EV38HN2A=",
+            "interactiveAnnotations": []
+          },
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "a3scfBYPxWxFErspRXnhvBXAU9DfLPF3RJtaWxA/XeE=",
+            "deviceListMetadata": {
+              "senderTimestamp": {
+                "low": 1772053379,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773612913,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "pairedMediaType": 0,
+          "statusSourceType": 0,
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsbbw510w1rnp4jk455zamm",
+        "key": {
+          "id": "2A850AFCFA81D7AD8A2D",
+          "fromMe": true,
+          "remoteJid": "573116816884@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "224842175528963@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Cómo está eso amor?"
+        },
+        "messageTimestamp": 1773612904,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsbbm610w1hnp4jb0f4sjif",
+        "key": {
+          "id": "ACAAF048F9BE4FAAC1BA31CDD9467F67",
+          "fromMe": false,
+          "remoteJid": "224842175528963@lid",
+          "participant": "",
+          "remoteJidAlt": "573116816884@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Natalia♡.",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Ya llegué amor",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "GHJBH5VrxI9kgVAvQW5RGDKvQhgfMa7WdybRAHVGhbk=",
+            "deviceListMetadata": {
+              "senderTimestamp": {
+                "low": 1772053379,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773612892,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsb8b5f0w17np4jlc2zc25g",
+        "key": {
+          "id": "3EB032BA60D27CA24E908E",
+          "fromMe": true,
+          "remoteJid": "573123613840@s.whatsapp.net"
+        },
+        "pushName": "Você",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "🔔 *Mensaje de Prueba - Barbería Churco*\n\nHola! 👋\n\nEste es un mensaje de prueba del sistema de notificaciones.\n\nSi recibes este mensaje, significa que el sistema está funcionando correctamente. ✅\n\n_Escribe *hola* para volver al menú principal._"
+        },
+        "messageTimestamp": 1773612737,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "web",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "disappearingMode": {
+            "initiator": 0
+          },
+          "ephemeralSettingTimestamp": {
+            "low": 1773439937,
+            "high": 0,
+            "unsigned": false
+          }
+        },
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "SERVER_ACK"
+          },
+          {
+            "status": "SERVER_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsar6l60w0nnp4jm4bfs4ma",
+        "key": {
+          "id": "3A52238CD7CBFCEE1051",
+          "fromMe": false,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Atletico Arauca",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Listo pana de una, a qué horas?",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "QRVJatgDiuw8D4iZIhqB35AVN06EhtDxo4DUgRqZ4Qg=",
+            "deviceListMetadata": {
+              "senderKeyHash": "X4olRCeQdfuLUg==",
+              "senderTimestamp": {
+                "low": 1772829468,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611938,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": []
+      },
+      {
+        "id": "cmmsan1ek0w0hnp4j1e3d4l8b",
+        "key": {
+          "id": "3AE032E579156A93AEAA",
+          "fromMe": false,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Martin Jimenez",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Estaré atento",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "vGls/ZbLJ6w/zQF2tlbGs1+bAgeu75UGhYGOTwnJeXM=",
+            "deviceListMetadata": {
+              "senderKeyHash": "DGbyCEt8ECijBw==",
+              "senderTimestamp": {
+                "low": 1772507013,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611745,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": []
+      },
+      {
+        "id": "cmmsamxmh0w0bnp4jjcceznmw",
+        "key": {
+          "id": "3A4FEA357EADA9468CA0",
+          "fromMe": false,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Martin Jimenez",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Vale me avisas",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "oeFmtc+GIiq6fhxhlmYCRziYm5VGah+Ih3q2aKXixKg=",
+            "deviceListMetadata": {
+              "senderKeyHash": "DGbyCEt8ECijBw==",
+              "senderTimestamp": {
+                "low": 1772507013,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611740,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": []
+      },
+      {
+        "id": "cmmsala9o0w01np4jsrl6dty0",
+        "key": {
+          "id": "2ACCE9D751CA32C93351",
+          "fromMe": true,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "audioMessage",
+        "message": {
+          "audioMessage": {
+            "ptt": true,
+            "url": "https://mmg.whatsapp.net/v/t62.7117-24/41102287_34323792643901655_7296581298783074525_n.enc?ccb=11-4&oh=01_Q5Aa4AHXRVOZiQhIXC7TJv_hFGOZPiC0ho2rOkFMWbRk1RzDKQ&oe=69DE9DA1&_nc_sid=5e03e0&mms3=true",
+            "seconds": 18,
+            "mediaKey": "eyK5iEEWdi/Td/jUTbbChb8UddLw+Y2w2Nr2iLdDTo4=",
+            "mimetype": "audio/ogg; codecs=opus",
+            "waveform": "MyckGzVkYE9EZF5kYWRXZFBWS11kXkYnF2RkZGRkY1dkSB4OZFpkZGRKU0pSQDhVMVBGGg84ZGRkZGBkKxwUHg==",
+            "directPath": "/v/t62.7117-24/41102287_34323792643901655_7296581298783074525_n.enc?ccb=11-4&oh=01_Q5Aa4AHXRVOZiQhIXC7TJv_hFGOZPiC0ho2rOkFMWbRk1RzDKQ&oe=69DE9DA1&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 44409,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "G+znTK+G6FzdwNJB18sTHu24BF5sCoBd1OP6TS4GS3s=",
+            "fileEncSha256": "nNbHbsLRlbFlyk+ANssexNjloUiyJ/Wrg2huEw2xBIA=",
+            "streamingSidecar": "9BuswVaSKIeNZQ==",
+            "mediaKeyTimestamp": {
+              "low": 1773611644,
+              "high": 0,
+              "unsigned": false
+            }
+          }
+        },
+        "messageTimestamp": 1773611663,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "PLAYED"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsaeff10vzrnp4jnikayzgh",
+        "key": {
+          "id": "3AFBEEFD49D5F7804F28",
+          "fromMe": false,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Martin Jimenez",
+        "messageType": "audioMessage",
+        "message": {
+          "audioMessage": {
+            "ptt": true,
+            "url": "https://mmg.whatsapp.net/v/t62.7117-24/653468688_924317936995632_6339649263118182069_n.enc?ccb=11-4&oh=01_Q5Aa4AHF9BCAOHCd_OibFK2lOOxsaKLJELAmwKvyesHnPBJr9w&oe=69DE8312&_nc_sid=5e03e0&mms3=true",
+            "seconds": 44,
+            "mediaKey": "SXE3le1M8jTRand6KgRyhansuik3hMrmeDnUPcifjqs=",
+            "mimetype": "audio/ogg; codecs=opus",
+            "waveform": "JhobLjApKBgSIhwgEhEZHxooDiEJCwkKAiIfPDYiAwEbFA4oTTMiVUk8HCQDDiklLSQlHxETDAkYHxcEKEMFAA==",
+            "directPath": "/v/t62.7117-24/653468688_924317936995632_6339649263118182069_n.enc?ccb=11-4&oh=01_Q5Aa4AHF9BCAOHCd_OibFK2lOOxsaKLJELAmwKvyesHnPBJr9w&oe=69DE8312&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 100223,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "xFHbKRUHSd8AGWtpfKooXaoswtShgTR6h3MTja4AYTs=",
+            "fileEncSha256": "M+TZSuGl5ubZVcOZoyb7Jh8Tlyp/bO8Y/ln52mwi/w0=",
+            "streamingSidecar": "gSkGbtZ0kLU3tVZrPQJFMzyjJB0=",
+            "mediaKeyTimestamp": {
+              "low": 1773611298,
+              "high": 0,
+              "unsigned": false
+            }
+          },
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "uy8wpdf3FNdtPkdriJa0/K0+orn/xcQY33Efyjb175U=",
+            "deviceListMetadata": {
+              "senderKeyHash": "DGbyCEt8ECijBw==",
+              "senderTimestamp": {
+                "low": 1772507013,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611343,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          },
+          {
+            "status": "PLAYED"
+          }
+        ]
+      },
+      {
+        "id": "cmmsaax200vzfnp4jfi9jlquy",
+        "key": {
+          "id": "2AF2189B4A9B102FAE7C",
+          "fromMe": true,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Para el martes en la mañana"
+        },
+        "messageTimestamp": 1773611179,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa9sf80vz5np4j49g3kh6f",
+        "key": {
+          "id": "3A77972CBDDB61ACF820",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "No bro, los que agendes hoy no les va a poder llegar recordatorio, eso solo lo hace el bot con los que crea el",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "9CeiG02Me5VO77mvZg8sNTroZ/aDbZvZwCPef7dY3kQ=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611127,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": {
+          "stanzaId": "2A90D484889C972CC604",
+          "quotedType": 0,
+          "participant": "196761259909209@lid",
+          "mentionedJid": [],
+          "groupMentions": [],
+          "quotedMessage": {
+            "audioMessage": {
+              "ptt": true,
+              "url": "https://mmg.whatsapp.net/v/t62.7117-24/653536306_1682650623171879_5705999154361390782_n.enc?ccb=11-4&oh=01_Q5Aa4AEwEr9ZUFTHe-SpoKM1ia7-ebZNw9OXrSu-4qaIZd1WTg&oe=69DE904E&_nc_sid=5e03e0&mms3=true",
+              "seconds": 7,
+              "mediaKey": "6NnV1DCDYXFwMqlQVQOWpb8gSg269PRB/d+RJUtAUBA=",
+              "mimetype": "audio/ogg; codecs=opus",
+              "waveform": "ABYcHyIeHDFeY2RkZGRkZGRkZGRkZFA+O01BTl5kZGRdU1NVTkE4MiswUlBXVUFLQDhCOEJHRkdZYl9NVF1dSA==",
+              "directPath": "/v/t62.7117-24/653536306_1682650623171879_5705999154361390782_n.enc?ccb=11-4&oh=01_Q5Aa4AEwEr9ZUFTHe-SpoKM1ia7-ebZNw9OXrSu-4qaIZd1WTg&oe=69DE904E&_nc_sid=5e03e0",
+              "fileLength": {
+                "low": 18052,
+                "high": 0,
+                "unsigned": true
+              },
+              "fileSha256": "8LG5AsVjqHuhslK2NKlym5yxl4xhz15Po4j1KNMSFm8=",
+              "fileEncSha256": "EjBVSwoWGsoZdRV6YyQLMNhlhBQE+HD81qq7lAkn05k=",
+              "streamingSidecar": "c2yq5y8zbQ+lpw==",
+              "mediaKeyTimestamp": {
+                "low": 1773611079,
+                "high": 0,
+                "unsigned": false
+              }
+            }
+          },
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa9j5y0vyznp4jakapzb50",
+        "key": {
+          "id": "2A4F167373519389835D",
+          "fromMe": true,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Mañana está full amigo"
+        },
+        "messageTimestamp": 1773611115,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa9bzh0vyrnp4j9nf1chgc",
+        "key": {
+          "id": "2A1D2CE3BB44AB84B519",
+          "fromMe": true,
+          "remoteJid": "573113663328@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "91023543930975@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Ya te digo"
+        },
+        "messageTimestamp": 1773611105,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa99s70vylnp4jpy6d1m35",
+        "key": {
+          "id": "2A893AD5CF941C736813",
+          "fromMe": true,
+          "remoteJid": "573113663328@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "91023543930975@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Mano"
+        },
+        "messageTimestamp": 1773611103,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa93ye0vyfnp4jhgj2h4ua",
+        "key": {
+          "id": "2ABADCE72619ED4F1608",
+          "fromMe": true,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Que más bro"
+        },
+        "messageTimestamp": 1773611095,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa8xqj0vy3np4jdfm38n3e",
+        "key": {
+          "id": "2A90D484889C972CC604",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "audioMessage",
+        "message": {
+          "audioMessage": {
+            "ptt": true,
+            "url": "https://mmg.whatsapp.net/v/t62.7117-24/653536306_1682650623171879_5705999154361390782_n.enc?ccb=11-4&oh=01_Q5Aa4AEwEr9ZUFTHe-SpoKM1ia7-ebZNw9OXrSu-4qaIZd1WTg&oe=69DE904E&_nc_sid=5e03e0&mms3=true",
+            "seconds": 7,
+            "mediaKey": "6NnV1DCDYXFwMqlQVQOWpb8gSg269PRB/d+RJUtAUBA=",
+            "mimetype": "audio/ogg; codecs=opus",
+            "waveform": "ABYcHyIeHDFeY2RkZGRkZGRkZGRkZFA+O01BTl5kZGRdU1NVTkE4MiswUlBXVUFLQDlCOUJHRkdZYl9NVF1dSA==",
+            "directPath": "/v/t62.7117-24/653536306_1682650623171879_5705999154361390782_n.enc?ccb=11-4&oh=01_Q5Aa4AEwEr9ZUFTHe-SpoKM1ia7-ebZNw9OXrSu-4qaIZd1WTg&oe=69DE904E&_nc_sid=5e03e0",
+            "fileLength": {
+              "low": 18052,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "8LG5AsVjqHuhslK2NKlym5yxl4xhz15Po4j1KNMSFm8=",
+            "fileEncSha256": "EjBVSwoWGsoZdRV6YyQLMNhlhBQE+HD81qq7lAkn05k=",
+            "streamingSidecar": "c2yq5y8zbQ+lpw==",
+            "mediaKeyTimestamp": {
+              "low": 1773611079,
+              "high": 0,
+              "unsigned": false
+            }
+          }
+        },
+        "messageTimestamp": 1773611087,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          },
+          {
+            "status": "PLAYED"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa8vda0vxvnp4jdn9adbhb",
+        "key": {
+          "id": "3AA5609AC9AC3ADB5192",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Por ahí a las 8-9",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "1nfypBD/ADg9tSVIi0NIF4/hrEZLfRT7GUZHFGBProY=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611084,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": {
+          "stanzaId": "3AE2726A9B828536ACBF",
+          "quotedType": 0,
+          "participant": "72615230193763@lid",
+          "mentionedJid": [],
+          "groupMentions": [],
+          "quotedMessage": {
+            "conversation": "hoy en la noche está"
+          },
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa8ieh0vxnnp4jblodl6e5",
+        "key": {
+          "id": "2AF79EFEAF72EBFB146F",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Cómo hago para agendar manualmente"
+        },
+        "messageTimestamp": 1773611067,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa8e7b0vxfnp4j5y4rrsdv",
+        "key": {
+          "id": "3AE2726A9B828536ACBF",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "hoy en la noche está",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "BJ/xSs2XQYMoG2zPewGmif/zCRSKoXjTO/GPFn3kxLs=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611062,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa865u0vx7np4jvv0rkh5n",
+        "key": {
+          "id": "3A16D9DC78145203D67D",
+          "fromMe": false,
+          "remoteJid": "275758425616599@lid",
+          "participant": "",
+          "remoteJidAlt": "573153476293@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Martin Jimenez",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Churco",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "dLYHJ3UM8rwU7vORCtmNwuVQOUrN8gt7NK9sSz0SIeU=",
+            "deviceListMetadata": {
+              "senderKeyHash": "DGbyCEt8ECijBw==",
+              "senderTimestamp": {
+                "low": 1772507013,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773611051,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa7s560vwvnp4j0l3it9zp",
+        "key": {
+          "id": "2ABB3E1FCCDDE7392234",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Mañana a qué hora?"
+        },
+        "messageTimestamp": 1773611033,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa7gde0vwnnp4j3rgfh8n3",
+        "key": {
+          "id": "2A45B60B061B9AD75B97",
+          "fromMe": true,
+          "remoteJid": "573018472037@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "180694189875407@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Me tienes que entregar 126 con lo de ayer"
+        },
+        "messageTimestamp": 1773611018,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa70d50vwhnp4jwelp3y28",
+        "key": {
+          "id": "2AF464F4C3014BF39834",
+          "fromMe": true,
+          "remoteJid": "573018472037@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "180694189875407@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "imageMessage",
+        "message": {
+          "imageMessage": {
+            "url": "https://mmg.whatsapp.net/o1/v/t24/f2/m269/AQOgw7yx6aV4_Jbp2ltWjqe5v02ww5VZTow2W83u2I5zscObmXphZNVAn034Svp-qjycEx3RsIsZJF_fm-wrSugnqXcQQBCNTalqMMQlTQ?ccb=9-4&oh=01_Q5Aa4AHqIt6pKfmkUOp7Sbewu_0jyFUTQb-4s17Lu-64OfZcJA&oe=69DEADEF&_nc_sid=e6ed6c&mms3=true",
+            "width": 738,
+            "height": 1600,
+            "mediaKey": "NHfij2eQsQA8ZhjY64urlcjWhOXqh4nfx2CVOTnJlVc=",
+            "mimetype": "image/jpeg",
+            "directPath": "/o1/v/t24/f2/m269/AQOgw7yx6aV4_Jbp2ltWjqe5v02ww5VZTow2W83u2I5zscObmXphZNVAn034Svp-qjycEx3RsIsZJF_fm-wrSugnqXcQQBCNTalqMMQlTQ?ccb=9-4&oh=01_Q5Aa4AHqIt6pKfmkUOp7Sbewu_0jyFUTQb-4s17Lu-64OfZcJA&oe=69DEADEF&_nc_sid=e6ed6c",
+            "fileLength": {
+              "low": 104313,
+              "high": 0,
+              "unsigned": true
+            },
+            "fileSha256": "1yulElXRcLYaiO2w6TJer+Awamn3Xk+tp/eklCcGdVQ=",
+            "annotations": [],
+            "contextInfo": {
+              "mentionedJid": [],
+              "groupMentions": [],
+              "statusSourceType": 0,
+              "statusAttributions": []
+            },
+            "scanLengths": [
+              8477,
+              44111,
+              20336,
+              31387
+            ],
+            "scansSidecar": "ZP8C2zF6Ko6S08C4zhudp6WNfQU1nYgZtjyaVy8wcRGvLadamx+vZw==",
+            "fileEncSha256": "i6GUqnCX2wJ0gCnsZL++pRFbVWKGb2tbmk0E6PWOvm4=",
+            "jpegThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAMBAgUG/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAAA+l3nTfF9nxyOS6PotwAZKmHOV0isJ9dAwczpIpSVDQGaYDmdJnfcxRPo7zRgOYhboANwAP/EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQIBAT8AT//EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQMBAT8AT//EACoQAAEEAAQFAwUBAAAAAAAAAAEAAgMREBIhMSAiQVFSBRNhBBQjMjNx/9oACAEBAAE/ABj6sI/uWl41rTRGMCOy4kHsEBE+aJ8Ys2BshsMDwerHNOGFljunEj8bg4Dc0vpYHe+yQZw07IbYFE00nsvf5Q7KdU2Yu2YURmNuitUOsKGgFRLO7wKa4ndtIpzsrbpAgjoP9Qy9K4inhpbzDRVF2KZGxpsDVb8AwkDS3mOiyR+RUYaDykm++Jw6LopAHNomvlCIE6PUceS9bVcPRPGZtXSDHjZ4WWTzCDJa/osknmmhw/Y3gRhI0ubQq/le1J8KMODQHVfB0Qw///4AAwD/2Q==",
+            "firstScanLength": 8477,
+            "imageSourceType": 0,
+            "firstScanSidecar": "ZP8C2zF6Ko6S0w==",
+            "mediaKeyTimestamp": {
+              "low": 1773610996,
+              "high": 0,
+              "unsigned": false
+            },
+            "midQualityFileSha256": "jp6sTus/n4WTzgAAh83yV9DCPmcDihx1Ae9wb0K13HM=",
+            "interactiveAnnotations": []
+          }
+        },
+        "messageTimestamp": 1773610997,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "statusSourceType": 0,
+          "statusAttributions": []
+        },
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa685v0vwbnp4jbsc9jet6",
+        "key": {
+          "id": "3AACA2BC75708212AABA",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Súper mal, eso más nunca volverá a suceder, malparido servidor inservible jajsjsjs, te aviso cuando esté todo ready",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "fB3qV7aiHjw/Lqvgkk/JSiqAK9zKq6nP/s04UkY2r3k=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773610961,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa5y440vvznp4j985lc0b7",
+        "key": {
+          "id": "AC1F333F6328ED790DE0442350627BEA",
+          "fromMe": false,
+          "remoteJid": "180694189875407@lid",
+          "participant": "",
+          "remoteJidAlt": "573018472037@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "🖤🖤🖤🖤",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "🤦🏾‍♂️si",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "5AZucBjkb9lA1qmzAq/5IO2BEUag/aIh34SFJRLMkMo=",
+            "deviceListMetadata": {
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773610948,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa5htp0vvrnp4j7ykngqzr",
+        "key": {
+          "id": "AC2A82E0432A1012DBD9123A76C4AE70",
+          "fromMe": false,
+          "remoteJid": "180694189875407@lid",
+          "participant": "",
+          "remoteJidAlt": "573018472037@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "🖤🖤🖤🖤",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Dale mi brother",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "2J/3nx+G11MWeMBNKqlYUOLHejcSY3g/NllK9Vxx7Lc=",
+            "deviceListMetadata": {
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773610926,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa5glw0vvfnp4jp5ckqwkq",
+        "key": {
+          "id": "2A1DE40859510F3E9DF9",
+          "fromMe": true,
+          "remoteJid": "573018472037@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "180694189875407@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Me los vas a dar hoy?"
+        },
+        "messageTimestamp": 1773610925,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa59zp0vv9np4jy9t0g2mq",
+        "key": {
+          "id": "2A00331243C0A64C7D48",
+          "fromMe": true,
+          "remoteJid": "573018472037@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "180694189875407@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hasta ahorita veo"
+        },
+        "messageTimestamp": 1773610916,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa53nw0vv3np4jshd4zjx9",
+        "key": {
+          "id": "2AA1E1632FD5D09B52E4",
+          "fromMe": true,
+          "remoteJid": "573018472037@s.whatsapp.net",
+          "participant": "",
+          "remoteJidAlt": "180694189875407@lid",
+          "addressingMode": "pn"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Bro"
+        },
+        "messageTimestamp": 1773610908,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa4zde0vuvnp4jljfmgyrx",
+        "key": {
+          "id": "2AC0426E08539DABD9C6",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Eso me descuadra resto"
+        },
+        "messageTimestamp": 1773610902,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmmsa4t7u0vupnp4j48veib4i",
+        "key": {
+          "id": "2A33A7EBFF026E017E3A",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Que mal bro"
+        },
+        "messageTimestamp": 1773610894,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms9rsjm0vtjnp4jyn0jjtop",
+        "key": {
+          "id": "3A338126ABA09B850274",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Mk, el día de hoy no se va a poder agendar, avise en estados, tuvimos un problema en nuestro servidor que tenemos para las empresas de Arauca, es culpa de nosotros"
+        },
+        "messageTimestamp": 1773610354,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "EDITED"
+          },
+          {
+            "status": "EDITED"
+          },
+          {
+            "status": "SERVER_ACK"
+          },
+          {
+            "status": "EDITED"
+          },
+          {
+            "status": "SERVER_ACK"
+          },
+          {
+            "status": "SERVER_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms9t6au0vu1np4jqyw44hra",
+        "key": {
+          "id": "AC7D655EAE203E4E2C7D1F75BC1D0B2D",
+          "fromMe": false,
+          "remoteJid": "180694189875407@lid",
+          "participant": "",
+          "remoteJidAlt": "573018472037@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "🖤🖤🖤🖤",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Me avisas mano por favor",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "M9Urf5x4s8Zw8935Ed0bka7qxJTGiWYNPflY2eOZqcQ=",
+            "deviceListMetadata": {
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773610352,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms9qs6e0vtdnp4jpu10cyd4",
+        "key": {
+          "id": "3ACDF46E671CAFE143FB",
+          "fromMe": false,
+          "remoteJid": "91023543930975@lid",
+          "participant": "",
+          "remoteJidAlt": "573113663328@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Deiby",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Que pasó mano",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "g0U08n9BSInFhgEODMXAPoKfPbnaavh9g409iepEpb0=",
+            "deviceListMetadata": {
+              "senderTimestamp": {
+                "low": 1773607041,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773610240,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms9jlii0vt5np4j18uwmnz3",
+        "key": {
+          "id": "ACACA8B35D271941E2EBB4C3831E0224",
+          "fromMe": false,
+          "remoteJid": "164330347692038@lid",
+          "participant": "",
+          "remoteJidAlt": "573009739258@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "SANTIAGO SILVA",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Una pregunta tienes turno para esta semana?",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "cbilU7w5lcTx6CQcAUgy7Z9v22nsKVSoL5XF+yBnFXo=",
+            "deviceListMetadata": {
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609905,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": {
+          "mentionedJid": [],
+          "groupMentions": [],
+          "statusAttributions": [],
+          "entryPointConversionApp": "whatsapp",
+          "entryPointConversionSource": "global_search_new_chat",
+          "entryPointConversionDelaySeconds": 3220
+        },
+        "MessageUpdate": []
+      },
+      {
+        "id": "cmms9fzkq0vsxnp4j5w8efl8m",
+        "key": {
+          "id": "3A28049E4D92141654C5",
+          "fromMe": false,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Atletico Arauca",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Y mañana a qué hora tiene libre ?",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "XG1nkhbDTI8CbA1PuzCt4VOiLgneQTNOTcfmxMe55qE=",
+            "deviceListMetadata": {
+              "senderKeyHash": "X4olRCeQdfuLUg==",
+              "senderTimestamp": {
+                "low": 1772829468,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609736,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms97o8g0vsrnp4j8pag15lq",
+        "key": {
+          "id": "3A9DB9F54A9A96DE76D9",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Manoooo",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "niAqkqj6h24LxS6CxZwYRlvApuuW7eEXPZXWpmmqLjY=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609348,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms96o8i0vslnp4jts2oi480",
+        "key": {
+          "id": "3ADEDB4C86B9C44B73F9",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Por favor me lo mandas",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "jLU2y3MdBnLTvfHsZ2Eo5mpHGYkPvm9c0hYNeNcnufo=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609302,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms96lww0vsfnp4jen5cp35f",
+        "key": {
+          "id": "3ADFB652FBE49681F10D",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Te va a llegar un código",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "56u8DOV9yiFa09k08rYkebCSFTHfFihmdc7eY6fpGqE=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609299,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms96j6g0vs9np4j65qz3oyp",
+        "key": {
+          "id": "3AF34F2DFFB41454E0BE",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Mano",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "TCB6A79rW8zoI3giJIPI8lv6c0vx90Lgl2lVL3bi2Tc=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609295,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms91hz30vs3np4jgv23zi8e",
+        "key": {
+          "id": "ACAE72F248C9ADB65783820B016441B1",
+          "fromMe": false,
+          "remoteJid": "52024972419246@lid",
+          "participant": "",
+          "remoteJidAlt": "573123613840@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Daniel",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hola",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "bAAnMhCa0OiCPlJJTMzxsjXP5RXj665VJY+gQeE2NC4=",
+            "deviceListMetadata": {
+              "senderKeyHash": "zCPtz/6inML0VQ==",
+              "senderTimestamp": {
+                "low": 1773525586,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773609060,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms8yo3u0vrxnp4j912vzbf0",
+        "key": {
+          "id": "ACF83077DA8458EAA2D74530232A5D18",
+          "fromMe": false,
+          "remoteJid": "52024972419246@lid",
+          "participant": "",
+          "remoteJidAlt": "573123613840@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Daniel",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hola",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "juPS/PP4OC6k7nS3f76LtavLpqbtT5yfOBne76P3Qg8=",
+            "deviceListMetadata": {
+              "senderKeyHash": "zCPtz/6inML0VQ==",
+              "senderTimestamp": {
+                "low": 1773525586,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773608928,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms8xla50vrrnp4j8gvwjhj4",
+        "key": {
+          "id": "AC127FD862384E6B2EAE5F50571291F2",
+          "fromMe": false,
+          "remoteJid": "52024972419246@lid",
+          "participant": "",
+          "remoteJidAlt": "573123613840@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Daniel",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hola",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "7ymN+Ew0LYGnOrg54alXBWEWN9CKdVnrWtp4+VwWcd4=",
+            "deviceListMetadata": {
+              "senderKeyHash": "zCPtz/6inML0VQ==",
+              "senderTimestamp": {
+                "low": 1773525586,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773608878,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "android",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms8wfxr0vrlnp4j58st5mxn",
+        "key": {
+          "id": "3A3D5B9A8D89EA141132",
+          "fromMe": false,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "Andrés Cisneros",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hola",
+          "messageContextInfo": {
+            "threadId": [],
+            "messageSecret": "cW5oAdEYuSIaZNnzjpHdP08ey5hHaKXFghvdM1mqJks=",
+            "deviceListMetadata": {
+              "senderKeyHash": "gN+Inq6bomjLzg==",
+              "senderTimestamp": {
+                "low": 1773102411,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyHash": "THBuAjrWIR32qw==",
+              "senderKeyIndexes": [],
+              "recipientTimestamp": {
+                "low": 1772566064,
+                "high": 0,
+                "unsigned": true
+              },
+              "recipientKeyIndexes": []
+            },
+            "deviceListMetadataVersion": 2
+          }
+        },
+        "messageTimestamp": 1773608824,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "ios",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms8vt3q0vrbnp4j18zit37u",
+        "key": {
+          "id": "2A5F6732945E7FC60609",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Varios ya"
+        },
+        "messageTimestamp": 1773608795,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "READ"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmms8vly90vr5np4jrswz2sz4",
+        "key": {
+          "id": "2A6F08412B3D02916C33",
+          "fromMe": true,
+          "remoteJid": "72615230193763@lid",
+          "participant": "",
+          "remoteJidAlt": "573209855847@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Si bro porque están enviando"
+        },
+        "messageTimestamp": 1773608786,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "READ"
+          }
+        ]
+      },
+      {
+        "id": "cmms8v1t00vqznp4jxui3y88k",
+        "key": {
+          "id": "2A01D430FD0B19394F92",
+          "fromMe": true,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "Hoy estamos descansado"
+        },
+        "messageTimestamp": 1773608759,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      },
+      {
+        "id": "cmms8uxvs0vqtnp4j8777pkkq",
+        "key": {
+          "id": "2A75BADDB5002076B43B",
+          "fromMe": true,
+          "remoteJid": "269079751475388@lid",
+          "participant": "",
+          "remoteJidAlt": "573107672734@s.whatsapp.net",
+          "addressingMode": "lid"
+        },
+        "pushName": "@Churco’s Barber Studio",
+        "messageType": "conversation",
+        "message": {
+          "conversation": "No amigo"
+        },
+        "messageTimestamp": 1773608754,
+        "instanceId": "1cf31137-7d4d-425a-9509-3e9487658101",
+        "source": "unknown",
+        "contextInfo": null,
+        "MessageUpdate": [
+          {
+            "status": "DELIVERY_ACK"
+          },
+          {
+            "status": "DELIVERY_ACK"
+          }
+        ]
+      }
+    ]
+  }
+}
