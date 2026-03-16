@@ -31,14 +31,7 @@ def get_proximas_fechas(dias: int = 7, offset: int = 0) -> List[date]:
         dias: Número de fechas a retornar
         offset: Días a saltar desde la fecha de inicio (default: 0)
     """
-    fecha_actual = get_fecha_actual()
-    fecha_inicio_agendamiento = date(2026, 3, 23)  # Primer día disponible para agendar
-    
-    # Si estamos antes del 23/03/2026, comenzar desde esa fecha
-    if fecha_actual < fecha_inicio_agendamiento:
-        fecha_inicio = fecha_inicio_agendamiento
-    else:
-        fecha_inicio = fecha_actual
+    fecha_inicio = get_fecha_actual()
     
     # Aplicar offset
     fecha_inicio = fecha_inicio + timedelta(days=offset)
@@ -48,11 +41,8 @@ def get_proximas_fechas(dias: int = 7, offset: int = 0) -> List[date]:
 
 def es_fecha_valida(fecha: date) -> bool:
     """Verifica si una fecha es válida para agendar."""
-    fecha_minima = date(2026, 3, 23)  # Primer día disponible para agendar
     hoy = get_fecha_actual()
-    
-    # La fecha mínima es la mayor entre hoy y el 23/03/2026
-    fecha_inicio = max(hoy, fecha_minima)
+    fecha_inicio = hoy
     max_fecha = fecha_inicio + timedelta(days=30)
     
     return fecha_inicio <= fecha <= max_fecha
