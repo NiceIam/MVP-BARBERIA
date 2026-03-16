@@ -271,35 +271,48 @@ Escribe 'hola' para volver al menú principal.
         duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
         return self._mostrar_fechas(duracion_minutos)
     
-    def _mostrar_fechas(self, duracion_minutos: int = 50) -> str:
-        """Muestra 20 fechas con disponibilidad, buscando en el futuro si es necesario."""
+    def _obtener_fechas_disponibles(self, duracion_minutos: int) -> list[date]:
+        """Calcula las próximas 20 fechas disponibles minimizando llamadas a APIs."""
         FECHAS_A_MOSTRAR = 20
-        MAX_DIAS_BUSCAR = 60  # Buscar hasta 60 días en el futuro
+        MAX_DIAS_BUSCAR = 60
         
         fechas_disponibles = []
-        dias_revisados = 0
+        fechas_a_revisar = get_proximas_fechas(MAX_DIAS_BUSCAR, 0)
         
-        # Buscar hasta encontrar 20 fechas con disponibilidad o llegar al límite
-        while len(fechas_disponibles) < FECHAS_A_MOSTRAR and dias_revisados < MAX_DIAS_BUSCAR:
-            # Obtener siguiente lote de fechas
-            fechas_lote = get_proximas_fechas(10, dias_revisados)
+        if not fechas_a_revisar:
+            return []
             
-            for fecha in fechas_lote:
-                if len(fechas_disponibles) >= FECHAS_A_MOSTRAR:
-                    break
+        fecha_ini = fechas_a_revisar[0]
+        fecha_fin = fechas_a_revisar[-1]
+        
+        todas_citas = self.sheets.get_todas_citas_activas()
+        todos_eventos = self.calendar.get_eventos_rango(fecha_ini, fecha_fin)
+        
+        for fecha in fechas_a_revisar:
+            if len(fechas_disponibles) >= FECHAS_A_MOSTRAR:
+                break
                 
-                citas_dia = self.sheets.get_citas_por_fecha(fecha)
-                eventos_calendar = self.calendar.get_eventos_dia(fecha)
-                slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
-                
-                if slots:  # Solo agregar si tiene al menos un slot disponible
-                    fechas_disponibles.append(fecha)
+            citas_dia = [c for c in todas_citas if c.fecha == fecha]
+            eventos_dia = []
+            for e in todos_eventos:
+                start = e.get('start', {})
+                start_str = start.get('dateTime') or start.get('date', '')
+                if start_str.startswith(fecha.isoformat()):
+                    eventos_dia.append(e)
             
-            dias_revisados += 10
+            slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_dia)
+            if slots:
+                fechas_disponibles.append(fecha)
+                
+        return fechas_disponibles
+
+    def _mostrar_fechas(self, duracion_minutos: int = 50) -> str:
+        """Muestra 20 fechas con disponibilidad, buscando en el futuro si es necesario."""
+        fechas_disponibles = self._obtener_fechas_disponibles(duracion_minutos)
         
         # Si no hay fechas disponibles
         if not fechas_disponibles:
-            return self._agregar_opcion_menu(f"😔 Lo sentimos, no hay fechas disponibles en los próximos {MAX_DIAS_BUSCAR} días. Por favor intenta más tarde o contacta directamente a la barbería.")
+            return self._agregar_opcion_menu("😔 Lo sentimos, no hay fechas disponibles en los próximos 60 días. Por favor intenta más tarde o contacta directamente a la barbería.")
         
         mensaje = "📅 *¿Qué día prefieres?*\n\n"
         
@@ -324,30 +337,8 @@ Escribe 'hola' para volver al menú principal.
         # Obtener duración del servicio
         duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
         
-        # Buscar 20 fechas con disponibilidad (igual que en _mostrar_fechas)
-        FECHAS_A_MOSTRAR = 20
-        MAX_DIAS_BUSCAR = 60
-        
-        fechas_disponibles = []
-        dias_revisados = 0
-        
-        # Buscar hasta encontrar 20 fechas con disponibilidad o llegar al límite
-        while len(fechas_disponibles) < FECHAS_A_MOSTRAR and dias_revisados < MAX_DIAS_BUSCAR:
-            # Obtener siguiente lote de fechas
-            fechas_lote = get_proximas_fechas(10, dias_revisados)
-            
-            for fecha in fechas_lote:
-                if len(fechas_disponibles) >= FECHAS_A_MOSTRAR:
-                    break
-                
-                citas_dia = self.sheets.get_citas_por_fecha(fecha)
-                eventos_calendar = self.calendar.get_eventos_dia(fecha)
-                slots = obtener_slots_disponibles(fecha, duracion_minutos, citas_dia, eventos_calendar)
-                
-                if slots:  # Solo agregar si tiene al menos un slot disponible
-                    fechas_disponibles.append(fecha)
-            
-            dias_revisados += 10
+        # Buscar 20 fechas con disponibilidad
+        fechas_disponibles = self._obtener_fechas_disponibles(duracion_minutos)
         
         # Validar opción
         if not validar_opcion_numerica(mensaje, len(fechas_disponibles)):
@@ -361,7 +352,7 @@ Escribe 'hola' para volver al menú principal.
         eventos_calendar = self.calendar.get_eventos_dia(fecha_seleccionada)
         slots = obtener_slots_disponibles(fecha_seleccionada, duracion_minutos, citas_dia, eventos_calendar)
         
-        # Guardar fecha y continuar (ya sabemos que tiene slots porque fue filtrada)
+        # Guardar fecha y continuar
         sesion.datos_temp["fecha"] = fecha_seleccionada.isoformat()
         sesion.estado = ESTADO_ESPERANDO_HORA
         self.sheets.actualizar_sesion(sesion, row_index)

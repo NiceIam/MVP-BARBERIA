@@ -221,6 +221,26 @@ class CalendarClient:
             logger.error(f"Error obteniendo eventos del día {fecha}: {e}")
             return []
     
+    def get_eventos_rango(self, fecha_inicio: date, fecha_fin: date) -> List[Dict[str, Any]]:
+        """Obtiene todos los eventos en un rango de fechas (BATCH)."""
+        dt_inicio = self._crear_datetime_local(fecha_inicio, time(0, 0))
+        dt_fin = self._crear_datetime_local(fecha_fin, time(23, 59))
+        
+        try:
+            events_result = self.service.events().list(
+                calendarId=self.calendar_id,
+                timeMin=dt_inicio.isoformat(),
+                timeMax=dt_fin.isoformat(),
+                singleEvents=True,
+                orderBy='startTime'
+            ).execute()
+            
+            eventos = events_result.get('items', [])
+            return [e for e in eventos if e.get('status') != 'cancelled']
+        except HttpError as e:
+            logger.error(f"Error obteniendo eventos del rango {fecha_inicio} - {fecha_fin}: {e}")
+            return []
+    
     def test_connection(self) -> bool:
         """Prueba la conexión con Google Calendar."""
         try:
