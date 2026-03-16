@@ -1,0 +1,34 @@
+2026-03-15 21:47:05.070 | INFO     | services.google_sheets:__init__:39 - ✅ Credenciales cargadas desde variable de entorno
+2026-03-15 21:47:05.172 | INFO     | services.google_calendar:__init__:39 - ✅ Credenciales Calendar cargadas desde variable de entorno
+2026-03-15 21:47:07.394 | INFO     | services.google_sheets:test_connection:233 - Conexión a Google Sheets exitosa
+2026-03-15 21:47:07.805 | INFO     | services.google_sheets:crear_cita:159 - Cita creada: cita_3d73b7ab
+2026-03-15 21:47:07.806 | INFO     | services.google_calendar:crear_evento:83 - 📅 Creando evento en Calendar para cita cita_3d73b7ab
+2026-03-15 21:47:07.808 | DEBUG    | services.google_calendar:crear_evento:84 -    Fecha: 2026-03-16, Hora: 10:00:00 - 10:50:00
+2026-03-15 21:47:07.810 | DEBUG    | services.google_calendar:crear_evento:85 -    Calendar ID: churcobarberstudio1@gmail.com
+2026-03-15 21:47:09.441 | INFO     | services.google_calendar:crear_evento:138 - ✅ Evento creado en Calendar: a9u4hebb5j9vmhgo81lkgdscfs
+======================================================================
+🧪 TEST SIMPLE DE SERVICIOS
+======================================================================
+
+1️⃣ Importando servicios...
+   ✅ Imports exitosos
+
+2️⃣ Inicializando SheetsClient...
+   ✅ SheetsClient inicializado
+
+3️⃣ Inicializando CalendarClient...
+   ✅ CalendarClient inicializado
+
+4️⃣ Probando conexión a Sheets...
+   ✅ Conexión exitosa
+
+5️⃣ Creando cita de prueba...
+   ✅ Cita guardada en Sheets con ID: cita_3d73b7ab
+
+6️⃣ Agendando en Calendar...
+   ✅ Evento creado en Calendar con ID: a9u4hebb5j9vmhgo81lkgdscfs
+   ✅ Cita actualizada en Sheets con event_id
+
+======================================================================
+✅ TEST COMPLETADO
+======================================================================

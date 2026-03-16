@@ -9,7 +9,12 @@ load_dotenv()
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE', 'service_account.json')
-SERVICE_ACCOUNT_PATH = BASE_DIR / SERVICE_ACCOUNT_FILE
+
+# Solo crear Path si no es un JSON string
+if SERVICE_ACCOUNT_FILE.startswith('{'):
+    SERVICE_ACCOUNT_PATH = None  # Es un JSON, no un path
+else:
+    SERVICE_ACCOUNT_PATH = BASE_DIR / SERVICE_ACCOUNT_FILE
 
 # Google Sheets
 GOOGLE_SHEETS_ID = os.getenv('GOOGLE_SHEETS_ID', '1XEk1okxlRuTfCYsNXGSrtDXeYq0_S1FT')
@@ -21,7 +26,7 @@ TIMEZONE = os.getenv('TIMEZONE', 'America/Bogota')
 # Google API Scopes
 GOOGLE_SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/calendar.events'
+    'https://www.googleapis.com/auth/calendar'  # Scope completo para lectura y escritura
 ]
 
 # Evolution API
