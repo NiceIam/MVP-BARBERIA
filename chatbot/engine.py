@@ -89,6 +89,7 @@ class ChatbotEngine:
             return self._procesar_reagendamiento(telefono, mensaje, sesion, row_index)
         
         # Estado desconocido - resetear
+        logger.warning(f"⚠️ Estado desconocido '{sesion.estado}' para {telefono}. Reseteando sesión.")
         self.sheets.eliminar_sesion(telefono)
         return self._menu_principal()
 
@@ -194,7 +195,13 @@ Responde con el número de la opción.
     def _mostrar_servicios(self) -> str:
         """Muestra los servicios disponibles."""
         servicios = self.sheets.get_servicios_activos()
-        
+
+        if not servicios:
+            return self._agregar_opcion_menu(
+                "⚠️ Los servicios no están disponibles temporalmente. "
+                "Por favor contáctanos directamente o intenta de nuevo en unos minutos."
+            )
+
         mensaje = "✂️ *Selecciona tu servicio:*\n\n"
         for idx, servicio in enumerate(servicios, 1):
             mensaje += f"{idx}. {servicio.nombre}\n"
@@ -532,7 +539,14 @@ Responde *SI* para confirmar o *NO* para cancelar.
             # Guardar en Sheets
             if not self.sheets.crear_cita(cita):
                 return self._agregar_opcion_menu("Error al crear la cita. Por favor intenta de nuevo.")
-            
+
+            # Verificar que la cita realmente quedó en Sheets antes de crear el evento en Calendar.
+            # Esto previene desincronización si el API de Google acepta el request pero no persiste el dato.
+            cita_verificada = self.sheets.get_cita_por_id(cita.id)
+            if not cita_verificada:
+                logger.error(f"❌ CRÍTICO: Cita {cita.id} no encontrada en Sheets tras crearla. Abortando para evitar desincronización Calendar/Sheets.")
+                return self._agregar_opcion_menu("Error al confirmar la cita. Por favor intenta de nuevo.")
+
             # Crear evento en Calendar
             event_id = self.calendar.crear_evento(
                 cita_id=cita.id,

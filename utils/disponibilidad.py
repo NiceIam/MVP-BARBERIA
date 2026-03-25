@@ -73,12 +73,10 @@ def filtrar_slots_ocupados(
         # Verificar contra eventos en Calendar
         if not ocupado:
             for evento in eventos_calendar:
-                # Verificar si es evento de todo el día
+                # Ignorar eventos de todo el día (no bloquean slots individuales)
                 if 'date' in evento.get('start', {}):
-                    # Evento de todo el día - bloquea todos los slots
-                    ocupado = True
-                    break
-                
+                    continue
+
                 # Extraer hora de inicio y fin del evento con hora específica
                 start_str = evento.get('start', {}).get('dateTime', '')
                 end_str = evento.get('end', {}).get('dateTime', '')
