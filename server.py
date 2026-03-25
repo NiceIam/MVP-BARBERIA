@@ -114,10 +114,14 @@ async def procesar_webhook_interno(data: dict) -> dict:
                 del mensaje_cache[k]
             
             logger.info(f"💬 Mensaje de {telefono}: {texto}")
-            
+
             # Procesar mensaje con el chatbot
-            respuesta = chatbot.procesar_mensaje(telefono, texto)
-            
+            try:
+                respuesta = chatbot.procesar_mensaje(telefono, texto)
+            except Exception as e:
+                logger.error(f"❌ Error crítico procesando mensaje de {telefono}: {e}", exc_info=True)
+                respuesta = "Lo sentimos, ocurrió un error inesperado. Por favor intenta de nuevo o escribe *hola* para volver al menú."
+
             # Enviar respuesta
             evolution.send_message(telefono, respuesta)
             logger.info(f"✅ Respuesta enviada a {telefono}")

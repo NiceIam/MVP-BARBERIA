@@ -79,10 +79,10 @@ class SheetsClient:
                 body={'values': [values]}
             ).execute()
             return True
-        except HttpError as e:
-            logger.error(f"Error agregando fila a {sheet_name}: {e}")
+        except Exception as e:
+            logger.error(f"Error agregando fila a {sheet_name}: {type(e).__name__}: {e}")
             return False
-    
+
     def _update_row(self, range_name: str, values: List[Any]) -> bool:
         """Actualiza una fila específica."""
         try:
@@ -93,8 +93,8 @@ class SheetsClient:
                 body={'values': [values]}
             ).execute()
             return True
-        except HttpError as e:
-            logger.error(f"Error actualizando {range_name}: {e}")
+        except Exception as e:
+            logger.error(f"Error actualizando {range_name}: {type(e).__name__}: {e}")
             return False
     
     # === CLIENTES ===
@@ -231,7 +231,10 @@ class SheetsClient:
             _, row_index = result
             # Limpiar la fila
             range_name = f"{SHEET_SESIONES}!A{row_index}:E{row_index}"
-            return self._update_row(range_name, ["", "", "", "", ""])
+            success = self._update_row(range_name, ["", "", "", "", ""])
+            if not success:
+                logger.error(f"❌ No se pudo eliminar sesión de {telefono} en fila {row_index}")
+            return success
         return False
     
     def test_connection(self) -> bool:
