@@ -213,7 +213,11 @@ class SheetsClient:
         rows = self._read_range(f"{SHEET_SESIONES}!A2:E")
         for idx, row in enumerate(rows, start=2):
             if len(row) > 0 and row[0] == telefono:
-                return Sesion.from_sheet_row(row), idx
+                try:
+                    return Sesion.from_sheet_row(row), idx
+                except Exception as e:
+                    logger.error(f"❌ Sesión corrupta para {telefono} en fila {idx}: {e}. Se tratará como sesión nueva.")
+                    return None
         return None
     
     def crear_sesion(self, sesion: Sesion) -> bool:
