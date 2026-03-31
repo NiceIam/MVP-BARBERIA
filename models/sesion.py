@@ -25,11 +25,16 @@ class Sesion:
             except json.JSONDecodeError:
                 datos_temp = {}
         
+        try:
+            ultima_actividad = datetime.fromisoformat(row[3]) if len(row) > 3 and row[3] else datetime.now()
+        except (ValueError, TypeError):
+            ultima_actividad = datetime.now()
+
         return cls(
             telefono=row[0] if len(row) > 0 else "",
             estado=row[1] if len(row) > 1 else "",
             datos_temp=datos_temp,
-            ultima_actividad=datetime.fromisoformat(row[3]) if len(row) > 3 and row[3] else datetime.now(),
+            ultima_actividad=ultima_actividad,
             cita_en_proceso=row[4] if len(row) > 4 else ""
         )
     

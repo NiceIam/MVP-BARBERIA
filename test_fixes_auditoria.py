@@ -246,6 +246,66 @@ def _():
 
 
 # ===========================================================
+# FIX 5 — google_sheets.py: citas pasadas no deben aparecer al cancelar/reagendar
+# ===========================================================
+
+@test("Fix5: get_citas_por_telefono solo_activas excluye citas del pasado")
+def _():
+    from services.google_sheets import SheetsClient
+    from datetime import date, timedelta
+
+    sheets = SheetsClient.__new__(SheetsClient)
+    sheets.spreadsheet_id = "fake"
+    sheets.service = MagicMock()
+
+    hoy = date.today()
+    ayer = (hoy - timedelta(days=1)).strftime('%d/%m/%Y')
+    manana = (hoy + timedelta(days=1)).strftime('%d/%m/%Y')
+
+    sheets._read_range = MagicMock(return_value=[
+        # Cita futura confirmada → debe incluirse
+        ["cita_fut", "cli_1", "573001234567", "Juan", "srv_1", "Corte", "20000",
+         manana, "10:00", "10:40", "confirmada", "", "", "", ""],
+        # Cita pasada confirmada → debe excluirse
+        ["cita_pas", "cli_1", "573001234567", "Juan", "srv_1", "Corte", "20000",
+         ayer, "10:00", "10:40", "confirmada", "", "", "", ""],
+        # Cita de otro cliente → debe excluirse
+        ["cita_oth", "cli_2", "573009999999", "Pedro", "srv_1", "Corte", "20000",
+         manana, "11:00", "11:40", "confirmada", "", "", "", ""],
+    ])
+
+    citas = sheets.get_citas_por_telefono("573001234567", solo_activas=True)
+
+    assert len(citas) == 1, f"Solo debe retornar la cita futura, got {len(citas)}"
+    assert citas[0].id == "cita_fut"
+
+
+@test("Fix5: get_citas_por_telefono sin solo_activas retorna todas (incluyendo pasadas)")
+def _():
+    from services.google_sheets import SheetsClient
+    from datetime import date, timedelta
+
+    sheets = SheetsClient.__new__(SheetsClient)
+    sheets.spreadsheet_id = "fake"
+    sheets.service = MagicMock()
+
+    hoy = date.today()
+    ayer = (hoy - timedelta(days=1)).strftime('%d/%m/%Y')
+    manana = (hoy + timedelta(days=1)).strftime('%d/%m/%Y')
+
+    sheets._read_range = MagicMock(return_value=[
+        ["cita_fut", "cli_1", "573001234567", "Juan", "srv_1", "Corte", "20000",
+         manana, "10:00", "10:40", "confirmada", "", "", "", ""],
+        ["cita_pas", "cli_1", "573001234567", "Juan", "srv_1", "Corte", "20000",
+         ayer, "10:00", "10:40", "confirmada", "", "", "", ""],
+    ])
+
+    citas = sheets.get_citas_por_telefono("573001234567", solo_activas=False)
+
+    assert len(citas) == 2, f"Sin filtro activo debe retornar todas, got {len(citas)}"
+
+
+# ===========================================================
 # INTEGRACIÓN — flujo completo de agendamiento (mock)
 # ===========================================================
 

@@ -130,12 +130,14 @@ class SheetsClient:
     
     def get_citas_por_telefono(self, telefono: str, solo_activas: bool = False) -> List[Cita]:
         """Obtiene todas las citas de un cliente."""
+        from utils.datetime_utils import get_fecha_actual
         rows = self._read_range(f"{SHEET_CITAS}!A2:O")
+        hoy = get_fecha_actual()
         citas = []
         for row in rows:
             if len(row) > 2 and row[2] == telefono:
                 cita = Cita.from_sheet_row(row)
-                if not solo_activas or cita.estado in ['confirmada', 'pendiente']:
+                if not solo_activas or (cita.estado in ['confirmada', 'pendiente'] and cita.fecha >= hoy):
                     citas.append(cita)
         return sorted(citas, key=lambda c: c.fecha)
     
@@ -211,7 +213,11 @@ class SheetsClient:
         rows = self._read_range(f"{SHEET_SESIONES}!A2:E")
         for idx, row in enumerate(rows, start=2):
             if len(row) > 0 and row[0] == telefono:
-                return Sesion.from_sheet_row(row), idx
+                try:
+                    return Sesion.from_sheet_row(row), idx
+                except Exception as e:
+                    logger.error(f"❌ Sesión corrupta para {telefono} en fila {idx}: {e}. Se tratará como sesión nueva.")
+                    return None
         return None
     
     def crear_sesion(self, sesion: Sesion) -> bool:
