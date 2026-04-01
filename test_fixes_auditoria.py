@@ -351,6 +351,171 @@ def _():
 
 
 # ===========================================================
+# FIX 6A — models/cita.py: fecha_creacion/fecha_modificacion con formato inválido
+# ===========================================================
+
+@test("Fix6A: Cita.from_sheet_row con fecha_creacion en formato invalido retorna None")
+def _():
+    from models.cita import Cita
+
+    row = [
+        "cita_test03", "cli_abc", "573001234567", "Juan",
+        "srv_corte_barba", "Corte + Barba", "28000",
+        "24/03/2026", "14:00", "14:50", "confirmada", "",
+        "30/03/2026 21:35:18",  # formato que Sheets puede auto-generar (no ISO)
+        "30/03/2026 22:00:00",  # igual
+        ""
+    ]
+    cita = Cita.from_sheet_row(row)
+    assert cita.fecha_creacion is None, f"Esperaba None, got {cita.fecha_creacion}"
+    assert cita.fecha_modificacion is None, f"Esperaba None, got {cita.fecha_modificacion}"
+
+
+@test("Fix6A: Cita.from_sheet_row con fecha_creacion ISO valida la parsea correctamente")
+def _():
+    from models.cita import Cita
+    from datetime import datetime
+
+    row = [
+        "cita_test04", "cli_abc", "573001234567", "Juan",
+        "srv_corte_barba", "Corte + Barba", "28000",
+        "24/03/2026", "14:00", "14:50", "confirmada", "",
+        "2026-03-30T21:35:18.008000",  # formato ISO correcto
+        "2026-03-30T22:00:00",
+        ""
+    ]
+    cita = Cita.from_sheet_row(row)
+    assert cita.fecha_creacion is not None
+    assert cita.fecha_creacion.year == 2026
+
+
+# ===========================================================
+# FIX 6B — engine.py: _procesar_seleccion_hora con datos_temp incompleto
+# ===========================================================
+
+@test("Fix6B: _procesar_seleccion_hora sin fecha en datos_temp vuelve a mostrar fechas")
+def _():
+    from chatbot.engine import ChatbotEngine
+    from models.sesion import Sesion
+
+    engine = ChatbotEngine.__new__(ChatbotEngine)
+    engine.sheets = MagicMock()
+    engine.calendar = MagicMock()
+    engine.sheets.get_todas_citas_activas.return_value = []
+    engine.calendar.get_eventos_rango.return_value = []
+    engine.sheets.actualizar_sesion.return_value = True
+
+    sesion = Sesion(telefono="573001234567", estado="esperando_hora", datos_temp={
+        "duracion_minutos": 50
+        # "fecha" ausente — simula sesión corrupta
+    })
+
+    respuesta = engine._procesar_seleccion_hora("573001234567", "2", sesion, 5)
+
+    assert "fecha" in respuesta.lower() or "día" in respuesta.lower() or "error" in respuesta.lower(), \
+        f"Debería redirigir a selección de fecha, got: {respuesta[:80]}"
+    engine.sheets.actualizar_sesion.assert_called()
+
+
+# ===========================================================
+# FIX 6C — engine.py: _mostrar_resumen_confirmacion con datos_temp vacío
+# ===========================================================
+
+@test("Fix6C: _mostrar_resumen_confirmacion con datos_temp vacio retorna error amigable")
+def _():
+    from chatbot.engine import ChatbotEngine
+
+    engine = ChatbotEngine.__new__(ChatbotEngine)
+    engine.sheets = MagicMock()
+
+    respuesta = engine._mostrar_resumen_confirmacion({})  # datos vacíos
+
+    assert "error" in respuesta.lower() or "hola" in respuesta.lower(), \
+        f"Debe retornar error amigable, got: {respuesta}"
+    assert "Confirma tu cita" not in respuesta
+
+
+@test("Fix6C: _mostrar_resumen_confirmacion con datos validos funciona normal")
+def _():
+    from chatbot.engine import ChatbotEngine
+
+    engine = ChatbotEngine.__new__(ChatbotEngine)
+
+    datos = {
+        "fecha": "2026-04-10",
+        "hora_inicio": "14:00:00",
+        "hora_fin": "14:50:00",
+        "servicio_nombre": "Corte + Barba",
+        "precio": 28000,
+    }
+    respuesta = engine._mostrar_resumen_confirmacion(datos)
+
+    assert "Confirma tu cita" in respuesta
+    assert "Corte + Barba" in respuesta
+    assert "28,000" in respuesta
+
+
+# ===========================================================
+# FIX 6D — engine.py: _procesar_confirmacion con datos_temp sin fecha
+# ===========================================================
+
+@test("Fix6D: _procesar_confirmacion sin fecha en datos_temp retorna error y limpia sesion")
+def _():
+    from chatbot.engine import ChatbotEngine
+    from models.sesion import Sesion
+    from models.cliente import Cliente
+    from datetime import datetime
+
+    engine = ChatbotEngine.__new__(ChatbotEngine)
+    engine.sheets = MagicMock()
+    engine.calendar = MagicMock()
+
+    cliente = Cliente(id="cli_test", telefono="573001234567", nombre="Juan",
+                      fecha_registro=datetime.now(), total_citas=0)
+    engine.sheets.get_cliente_por_telefono.return_value = cliente
+    engine.sheets.eliminar_sesion.return_value = True
+
+    sesion = Sesion(telefono="573001234567", estado="confirmando_cita", datos_temp={
+        "reagendando": False,
+        # "fecha", "hora_inicio", "hora_fin" ausentes
+    })
+
+    respuesta = engine._procesar_confirmacion("573001234567", "SI", sesion, 3)
+
+    assert "error" in respuesta.lower() or "hola" in respuesta.lower()
+    engine.sheets.eliminar_sesion.assert_called_with("573001234567")
+    engine.calendar.crear_evento.assert_not_called()
+
+
+# ===========================================================
+# FIX 6E — formatters.py: formatear_precio con None
+# ===========================================================
+
+@test("Fix6E: formatear_precio con None retorna $0 COP sin crash")
+def _():
+    from utils.formatters import formatear_precio
+
+    resultado = formatear_precio(None)
+    assert resultado == "$0 COP", f"Esperaba '$0 COP', got '{resultado}'"
+
+
+@test("Fix6E: formatear_precio con int normal funciona correctamente")
+def _():
+    from utils.formatters import formatear_precio
+
+    resultado = formatear_precio(28000)
+    assert resultado == "$28,000 COP", f"Esperaba '$28,000 COP', got '{resultado}'"
+
+
+@test("Fix6E: formatear_precio con string numerico funciona correctamente")
+def _():
+    from utils.formatters import formatear_precio
+
+    resultado = formatear_precio("20000")
+    assert resultado == "$20,000 COP", f"Esperaba '$20,000 COP', got '{resultado}'"
+
+
+# ===========================================================
 # RESUMEN
 # ===========================================================
 

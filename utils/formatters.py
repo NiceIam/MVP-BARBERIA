@@ -3,9 +3,11 @@ from datetime import date, time
 from models import Cita, Servicio
 
 
-def formatear_precio(precio: int) -> str:
+def formatear_precio(precio) -> str:
     """Formatea un precio en COP."""
-    return f"${precio:,} COP"
+    if precio is None:
+        return "$0 COP"
+    return f"${int(precio):,} COP"
 
 
 def formatear_cita_resumen(cita: Cita) -> str:

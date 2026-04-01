@@ -4,6 +4,14 @@ from datetime import datetime, date, time
 from typing import Optional
 
 
+def _safe_fromisoformat(value: str) -> Optional[datetime]:
+    """Parsea un string ISO a datetime de forma segura, retorna None si falla."""
+    try:
+        return datetime.fromisoformat(value)
+    except (ValueError, TypeError):
+        return None
+
+
 @dataclass
 class Cita:
     """Representa una cita en la barbería."""
@@ -54,8 +62,8 @@ class Cita:
             hora_fin=datetime.strptime(row[9], '%H:%M').time() if len(row) > 9 and row[9] else time(0, 0),
             estado=row[10] if len(row) > 10 else "",
             calendar_event_id=row[11] if len(row) > 11 and row[11] else None,
-            fecha_creacion=datetime.fromisoformat(row[12]) if len(row) > 12 and row[12] else None,
-            fecha_modificacion=datetime.fromisoformat(row[13]) if len(row) > 13 and row[13] else None,
+            fecha_creacion=_safe_fromisoformat(row[12]) if len(row) > 12 and row[12] else None,
+            fecha_modificacion=_safe_fromisoformat(row[13]) if len(row) > 13 and row[13] else None,
             notas=row[14] if len(row) > 14 else ""
         )
     
