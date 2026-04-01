@@ -395,9 +395,23 @@ Escribe 'hola' para volver al menú principal.
             duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
             return self._mostrar_fechas(duracion_minutos)
         
-        fecha = date.fromisoformat(sesion.datos_temp["fecha"])
-        duracion_minutos = sesion.datos_temp["duracion_minutos"]
-        
+        fecha_str = sesion.datos_temp.get("fecha")
+        if not fecha_str:
+            sesion.estado = ESTADO_ESPERANDO_FECHA
+            self.sheets.actualizar_sesion(sesion, row_index)
+            duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+            return self._mostrar_fechas(duracion_minutos)
+        try:
+            fecha = date.fromisoformat(fecha_str)
+        except ValueError:
+            logger.error(f"❌ Fecha inválida en datos_temp para {telefono}: '{fecha_str}'")
+            sesion.estado = ESTADO_ESPERANDO_FECHA
+            self.sheets.actualizar_sesion(sesion, row_index)
+            duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+            return self._mostrar_fechas(duracion_minutos)
+
+        duracion_minutos = sesion.datos_temp.get("duracion_minutos", 50)
+
         # Recalcular slots disponibles
         citas_dia = self.sheets.get_citas_por_fecha(fecha)
         eventos_calendar = self.calendar.get_eventos_dia(fecha)
@@ -421,17 +435,23 @@ Escribe 'hola' para volver al menú principal.
     
     def _mostrar_resumen_confirmacion(self, datos: dict) -> str:
         """Muestra el resumen de la cita para confirmación."""
-        fecha = date.fromisoformat(datos["fecha"])
-        hora_inicio = time.fromisoformat(datos["hora_inicio"])
-        hora_fin = time.fromisoformat(datos["hora_fin"])
-        
+        try:
+            fecha = date.fromisoformat(datos["fecha"])
+            hora_inicio = time.fromisoformat(datos["hora_inicio"])
+            hora_fin = time.fromisoformat(datos["hora_fin"])
+            precio = datos["precio"]
+            servicio_nombre = datos["servicio_nombre"]
+        except (KeyError, ValueError) as e:
+            logger.error(f"❌ Error construyendo resumen de confirmación: {e}")
+            return self._agregar_opcion_menu("Ocurrió un error al preparar tu cita. Por favor escribe *hola* para empezar de nuevo.")
+
         mensaje = f"""
 📋 *Confirma tu cita:*
 
 📅 {formatear_fecha(fecha)}
 🕐 {formatear_hora(hora_inicio)} - {formatear_hora(hora_fin)}
-✂️ {datos["servicio_nombre"]}
-💰 ${datos["precio"]:,} COP
+✂️ {servicio_nombre}
+💰 ${precio:,} COP
 👨‍💼 Barbero: Churco
 
 Responde *SI* para confirmar o *NO* para cancelar.
@@ -464,9 +484,14 @@ Responde *SI* para confirmar o *NO* para cancelar.
             return self._agregar_opcion_menu("Error: Cliente no encontrado. Por favor inicia de nuevo.")
         
         # Preparar datos de la cita
-        fecha = date.fromisoformat(sesion.datos_temp["fecha"])
-        hora_inicio = time.fromisoformat(sesion.datos_temp["hora_inicio"])
-        hora_fin = time.fromisoformat(sesion.datos_temp["hora_fin"])
+        try:
+            fecha = date.fromisoformat(sesion.datos_temp["fecha"])
+            hora_inicio = time.fromisoformat(sesion.datos_temp["hora_inicio"])
+            hora_fin = time.fromisoformat(sesion.datos_temp["hora_fin"])
+        except (KeyError, ValueError) as e:
+            logger.error(f"❌ Error parseando datos de fecha/hora en confirmación para {telefono}: {e}")
+            self.sheets.eliminar_sesion(telefono)
+            return self._agregar_opcion_menu("Ocurrió un error con tu cita. Por favor escribe *hola* para empezar de nuevo.")
         
         if es_reagendamiento:
             # REAGENDAMIENTO - Actualizar cita existente
@@ -527,9 +552,9 @@ Responde *SI* para confirmar o *NO* para cancelar.
                 cliente_id=cliente.id,
                 cliente_telefono=telefono,
                 cliente_nombre=cliente.nombre,
-                servicio_id=sesion.datos_temp["servicio_id"],
-                servicio_nombre=sesion.datos_temp["servicio_nombre"],
-                precio=sesion.datos_temp["precio"],
+                servicio_id=sesion.datos_temp.get("servicio_id", ""),
+                servicio_nombre=sesion.datos_temp.get("servicio_nombre", ""),
+                precio=sesion.datos_temp.get("precio", 0),
                 fecha=fecha,
                 hora_inicio=hora_inicio,
                 hora_fin=hora_fin,
