@@ -566,11 +566,13 @@ Responde *SI* para confirmar o *NO* para cancelar.
                 return self._agregar_opcion_menu("Error al crear la cita. Por favor intenta de nuevo.")
 
             # Verificar que la cita realmente quedó en Sheets antes de crear el evento en Calendar.
-            # Esto previene desincronización si el API de Google acepta el request pero no persiste el dato.
-            cita_verificada = self.sheets.get_cita_por_id(cita.id)
-            if not cita_verificada:
+            # Guardamos el row_index aquí para no tener que leer Sheets una segunda vez.
+            cita_verificada_result = self.sheets.get_cita_por_id(cita.id)
+            if not cita_verificada_result:
                 logger.error(f"❌ CRÍTICO: Cita {cita.id} no encontrada en Sheets tras crearla. Abortando para evitar desincronización Calendar/Sheets.")
                 return self._agregar_opcion_menu("Error al confirmar la cita. Por favor intenta de nuevo.")
+
+            cita_en_sheets, cita_row_index = cita_verificada_result
 
             # Crear evento en Calendar
             event_id = self.calendar.crear_evento(
@@ -584,22 +586,17 @@ Responde *SI* para confirmar o *NO* para cancelar.
                 hora_fin=hora_fin,
                 estado=ESTADO_CONFIRMADA
             )
-            
+
             if event_id:
                 logger.info(f"✅ Event ID recibido: {event_id}")
-                # Actualizar cita con event_id
-                result = self.sheets.get_cita_por_id(cita.id)
-                if result:
-                    cita_guardada, cita_row = result
-                    cita_guardada.calendar_event_id = event_id
-                    if self.sheets.actualizar_cita(cita_guardada, cita_row):
-                        logger.info(f"✅ Cita actualizada con event_id en Sheets")
-                    else:
-                        logger.error(f"❌ Error actualizando cita con event_id")
+                # Usar el row_index ya conocido — sin segunda lectura a Sheets
+                cita_en_sheets.calendar_event_id = event_id
+                if self.sheets.actualizar_cita(cita_en_sheets, cita_row_index):
+                    logger.info(f"✅ Cita {cita.id} actualizada con event_id en Sheets")
                 else:
-                    logger.error(f"❌ No se pudo recuperar la cita {cita.id} para actualizar event_id")
+                    logger.error(f"❌ Error actualizando event_id para cita {cita.id} en fila {cita_row_index}")
             else:
-                logger.warning(f"⚠️ No se recibió event_id de Calendar")
+                logger.warning(f"⚠️ No se recibió event_id de Calendar para cita {cita.id}")
             
             # Limpiar sesión
             self.sheets.eliminar_sesion(telefono)
